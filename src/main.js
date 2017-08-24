@@ -2,6 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
+import 'element-ui/lib/theme-default/index.css'
 import Element from 'element-ui'
 import router from './router'
 import Vuex from 'vuex'
