@@ -1,9 +1,8 @@
 import axios from 'axios';
 
 class Model {
-  public base = '/API';
-  public needAuth = false;
-  public instance;
+  base = '/API';
+  instance;
 
   constructor() {
     this.instance = axios.create({
@@ -12,14 +11,22 @@ class Model {
     });
   }
 
-  public request(method = "GET", path = '/', params = {}) {
+  /**
+   * HTTP Request
+   * @param method
+   * @param path
+   * @param params
+   * @param options
+   * @returns {Promise}
+   */
+  request(method = "GET", path = '/', params = {}, options = {}) {
     return new Promise(async (resolve, reject) => {
       try {
         let options = {
           method: method,
           url: path
         };
-        if (this.needAuth) {
+        if (options.needAuth) {
           options.headers = {
             "Authorization": `Bearer ${localStorage.getItem("jwt")}`
           }
@@ -48,23 +55,26 @@ class Model {
    * HTTP GET
    * @param path
    * @param params
+   * @param options
    * @returns {*}
    */
-  public get(path = '/', params = {}) {
-    return this.request("GET", path, params);
+  get(path = '/', params = {}, options = {}) {
+    return this.request("GET", path, params, options);
   }
 
   /**
    * HTTP POST
    * @param path
    * @param data
+   * @param options
    * @returns {*}
    */
-  public post(path = '/', data = {}){
-    return this.request("POST", path, data);
+  post(path = '/', data = {}, options = {}){
+    return this.request("POST", path, data, options);
   }
 
-  private parseErrorResponse(e) {
+  parseErrorResponse(e) {
     return e;
   }
 }
+export default Model;

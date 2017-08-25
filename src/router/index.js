@@ -20,6 +20,11 @@ export default new Router({
           path: 'register',
           name: 'User-Register',
           component: resolve => require(['../components/User/Register.vue'], resolve),
+        },
+        {
+          path: 'login',
+          name: 'User-Login',
+          component: resolve => require(['@/components/User/Login.vue'], resolve)
         }
       ]
     }
