@@ -10,6 +10,18 @@ export default new Router({
       path: '/',
       name: 'Hello',
       component: Hello
+    },
+    {
+      path: '/user',
+      name: 'User-Index',
+      component: resolve => require(['../components/User/UserLayout.vue'], resolve),
+      children: [
+        {
+          path: 'register',
+          name: 'User-Register',
+          component: resolve => require(['../components/User/Register.vue'], resolve),
+        }
+      ]
     }
   ]
 })
