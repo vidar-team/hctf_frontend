@@ -7,6 +7,7 @@ class User extends Model{
     return sha256.update(text).digest('hex');
   }
   login(email, password){
+    let self = this;
     return new Promise(async (resolve, reject) => {
       try{
         let result = await this.request("POST", '/User/login', {

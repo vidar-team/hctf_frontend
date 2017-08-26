@@ -74,7 +74,44 @@ class Model {
   }
 
   parseErrorResponse(e) {
-    return e;
+    let parsedError = {
+      message: ""
+    };
+    console.log(e.response.data.data);
+    if (e.response){
+      if (e.response.data.data && e.response.data.data.error){
+        if (Array.isArray(e.response.data.data.error.message)){
+          parsedError.message = e.response.data.data.error.message.join(',');
+        }
+        else{
+          parsedError.message = e.response.data.data.error.message.toString();
+        }
+      }
+      else{
+        parsedError.message = {
+          400: "HTTP 400 Bad Request",
+          401: "HTTP 401 Unauthorized",
+          403: "HTTP 403 Forbidden",
+          404: "HTTP 404 Not Found",
+          405: "HTTP 405 Method Not Allowed",
+          406: "HTTP 406 Not Acceptable",
+          408: "HTTP 408 Request Timeout",
+          414: "HTTP 414 URI Too Long",
+          418: "HTTP 418 I'm a teapot",
+          500: "HTTP 500 Internal Server Error",
+          502: "HTTP 502 Bad Gateway",
+          503: "HTTP 503 Service Unavailable",
+          504: "HTTP 504 Gateway Timeout"
+        }[e.response.status] || `HTTP ${e.response.status}`;
+      }
+    }
+    else if (e.request){
+      parsedError.message = "NETWORK ERROR"
+    }
+    else{
+      parsedError.message = "UNKNOWN ERROR"
+    }
+    return parsedError;
   }
 }
 export default Model;
