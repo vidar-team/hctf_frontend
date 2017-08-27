@@ -38,8 +38,8 @@ class Model {
           options.data = params
         }
         let result = await this.instance.request(options);
-        if (result.status === "success") {
-          resolve(result.data);
+        if (result.data.status === "success") {
+          resolve(result.data.data);
         }
         else {
           reject(result);

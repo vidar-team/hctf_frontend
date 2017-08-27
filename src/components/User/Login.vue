@@ -37,9 +37,14 @@
         }
         this.loading = true;
         try{
-          await UserModel.login(this.form.email, this.form.password);
+          let result = await UserModel.login(this.form.email, this.form.password);
+          if (result.access_token){
+            localStorage.setItem('jwt', result.access_token);
+          }
+          this.$router.push('/');
         }
         catch (e){
+          console.log(e);
           this.$message.error(e.message);
         }
         this.loading = false;

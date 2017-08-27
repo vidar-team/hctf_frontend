@@ -18,11 +18,10 @@ class User extends Model{
    * @param password
    * @returns {Promise}
    */
-  login(teamName, email, password){
+  login(email, password){
     return new Promise(async (resolve, reject) => {
       try{
         let result = await this.request("POST", '/User/login', {
-          teamName: teamName,
           email: email,
           password: this.sha256(password)
         });
@@ -33,10 +32,11 @@ class User extends Model{
       }
     })
   }
-  register(email, password){
+  register(teamName, email, password){
     return new Promise(async (resolve, reject) => {
       try{
         let result = await  this.request("POST", "/User/register", {
+          teamName: teamName,
           email: email,
           password: password
         })
