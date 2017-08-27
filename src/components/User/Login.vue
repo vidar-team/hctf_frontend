@@ -44,8 +44,7 @@
           this.$router.push('/');
         }
         catch (e){
-          console.log(e);
-          this.$message.error(e.message);
+          this.$handleError(e);
         }
         this.loading = false;
       }

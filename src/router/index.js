@@ -25,6 +25,11 @@ export default new Router({
           path: 'login',
           name: 'User-Login',
           component: resolve => require(['@/components/User/Login.vue'], resolve)
+        },
+        {
+          path: 'index',
+          name: 'User-Info',
+          component: resolve => require(['@/components/User/Index.vue'], resolve)
         }
       ]
     }

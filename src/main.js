@@ -18,11 +18,16 @@ import NProgressCss from 'nprogress/nprogress.css';
 // global css
 import '@/assets/css/global.css';
 
+// global error handler
+import GlobalErrorHandler from './plugins/GlobalErrorHandler';
+
 // development mode
 Vue.config.productionTip = false;
-
 // enable plugins
 Vue.use(Element);
+Vue.use(GlobalErrorHandler, {
+  router: router
+});
 Vue.use(Vuex);
 
 router.beforeEach((to, from, next) => {

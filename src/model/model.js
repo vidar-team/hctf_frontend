@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import jwt from '../utils/jwt';
 class Model {
   base = '/API';
   instance;
@@ -19,14 +19,20 @@ class Model {
    * @param options
    * @returns {Promise}
    */
-  request(method = "GET", path = '/', params = {}, options = {}) {
+  request(method = "GET", path = '/', params = {}, config = {}) {
     return new Promise(async (resolve, reject) => {
       try {
         let options = {
           method: method,
           url: path
         };
-        if (options.needAuth) {
+        if (config.needAuth) {
+          if (jwt.isTokenExpired()){
+            reject({
+              message: "token_expired",
+              redirect: "User-Login"
+            })
+          }
           options.headers = {
             "Authorization": `Bearer ${localStorage.getItem("jwt")}`
           }
@@ -42,7 +48,7 @@ class Model {
           resolve(result.data.data);
         }
         else {
-          reject(result);
+          reject(this.parseErrorResponse(e));
         }
       }
       catch (e) {
@@ -77,7 +83,6 @@ class Model {
     let parsedError = {
       message: ""
     };
-    console.log(e.response.data.data);
     if (e.response){
       if (e.response.data.data && e.response.data.data.error){
         if (Array.isArray(e.response.data.data.error.message)){

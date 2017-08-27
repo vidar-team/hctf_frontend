@@ -32,6 +32,14 @@ class User extends Model{
       }
     })
   }
+
+  /**
+   * 注册
+   * @param teamName
+   * @param email
+   * @param password
+   * @returns {Promise}
+   */
   register(teamName, email, password){
     return new Promise(async (resolve, reject) => {
       try{
@@ -39,7 +47,26 @@ class User extends Model{
           teamName: teamName,
           email: email,
           password: password
-        })
+        });
+        resolve(result);
+      }
+      catch (e){
+        reject(e);
+      }
+    })
+  }
+
+  /**
+   * 获取用户信息
+   * @returns {Promise}
+   */
+  getUserInfo(){
+    return new Promise(async (resolve, reject) => {
+      try{
+        let result = await this.request("GET", "/User/info", {}, {
+          needAuth: true
+        });
+        resolve(result);
       }
       catch (e){
         reject(e);

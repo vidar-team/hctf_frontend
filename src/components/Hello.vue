@@ -11,7 +11,7 @@ export default {
     return {
       msg: 'Welcome to HCTF'
     }
-  }
+  },
 }
 </script>
 
