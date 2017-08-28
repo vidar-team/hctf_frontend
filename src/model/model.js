@@ -44,6 +44,12 @@ class Model {
           options.data = params
         }
         let result = await this.instance.request(options);
+
+        // jwt auto-renewal
+        if (Object.keys(result.headers).includes("authorization")){
+          localStorage.setItem("jwt", result.headers["authorization"].slice(7));
+        }
+
         if (result.data.status === "success") {
           resolve(result.data.data);
         }

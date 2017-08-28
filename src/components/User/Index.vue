@@ -8,7 +8,7 @@
     async mounted(){
       try{
         let result = await UserModel.getUserInfo();
-        console.log(resultl);
+        console.log(result);
       }
       catch (e){
         this.$handleError(e);
