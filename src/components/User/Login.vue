@@ -41,6 +41,9 @@
           if (result.access_token){
             localStorage.setItem('jwt', result.access_token);
           }
+          result = await UserModel.getUserInfo();
+          this.$store.commit("setTeamName", result.team.teamName);
+          this.$store.commit("login");
           this.$router.push('/');
         }
         catch (e){

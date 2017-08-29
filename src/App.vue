@@ -4,14 +4,27 @@
       <el-menu-item index="/">
         HCTF
       </el-menu-item>
-      <el-menu-item index="/user/register" class="float-right">
-        注册
+      <template v-if="inited">
+        <template v-if="isLogin">
+          <el-menu-item index="/user/logout" class="float-right">
+            登出
+          </el-menu-item>
+          <el-menu-item index="/user/index" class="float-right">
+            {{ teamName }}
+          </el-menu-item>
+        </template>
+        <template v-else>
+          <el-menu-item index="/user/register" class="float-right">
+            注册
 
-      </el-menu-item>
-      <el-menu-item index="/user/login" class="float-right">
-        登录
+          </el-menu-item>
+          <el-menu-item index="/user/login" class="float-right">
+            登录
 
-      </el-menu-item>
+          </el-menu-item>
+        </template>
+      </template>
+      <template v-else></template>
 
     </el-menu>
     <div class="main-container">
@@ -21,8 +34,40 @@
 </template>
 
 <script>
+  import Auth from './utils/auth';
+  import User from './model/User';
+  let UserModel = new User();
   export default {
-    name: 'app'
+    name: 'hctf',
+    data(){
+      return {
+        inited: false
+      }
+    },
+    computed: {
+      teamName(){
+        return this.$store.state.user.teamName;
+      },
+      isLogin(){
+        return this.$store.state.user.isLogin;
+      }
+    },
+    async mounted(){
+      if (!Auth.isLogin()){
+        this.inited = true;
+      }
+      else{
+        try{
+          let result = await UserModel.getUserInfo();
+          this.$store.commit("setTeamName", result.team.teamName);
+          this.$store.commit("login");
+          this.inited = true;
+        }
+        catch (e){
+          this.inited = true;
+        }
+      }
+    }
   }
 </script>
 

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import jwt from '../utils/jwt';
+import auth from '../utils/auth';
 class Model {
   base = '/API';
   instance;
@@ -27,7 +27,7 @@ class Model {
           url: path
         };
         if (config.needAuth) {
-          if (jwt.isTokenExpired()){
+          if (auth.isTokenExpired()){
             reject({
               message: "token_expired",
               redirect: "User-Login"

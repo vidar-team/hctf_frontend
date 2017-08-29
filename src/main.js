@@ -5,7 +5,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import Vuex from 'vuex'
+import store from './store'
 
 // Element
 import 'element-ui/lib/theme-default/index.css'
@@ -28,7 +28,6 @@ Vue.use(Element);
 Vue.use(GlobalErrorHandler, {
   router: router
 });
-Vue.use(Vuex);
 
 router.beforeEach((to, from, next) => {
   NProgress.start();
@@ -43,6 +42,7 @@ router.afterEach((options)=>{
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: { App }
-})
+});
