@@ -29,7 +29,10 @@ export default new Router({
         {
           path: 'index',
           name: 'User-Info',
-          component: resolve => require(['@/components/User/Index.vue'], resolve)
+          component: resolve => require(['@/components/User/Index.vue'], resolve),
+          meta: {
+            needLogin: true
+          }
         }
       ]
     }

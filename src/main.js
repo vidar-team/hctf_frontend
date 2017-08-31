@@ -21,6 +21,9 @@ import '@/assets/css/global.css';
 // global error handler
 import GlobalErrorHandler from './plugins/GlobalErrorHandler';
 
+// utils
+import Auth from './utils/auth';
+
 // development mode
 Vue.config.productionTip = false;
 // enable plugins
@@ -29,9 +32,26 @@ Vue.use(GlobalErrorHandler, {
   router: router
 });
 
+
 router.beforeEach((to, from, next) => {
   NProgress.start();
-  next();
+  if (to.matched.some(record => record.meta.needLogin)){
+    // 需要登录的操作。
+    if (Auth.isLogin()){
+      next();
+    }
+    else{
+      next({
+        name: 'User-Login',
+        query: {
+          'return': to.name
+        }
+      })
+    }
+  }
+  else{
+    next();
+  }
 });
 
 router.afterEach((options)=>{

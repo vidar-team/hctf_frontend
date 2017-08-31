@@ -44,7 +44,14 @@
           result = await UserModel.getUserInfo();
           this.$store.commit("setTeamName", result.team.teamName);
           this.$store.commit("login");
-          this.$router.push('/');
+          if (this.$route.query && this.$route.query["return"]){
+            this.$router.push({
+              name: this.$route.query["return"]
+            });
+          }
+          else{
+            this.$router.push('/');
+          }
         }
         catch (e){
           this.$handleError(e);
