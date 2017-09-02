@@ -35,6 +35,18 @@ export default new Router({
           }
         }
       ]
+    },
+    // 已经被封禁
+    {
+      path: '/banned',
+      name: "Banned",
+      component: resolve => require(['@/components/Common/Banned.vue'], resolve)
+    },
+    // 404
+    {
+      path: '*',
+      name: "HTTP-404",
+      component: resolve => require(['@/components/Common/404.vue'], resolve)
     }
   ]
 })
