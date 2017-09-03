@@ -29,7 +29,8 @@ Vue.config.productionTip = false;
 // enable plugins
 Vue.use(Element);
 Vue.use(GlobalErrorHandler, {
-  router: router
+  router: router,
+  store: store
 });
 
 
@@ -41,6 +42,7 @@ router.beforeEach((to, from, next) => {
       next();
     }
     else{
+      store.commit("logout");
       next({
         name: 'User-Login',
         query: {

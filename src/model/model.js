@@ -30,7 +30,8 @@ class Model {
           if (auth.isTokenExpired()){
             reject({
               message: "token_expired",
-              redirect: "User-Login"
+              redirect: "User-Login",
+              action: "logout"
             })
           }
           options.headers = {
