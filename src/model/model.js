@@ -16,7 +16,7 @@ class Model {
    * @param method
    * @param path
    * @param params
-   * @param options
+   * @param config
    * @returns {Promise}
    */
   request(method = "GET", path = '/', params = {}, config = {}) {
@@ -91,6 +91,9 @@ class Model {
     };
     if (e.response){
       if (e.response.data.data && e.response.data.data.error){
+        if (e.response.data.data.error.code === "banned"){
+          parsedError.redirect = "Banned";
+        }
         if (Array.isArray(e.response.data.data.error.message)){
           parsedError.message = e.response.data.data.error.message.join(',');
         }

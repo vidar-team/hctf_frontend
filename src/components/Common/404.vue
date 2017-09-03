@@ -20,6 +20,6 @@
     text-align: center;
     font-size: 5rem;
     color: #aaa;
-    font-family: Consolas, serif;
+    font-family: Consolas, monospace;
   }
 </style>
