@@ -60,11 +60,26 @@ class User extends Model{
    * 获取用户信息
    * @returns {Promise}
    */
-  getUserInfo(){
+  getTeamInfo(){
     return new Promise(async (resolve, reject) => {
       try{
         let result = await this.request("GET", "/User/info", {}, {
           needAuth: true
+        });
+        resolve(result);
+      }
+      catch (e){
+        reject(e);
+      }
+    })
+  }
+
+  getAllTeams(){
+    return new Promise(async (resolve, reject) => {
+      try{
+        let result = await this.request("GET", "/User/list", {}, {
+          needAuth: true,
+          needAdmin: true
         });
         resolve(result);
       }

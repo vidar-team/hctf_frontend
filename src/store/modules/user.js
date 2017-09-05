@@ -9,6 +9,9 @@ const mutations = {
   setTeamName: (state, payload) => {
     state.teamName = payload;
   },
+  enterAdminMode: state => {
+    state.isAdmin = true;
+  },
   login: state => {
     state.isLogin = true;
   },

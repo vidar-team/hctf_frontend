@@ -38,12 +38,15 @@
         this.loading = true;
         try{
           let result = await UserModel.login(this.form.email, this.form.password);
-          if (result.access_token){
+          if (result["access_token"]){
             localStorage.setItem('jwt', result.access_token);
           }
-          result = await UserModel.getUserInfo();
-          this.$store.commit("setTeamName", result.team.teamName);
+          result = await UserModel.getTeamInfo();
+          this.$store.commit("setTeamName", result.teamName);
           this.$store.commit("login");
+          if (result.admin){
+            this.$store.commit("enterAdminMode");
+          }
           if (this.$route.query && this.$route.query["return"]){
             this.$router.push({
               name: this.$route.query["return"]

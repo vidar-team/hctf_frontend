@@ -7,7 +7,7 @@
   export default {
     async mounted(){
       try{
-        let result = await UserModel.getUserInfo();
+        let result = await UserModel.getTeamInfo();
         console.log(result);
       }
       catch (e){

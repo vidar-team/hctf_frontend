@@ -9,6 +9,11 @@
           <el-menu-item index="/user/logout" class="float-right">
             登出
           </el-menu-item>
+          <template v-if="isAdmin">
+            <el-menu-item index="/admin/index" class="float-right">
+              管理后台
+            </el-menu-item>
+          </template>
           <el-menu-item index="/user/index" class="float-right">
             {{ teamName }}
           </el-menu-item>
@@ -50,6 +55,9 @@
       },
       isLogin(){
         return this.$store.state.user.isLogin;
+      },
+      isAdmin(){
+        return this.$store.state.user.isAdmin;
       }
     },
     async mounted(){
@@ -58,8 +66,11 @@
       }
       else{
         try{
-          let result = await UserModel.getUserInfo();
-          this.$store.commit("setTeamName", result.team.teamName);
+          let result = await UserModel.getTeamInfo();
+          if (result.admin){
+            this.$store.commit("enterAdminMode");
+          }
+          this.$store.commit("setTeamName", result.teamName);
           this.$store.commit("login");
           this.inited = true;
         }
@@ -71,7 +82,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   .float-right {
     float: right !important;
   }
