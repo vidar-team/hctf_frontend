@@ -8,7 +8,6 @@ let install = (Vue, options) => {
         name: e.redirect
       })
     }
-    console.log(e);
     if (e.action === "logout"){
       options.store.commit("logout");
     }

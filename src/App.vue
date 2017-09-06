@@ -40,7 +40,7 @@
 
 <script>
   import Auth from './utils/auth';
-  import User from './model/User';
+  import User from './model/Team';
   let UserModel = new User();
   export default {
     name: 'hctf',

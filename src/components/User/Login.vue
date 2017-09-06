@@ -15,7 +15,7 @@
   </el-card>
 </template>
 <script>
-  import User from '../../model/User';
+  import User from '../../model/Team';
   let UserModel = new User();
   export default {
     data(){

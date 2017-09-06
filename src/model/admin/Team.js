@@ -1,7 +1,7 @@
 import makeHash from 'sha.js';
+import Model from '@/model/model'
 
-import Model from './model'
-class User extends Model{
+class Team extends Model{
   /**
    * Do SHA-256 Hashing
    * @param text
@@ -10,50 +10,6 @@ class User extends Model{
   sha256(text = ''){
     let sha256 = makeHash('sha256');
     return sha256.update(text).digest('hex');
-  }
-
-  /**
-   * 登陆
-   * @param email
-   * @param password
-   * @returns {Promise}
-   */
-  login(email, password){
-    return new Promise(async (resolve, reject) => {
-      try{
-        let result = await this.request("POST", '/User/login', {
-          email: email,
-          password: this.sha256(password)
-        });
-        resolve(result);
-      }
-      catch (e){
-        reject(e);
-      }
-    })
-  }
-
-  /**
-   * 注册
-   * @param teamName
-   * @param email
-   * @param password
-   * @returns {Promise}
-   */
-  register(teamName, email, password){
-    return new Promise(async (resolve, reject) => {
-      try{
-        let result = await  this.request("POST", "/User/register", {
-          teamName: teamName,
-          email: email,
-          password: password
-        });
-        resolve(result);
-      }
-      catch (e){
-        reject(e);
-      }
-    })
   }
 
   /**
@@ -74,12 +30,60 @@ class User extends Model{
     })
   }
 
-  getAllTeams(){
+  /**
+   * 获得所有队伍的信息
+   * @param page 分页
+   * @returns {Promise}
+   */
+  getAllTeams(page = 1){
     return new Promise(async (resolve, reject) => {
       try{
-        let result = await this.request("GET", "/User/list", {}, {
+        let result = await this.request("GET", "/User/list", {
+          page: page
+        }, {
           needAuth: true,
-          needAdmin: true
+        });
+        resolve(result);
+      }
+      catch (e){
+        reject(e);
+      }
+    })
+  }
+
+  /**
+   * 封禁队伍
+   * @param teamId
+   * @returns {Promise}
+   */
+  banTeam(teamId){
+    return new Promise(async (resolve, reject) => {
+      try{
+        let result = this.request("POST", "/User/ban", {
+          teamId: teamId
+        }, {
+          needAuth: true
+        });
+        resolve(result);
+      }
+      catch (e){
+        reject(e);
+      }
+    })
+  }
+
+  /**
+   * 设定管理员
+   * @param teamId
+   * @returns {Promise}
+   */
+  setAdmin(teamId){
+    return new Promise(async (resolve, reject) => {
+      try{
+        let result = this.request("POST", "/User/setAdmin", {
+          teamId: teamId
+        }, {
+          needAuth: true
         });
         resolve(result);
       }
@@ -89,4 +93,4 @@ class User extends Model{
     })
   }
 }
-export default User;
+export default Team;
