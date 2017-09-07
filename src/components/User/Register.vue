@@ -46,6 +46,9 @@
         this.loading = true;
         try{
           let result = await UserModel.register(this.form.teamName, this.form.email, this.form.password2);
+          this.$router.push({
+            name: "User-Login"
+          });
         }
         catch(e){
           this.$message.error(e.message);

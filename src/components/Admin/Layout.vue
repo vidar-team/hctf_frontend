@@ -8,6 +8,11 @@
             <template slot="title">队伍管理</template>
             <el-menu-item index="/admin/team/list">队伍概览</el-menu-item>
           </el-submenu>
+          <el-submenu index="/admin/question">
+            <template slot="title">题目管理</template>
+            <el-menu-item index="/admin/question/add">添加问题</el-menu-item>
+            <el-menu-item index="/admin/question/list">题目概览</el-menu-item>
+          </el-submenu>
         </el-menu>
       </div>
     </el-col>
@@ -32,7 +37,7 @@
   export default{
     data(){
       return {
-        defaultOpeneds: ['/admin/team']
+        defaultOpeneds: ['/admin/team', '/admin/question']
       }
     }
   }

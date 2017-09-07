@@ -46,7 +46,7 @@ class User extends Model{
         let result = await  this.request("POST", "/User/register", {
           teamName: teamName,
           email: email,
-          password: password
+          password: this.sha256(password)
         });
         resolve(result);
       }

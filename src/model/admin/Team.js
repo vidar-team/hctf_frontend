@@ -59,7 +59,7 @@ class Team extends Model{
   banTeam(teamId){
     return new Promise(async (resolve, reject) => {
       try{
-        let result = this.request("POST", "/User/ban", {
+        let result = await this.request("POST", "/User/ban", {
           teamId: teamId
         }, {
           needAuth: true
@@ -80,7 +80,23 @@ class Team extends Model{
   setAdmin(teamId){
     return new Promise(async (resolve, reject) => {
       try{
-        let result = this.request("POST", "/User/setAdmin", {
+        let result = await this.request("POST", "/User/setAdmin", {
+          teamId: teamId
+        }, {
+          needAuth: true
+        });
+        resolve(result);
+      }
+      catch (e){
+        reject(e);
+      }
+    })
+  }
+
+  resetPassword(teamId){
+    return new Promise(async (resolve, reject) => {
+      try{
+        let result = await this.request("POST", "/User/forceResetPassword", {
           teamId: teamId
         }, {
           needAuth: true
