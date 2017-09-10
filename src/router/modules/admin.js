@@ -14,7 +14,12 @@ export default {
     {
       path: "team/list",
       name: "Admin-Team-List",
-      component: resolve => require(['@/components/Admin/Team.List.vue'], resolve)
+      component: resolve => require(['@/components/Admin/Team/List.vue'], resolve)
+    },
+    {
+      path: "challenge/add",
+      name: "Admin-Challenge-Add",
+      component: resolve => require(['@/components/Admin/Challenge/Add.vue'], resolve)
     }
   ]
 }

@@ -7,7 +7,7 @@
       <template v-if="inited">
         <template v-if="isLogin">
           <el-menu-item index="/user/logout" class="float-right">
-            登出
+            {{ $t("root.logout") }}
           </el-menu-item>
           <template v-if="isAdmin">
             <el-menu-item index="/admin/index" class="float-right">
@@ -20,17 +20,19 @@
         </template>
         <template v-else>
           <el-menu-item index="/user/register" class="float-right">
-            注册
+            {{ $t("root.register ")}}
 
           </el-menu-item>
           <el-menu-item index="/user/login" class="float-right">
-            登录
+            {{ $t("root.login") }}
 
           </el-menu-item>
         </template>
       </template>
       <template v-else></template>
-
+      <el-menu-item index="#" class="float-right" @click="switchLanguage">
+        {{ switchLanguageButton }}
+      </el-menu-item>
     </el-menu>
     <div class="main-container">
       <router-view></router-view>
@@ -46,7 +48,7 @@
     name: 'hctf',
     data(){
       return {
-        inited: false
+        inited: false,
       }
     },
     computed: {
@@ -58,6 +60,9 @@
       },
       isAdmin(){
         return this.$store.state.user.isAdmin;
+      },
+      switchLanguageButton(){
+        return this.$i18n.locale === "en" ? "中文" : "English"
       }
     },
     async mounted(){
@@ -77,6 +82,11 @@
         catch (e){
           this.inited = true;
         }
+      }
+    },
+    methods: {
+      switchLanguage(){
+        return this.$i18n.locale = this.$i18n.locale === "en" ? "zh-cn" : "en";
       }
     }
   }
