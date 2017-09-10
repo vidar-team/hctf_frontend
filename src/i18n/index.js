@@ -12,7 +12,7 @@ const messages = {
   "zh-cn": zh,
   "en": en
 };
-console.log(messages);
+
 const i18n = new VueI18n({
   locale: 'zh-cn', // set locale
   messages, // set locale messages

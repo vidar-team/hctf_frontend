@@ -42,7 +42,7 @@
             localStorage.setItem('jwt', result.access_token);
           }
           result = await UserModel.getTeamInfo();
-          this.$store.commit("setTeamName", result.teamName);
+          this.$store.commit("setTeamName", result.team_name);
           this.$store.commit("login");
           if (result.admin){
             this.$store.commit("enterAdminMode");

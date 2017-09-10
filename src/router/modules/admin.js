@@ -20,6 +20,11 @@ export default {
       path: "challenge/add",
       name: "Admin-Challenge-Add",
       component: resolve => require(['@/components/Admin/Challenge/Add.vue'], resolve)
+    },
+    {
+      path: "challenge/category",
+      name: "Admin-Challenge-Category",
+      component: resolve => require(['@/components/Admin/Challenge/Category.vue'], resolve)
     }
   ]
 }

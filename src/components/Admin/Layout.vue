@@ -10,6 +10,7 @@
           </el-submenu>
           <el-submenu index="/admin/challenge">
             <template slot="title">Challenge 管理</template>
+            <el-menu-item index="/admin/challenge/category">分类管理</el-menu-item>
             <el-menu-item index="/admin/challenge/add">添加 Challenge</el-menu-item>
             <el-menu-item index="/admin/challenge/list">Challenge 概览</el-menu-item>
           </el-submenu>
@@ -37,7 +38,7 @@
   export default{
     data(){
       return {
-        defaultOpeneds: ['/admin/team', '/admin/question']
+        defaultOpeneds: ['/admin/team', '/admin/challenge']
       }
     }
   }

@@ -1,0 +1,5 @@
+class Rule {
+  constructor(rules){
+
+  }
+}

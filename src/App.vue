@@ -75,7 +75,7 @@
           if (result.admin){
             this.$store.commit("enterAdminMode");
           }
-          this.$store.commit("setTeamName", result.teamName);
+          this.$store.commit("setTeamName", result.team_name);
           this.$store.commit("login");
           this.inited = true;
         }
