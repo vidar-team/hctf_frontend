@@ -16,10 +16,16 @@ class Category extends Model {
       }
     })
   }
-  addCategory(categoryName){
+
+  /**
+   * 添加分类
+   * @param categoryName
+   * @returns {Promise}
+   */
+  createCategory(categoryName){
     return new Promise(async (resolve, reject) => {
       try{
-        let newCategory = this.request("GET", "/Category/list", {
+        let newCategory = this.request("POST", "/Category/create", {
           categoryName: categoryName
         }, {
           needAuth: true

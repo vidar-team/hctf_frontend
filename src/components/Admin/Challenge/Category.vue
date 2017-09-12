@@ -1,9 +1,9 @@
 <template>
   <div v-loading="loading">
     <h2>分类管理</h2>
-    <el-tabs>
+    <el-tabs closable @tab-remove="removeCategory" v-model="activeTabName">
       <template v-for="category in categories">
-        <el-tab-pane :label="category.category_name">
+        <el-tab-pane :label="category.category_name" :name="''+category.category_id">
           <template>
             <el-table
               :data="category.levels"
@@ -25,7 +25,7 @@
                       <span style="color: hotpink" v-else>未发布</span>
                     </el-form-item>
                     <el-form-item label="开放规则">
-                      <span>...</span>
+                      <rules :rules="scope.row.rules" mode="simple" :info="categories"></rules>
                     </el-form-item>
                   </el-form>
                 </template>
@@ -42,7 +42,14 @@
                 label="发布时间"
                 prop="release_time">
               </el-table-column>
-
+              <el-table-column
+                label="操作"
+                prop="release_time">
+                <template scope="scope">
+                  <el-button type="text">编辑</el-button>
+                  <el-button type="text" style="color: red">删除</el-button>
+                </template>
+              </el-table-column>
             </el-table>
             <hr>
             <el-button type="primary" size="small">添加 Level</el-button>
@@ -69,11 +76,13 @@
 </style>
 <script>
   import Category from '@/model/admin/Category';
+  import Rules from './RuleComponents/Rules.vue';
   let CategoryModel = new Category();
   export default {
     data(){
       return {
         categories: [],
+        activeTabName: "",
         nameFilter: "",
         loading: false
       }
@@ -83,6 +92,9 @@
         return Array.from(this.categories, i => i["category_name"]);
       }
     },
+    components: {
+      Rules
+    },
     mounted(){
       this.loadCategories();
     },
@@ -91,6 +103,7 @@
         this.loading = true;
         try{
           this.categories = await CategoryModel.getAllCategories();
+          this.activeTabName = "" + this.categories[0]["category_id"];
         }
         catch (e){
           this.$handleError(e);
@@ -103,10 +116,33 @@
             confirmButtonText: '确定',
             cancelButtonText: '取消',
           })).value;
-
+          this.loading = true;
+          let newCategory = await CategoryModel.createCategory(categoryName);
+          this.categories.push(newCategory);
         }
         catch (e){
           this.$handleError(e);
+        }
+        this.loading = false;
+      },
+      async removeCategory(categoryId){
+        categoryId = parseInt(categoryId);
+        let category = this.categories.find(i => i["category_id"] === categoryId);
+        if (category["challenges"].length > 0){
+          return this.$handleError({
+            message: "无法删除，该分类下仍有 Challenge"
+          })
+        }
+        if (category["levels"].length > 0){
+          return this.$handleError({
+            message: "无法删除，该分类下仍有 Level"
+          })
+        }
+        try{
+
+        }
+        catch (e){
+
         }
       },
       hasPassed(t){

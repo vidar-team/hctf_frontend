@@ -7,7 +7,7 @@
         width="55">
       </el-table-column>
       <el-table-column
-        prop="teamName"
+        prop="team_name"
         label="队伍名"
         width="120">
       </el-table-column>
