@@ -14,7 +14,6 @@
     },
     props: ['rule', 'mode', 'info'],
     mounted(){
-      console.log(this.info);
     },
     computed: {
       categoryName(){

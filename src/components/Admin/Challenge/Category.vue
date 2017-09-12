@@ -46,8 +46,8 @@
                 label="操作"
                 prop="release_time">
                 <template scope="scope">
-                  <el-button type="text">编辑</el-button>
-                  <el-button type="text" style="color: red">删除</el-button>
+                  <el-button type="text" @click="editLevel(scope.row.level_id)">编辑</el-button>
+                  <el-button type="text" style="color: red" @click="removeLevel(scope.row)">删除</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -144,6 +144,23 @@
         catch (e){
 
         }
+      },
+      async removeLevel(level){
+        let categoryId = level.category_id;
+        let category = this.categories.find(i => i.category_id === categoryId);
+        if (category.challenges.find(i => i.level_id === level.level_id)){
+          this.$handleError({
+            message: "无法删除，该 Level 下仍有 Challenge"
+          })
+        }
+      },
+      editLevel(levelId){
+        this.$router.push({
+          name: "Admin-Challenge-Level",
+          query: {
+            id: levelId
+          }
+        })
       },
       hasPassed(t){
         return new Date(t) < new Date();

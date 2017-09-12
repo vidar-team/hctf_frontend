@@ -2,7 +2,10 @@
  <span v-if="mode === 'simple'">
    <template v-if="parsedRules.rules.length > 0" v-for="rule in parsedRules.rules">
      <component :is="rule.type" :rule="rule" :info="info" :mode="mode">
-
+        <!--
+          Dynamic Component
+          Modify this part may cause reconstruction.
+        -->
      </component>
    </template>
    <span v-if="parsedRules.length === 0">

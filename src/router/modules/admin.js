@@ -25,6 +25,11 @@ export default {
       path: "challenge/category",
       name: "Admin-Challenge-Category",
       component: resolve => require(['@/components/Admin/Challenge/Category.vue'], resolve)
+    },
+    {
+      path: "challenge/level",
+      name: "Admin-Challenge-Level",
+      component: resolve => require(['@/components/Admin/Challenge/Level.vue'], resolve)
     }
   ]
 }
