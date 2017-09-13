@@ -19,19 +19,25 @@
           </el-form-item>
         </el-form>
       </el-tab-pane>
-      <el-tab-pane label="开放条件设置" name="rules">开放条件设置</el-tab-pane>
+      <el-tab-pane label="开放条件设置" name="rules">
+        <rules mode="edit" :rules="this.level.rules" :info="info"></rules>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
 <script>
   import Level from '@/model/admin/Level';
-
+  import Category from '@/model/admin/Category';
+  import Rules from './RuleComponents/Rules.vue';
   let LevelModel = new Level();
+  let CategoryModel = new Category();
   export default {
     data() {
       return {
         activeTab: "overview",
         level: {},
+        rules: [],
+        info: [],
         form: {
           levelName: "",
           releaseTime: undefined
@@ -50,16 +56,22 @@
       }
       this.loadLevelInfo(this.$route.query.id);
     },
+    components: {
+      Rules
+    },
     methods: {
       async loadLevelInfo(levelId) {
+        this.loading = true;
         try {
           this.level = await LevelModel.getLevelInfo(levelId);
+          this.info = await CategoryModel.getAllCategories();
           this.form.levelName = this.level.level_name;
           this.form.releaseTime = this.level.release_time;
         }
         catch (e) {
           this.$handleError(e);
         }
+        this.loading = false;
       },
       async update(){
         this.loading = true;
