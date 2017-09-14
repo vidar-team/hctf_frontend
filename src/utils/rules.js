@@ -49,6 +49,11 @@ class Rules {
     this.reIndex();
     return this;
   }
+  append(rule){
+    rule._ruleId = this.ruleCount++;
+    this.rules.push(rule);
+    return this;
+  }
   toString(){
     let r = JSON.parse(JSON.stringify(this.rules));
     for (let i of r){

@@ -25,9 +25,27 @@
         </el-button>
       </el-col>
     </el-row>
+    <el-row v-if="appendMode">
+      <el-col :span="6" :offset="1">
+        <el-form :inline="true">
+          <el-form-item label="规则类型">
+            <el-select v-model="form.type">
+              <el-option value="category" label="分类通过数量"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-form>
+      </el-col>
+      <el-col :span="23" :offset="1">
+        <template v-if="form.type">
+          <component :is="form.type" :info="info" mode="edit" :key="new Date().valueOf()" :count="parsedRules.ruleCount" @save="saveRule">
+
+          </component>
+        </template>
+      </el-col>
+    </el-row>
     <el-row>
       <el-col :span="22" :offset=1 style="margin-top: 2rem">
-        <el-button size="small" type="primary">添加规则</el-button>
+        <el-button size="small" type="primary" @click="appendRule">添加规则</el-button>
         <el-button size="small" type="primary">保存更改</el-button>
       </el-col>
     </el-row>
@@ -42,6 +60,10 @@
     data() {
       return {
         parsedRules: [],
+        appendMode: false,
+        form: {
+          type: "",
+        },
       }
     },
     props: ['rules', 'mode', 'info'],
@@ -61,7 +83,17 @@
       },
       removeRule(ruleId){
          this.parsedRules = this.parsedRules.remove(ruleId);
-         console.log(this.parsedRules.toString());
+      },
+      appendRule(){
+        if (this.appendMode){
+          return false;
+        }
+        this.appendMode = true;
+      },
+      saveRule(rule){
+        this.parsedRules = this.parsedRules.append(rule);
+        this.appendMode = false;
+        this.form.type = "";
       }
     },
     components: {
