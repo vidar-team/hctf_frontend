@@ -46,7 +46,7 @@
     <el-row>
       <el-col :span="22" :offset=1 style="margin-top: 2rem">
         <el-button size="small" type="primary" @click="appendRule">添加规则</el-button>
-        <el-button size="small" type="primary">保存更改</el-button>
+        <el-button size="small" type="primary" @click="updateRule">保存更改</el-button>
       </el-col>
     </el-row>
   </div>
@@ -94,6 +94,9 @@
         this.parsedRules = this.parsedRules.append(rule);
         this.appendMode = false;
         this.form.type = "";
+      },
+      updateRule(rule){
+        this.$emit('update', this.parsedRules);
       }
     },
     components: {

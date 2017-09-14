@@ -3,7 +3,7 @@
     <span v-if="rule.logicOperator" class="logic-operator">
       {{rule.logicOperator | parseLogicOperator}}
     </span>
-    分类 {{categoryName}} 的通过数量 {{rule.compare.compareOperator | parseCompareOperator}} {{rule.compare.compareTo}}
+    <span>分类 {{categoryName}} 的通过数量 {{rule.compare.compareOperator | parseCompareOperator}} {{rule.compare.compareTo}}</span>
   </span>
   <div v-else-if="mode === 'view'">
     <div v-if="rule.logicOperator" class="logic-operator-view">
@@ -12,7 +12,7 @@
     <div v-else class="logic-operator-view-placeholder">
 
     </div>
-    分类 {{categoryName}} 的通过数量 {{rule.compare.compareOperator | parseCompareOperator}} {{rule.compare.compareTo}}
+    <span class="rule-body">分类 {{categoryName}} 的通过数量 {{rule.compare.compareOperator | parseCompareOperator}} {{rule.compare.compareTo}}</span>
   </div>
   <div v-else-if="mode === 'edit'" class="rules-editor-container">
     <el-form :inline="true">

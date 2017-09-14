@@ -19,8 +19,8 @@
           </el-form-item>
         </el-form>
       </el-tab-pane>
-      <el-tab-pane label="开放条件设置" name="rules">
-        <rules mode="edit" :rules="this.level.rules" :info="info"></rules>
+      <el-tab-pane label="开放条件设置" name="rules" v-loading="loading">
+        <rules mode="edit" :rules="this.level.rules" :info="info" @update="updateRule"></rules>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -80,6 +80,16 @@
           if (this.form.levelName !== this.level.level_name){
             level = await LevelModel.setLevelName(this.level.level_id, this.form.levelName);
           }
+        }
+        catch (e){
+          this.$handleError(e);
+        }
+        this.loading = false;
+      },
+      async updateRule(rules){
+        this.loading = true;
+        try{
+          await LevelModel.setRules(this.level.level_id, rules.toString());
         }
         catch (e){
           this.$handleError(e);

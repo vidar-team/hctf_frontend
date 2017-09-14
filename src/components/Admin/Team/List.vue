@@ -54,8 +54,8 @@
         label="搞事情"
         >
         <template scope="scope">
-          <el-button type="text" @click="banTeam(scope.row.id)">BAN!</el-button>
-          <el-button type="text" @click="setAdmin(scope.row.id)">钦点管理员!</el-button>
+          <el-button type="text" @click="banTeam(scope.row.team_id)">BAN!</el-button>
+          <el-button type="text" @click="setAdmin(scope.row.team_id)">钦点管理员!</el-button>
         </template>
       </el-table-column>
     </el-table>

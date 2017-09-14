@@ -67,6 +67,23 @@ class Level extends Model{
       }
     })
   }
+
+  setRules(levelId, rules){
+    return new Promise(async (resolve, reject) => {
+      try{
+        let level = await this.request("POST", "/Level/setRules", {
+          levelId: levelId,
+          rules: rules
+        }, {
+          needAuth: true
+        });
+        resolve(level);
+      }
+      catch (e){
+        reject(e);
+      }
+    })
+  }
 }
 
 export default Level;
