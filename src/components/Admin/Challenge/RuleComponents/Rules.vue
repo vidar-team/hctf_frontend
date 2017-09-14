@@ -20,7 +20,7 @@
         </component>
       </el-col>
       <el-col :span="1" :offset = 1>
-        <el-button type="text">
+        <el-button type="text" @click="removeRule(rule._ruleId)">
           <i class="el-icon-close"></i>
         </el-button>
       </el-col>
@@ -28,6 +28,7 @@
     <el-row>
       <el-col :span="22" :offset=1 style="margin-top: 2rem">
         <el-button size="small" type="primary">添加规则</el-button>
+        <el-button size="small" type="primary">保存更改</el-button>
       </el-col>
     </el-row>
   </div>
@@ -54,9 +55,13 @@
     },
     methods: {
       flushRules(){
-        if (this.rules && this.rules.length > 0) {
+        if (this.rules && this.rules.length > 0 && this.parsedRules.rules === undefined) {
           this.parsedRules = new Rules(this.rules);
         }
+      },
+      removeRule(ruleId){
+         this.parsedRules = this.parsedRules.remove(ruleId);
+         console.log(this.parsedRules.toString());
       }
     },
     components: {
