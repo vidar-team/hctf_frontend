@@ -124,7 +124,6 @@ class Model {
       parsedError.message = "NETWORK ERROR"
     }
     else{
-      console.log(e);
       parsedError.message = "UNKNOWN ERROR"
     }
     return parsedError;

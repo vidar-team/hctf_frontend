@@ -11,6 +11,8 @@ class Level extends Model{
       try{
         let levelInfo = await this.request("GET", "/Level/info", {
           "levelId": levelId
+        }, {
+          needAuth: true
         });
         resolve(levelInfo);
       }
@@ -68,6 +70,12 @@ class Level extends Model{
     })
   }
 
+  /**
+   * 设置 Level 开放规则
+   * @param levelId
+   * @param rules
+   * @returns {Promise}
+   */
   setRules(levelId, rules){
     return new Promise(async (resolve, reject) => {
       try{

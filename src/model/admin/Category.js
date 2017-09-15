@@ -8,7 +8,9 @@ class Category extends Model {
   getAllCategories(){
     return new Promise(async (resolve, reject) => {
       try{
-        let lists = this.request("GET", "/Category/list");
+        let lists = this.request("GET", "/Category/list", {}, {
+          needAuth: true
+        });
         resolve(lists);
       }
       catch (e){
