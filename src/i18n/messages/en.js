@@ -3,6 +3,8 @@ export default {
     login: "Login",
     logout: "Logout",
     register: "Register",
+    submitFlag: "Submit Flag",
+    welcomeMessage: "Welcome to HCTF 2017"
   },
   login: {
     login: "Login",
@@ -16,5 +18,9 @@ export default {
     register: "Register",
     pleaseFillTheForm: "Please fill the form carefully",
     pleaseConfirmPassword: "Passwords must match"
+  },
+  challenge: {
+    submitFlagPlaceholder: "Input your flag here",
+    submit: "Submit"
   }
 }

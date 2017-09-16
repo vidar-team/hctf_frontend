@@ -2,7 +2,9 @@ export default {
   root: {
     login: "登录",
     logout: "登出",
-    register: "注册"
+    register: "注册",
+    submitFlag: "提交 Flag",
+    welcomeMessage: "Welcome to HCTF 2017"
   },
   login: {
     login: "登录",
@@ -16,5 +18,9 @@ export default {
     register: "注册",
     pleaseFillTheForm: "请完整填写表单",
     pleaseConfirmPassword: "两次输入的密码不一致"
+  },
+  challenge: {
+    submitFlagPlaceholder: "在此处输入 Flag",
+    submit: "提交"
   }
 }

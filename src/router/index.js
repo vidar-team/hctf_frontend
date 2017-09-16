@@ -5,8 +5,9 @@ import Hello from '@/components/Hello'
 // load modules
 import user from './modules/user'
 import admin from './modules/admin'
+import challenge from './modules/challenge';
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
   routes: [
@@ -16,6 +17,7 @@ export default new Router({
       component: Hello
     },
     user,
+    challenge,
     admin,
     // 已经被封禁
     {

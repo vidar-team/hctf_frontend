@@ -4,6 +4,9 @@
       <el-menu-item index="/">
         HCTF
       </el-menu-item>
+      <el-menu-item index="/Challenge/submit">
+        {{ $t("root.submitFlag") }}
+      </el-menu-item>
       <template v-if="inited">
         <template v-if="isLogin">
           <el-menu-item index="/user/logout" class="float-right">
@@ -30,7 +33,7 @@
         </template>
       </template>
       <template v-else></template>
-      <el-menu-item index="#" class="float-right" @click="switchLanguage">
+      <el-menu-item index="#" class="float-right" @click="switchLanguage" :key="switchLanguage">
         {{ switchLanguageButton }}
       </el-menu-item>
     </el-menu>
