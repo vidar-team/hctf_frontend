@@ -78,7 +78,7 @@
         }
         this.loading = true;
         try{
-          let challenge = await ChallengeModel.createChallenge(this.form.title, this.form.url, this.form.description, this.form.score, this.form.flag, this.form.levelId[1], this.form.releaseTime);
+          let challenge = await ChallengeModel.createChallenge(this.form.title, this.form.url, this.form.description, this.form.score, [this.form.flag], this.form.levelId[1], this.form.releaseTime);
         }
         catch (e){
           this.$handleError(e);

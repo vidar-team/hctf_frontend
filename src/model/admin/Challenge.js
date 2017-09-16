@@ -7,6 +7,7 @@ class Challenge extends Model{
    * @param url
    * @param description
    * @param score
+   * @param flag
    * @param levelId
    * @param releaseTime
    * @returns {Promise}
@@ -21,7 +22,11 @@ class Challenge extends Model{
           url: url,
           description: description,
           score: score,
-          flag: flag,
+          flag: Array.from(flag, f => {
+            return {
+              flag: f
+            }
+          }),
           levelId: levelId,
           releaseTime: timeString
         }, {
