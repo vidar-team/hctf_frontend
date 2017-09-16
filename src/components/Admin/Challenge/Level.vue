@@ -19,6 +19,7 @@
           </el-form-item>
         </el-form>
       </el-tab-pane>
+      <el-tab-pane label="Challenge 管理"></el-tab-pane>
       <el-tab-pane label="开放条件设置" name="rules" v-loading="loading">
         <rules mode="edit" :rules="this.level.rules" :info="info" @update="updateRule"></rules>
       </el-tab-pane>
@@ -66,7 +67,12 @@
           this.level = await LevelModel.getLevelInfo(levelId);
           this.info = await CategoryModel.getAllCategories();
           this.form.levelName = this.level.level_name;
-          this.form.releaseTime = this.level.release_time;
+          try{
+            this.form.releaseTime = new Date(this.level.release_time).toISOString();
+          }
+          catch (e){
+            this.form.releaseTime = "";
+          }
         }
         catch (e) {
           this.$handleError(e);

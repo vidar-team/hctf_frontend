@@ -59,7 +59,7 @@
   export default {
     data() {
       return {
-        parsedRules: [],
+        parsedRules: new Rules([]),
         appendMode: false,
         form: {
           type: "",
@@ -77,8 +77,11 @@
     },
     methods: {
       flushRules(){
-        if (this.rules && this.rules.length > 0 && this.parsedRules.rules === undefined) {
+        if (this.rules && this.rules.length > 0 && this.parsedRules.rules.length === 0) {
           this.parsedRules = new Rules(this.rules);
+        }
+        else{
+          this.parsedRules = new Rules([]);
         }
       },
       removeRule(ruleId){

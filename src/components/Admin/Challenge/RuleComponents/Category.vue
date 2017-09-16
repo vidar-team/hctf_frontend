@@ -16,7 +16,7 @@
   </div>
   <div v-else-if="mode === 'edit'" class="rules-editor-container">
     <el-form :inline="true">
-      <el-form-item label="逻辑运算符">
+      <el-form-item label="逻辑运算符" v-if="count > 0">
         <el-select size="small" v-model="form.logicOperator">
           <el-option label="且 / AND" value="and"></el-option>
           <el-option label="或 / OR" value="or"></el-option>
