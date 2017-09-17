@@ -8,11 +8,12 @@ class Challenge extends Model{
    * @param description
    * @param score
    * @param flag
+   * @param config
    * @param levelId
    * @param releaseTime
    * @returns {Promise}
    */
-  createChallenge(title, url, description, score, flag, levelId, releaseTime){
+  createChallenge(title, url, description, score, flag, config, levelId, releaseTime){
     let time = new Date(releaseTime);
     let timeString = `${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()} ${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`;
     return new Promise(async (resolve, reject) => {
@@ -22,11 +23,8 @@ class Challenge extends Model{
           url: url,
           description: description,
           score: score,
-          flag: Array.from(flag, f => {
-            return {
-              flag: f
-            }
-          }),
+          flag: flag,
+          config: JSON.stringify(config),
           levelId: levelId,
           releaseTime: timeString
         }, {

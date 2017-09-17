@@ -99,6 +99,10 @@
     },
     methods: {
       async submit(){
+        let config = {
+          multiFlag: false,
+          minimumSolveTime: 0
+        };
         if (!this.form.title || !this.form.description || !this.form.url || !this.form.score || !this.form.releaseTime || this.form.levelId.length === 0){
           return this.$handleError({
             message: "请填写表单全部内容"
@@ -111,6 +115,9 @@
               message: "请填写表单全部内容"
             });
           }
+          else{
+            config.multiFlag = true;
+          }
         }
         else{
           this.flags = [{
@@ -119,7 +126,7 @@
         }
 
         try{
-          let challenge = await ChallengeModel.createChallenge(this.form.title, this.form.url, this.form.description, this.form.score, this.flags, this.form.levelId[1], this.form.releaseTime);
+          let challenge = await ChallengeModel.createChallenge(this.form.title, this.form.url, this.form.description, this.form.score, this.flags, config, this.form.levelId[1], this.form.releaseTime);
         }
         catch (e){
           this.$handleError(e);
@@ -146,7 +153,7 @@
             })
           }
         }
-
+        this.form.flag = "";
         this.flags = multiFlag;
         this.multiFlagDialogVisible = false;
         this.disableFlagInput = true;

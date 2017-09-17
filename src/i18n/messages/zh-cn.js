@@ -4,7 +4,7 @@ export default {
     logout: "登出",
     register: "注册",
     submitFlag: "提交 Flag",
-    welcomeMessage: "Welcome to HCTF 2017"
+    welcomeMessage: "欢迎来到 HCTF 2017 / 占位"
   },
   login: {
     login: "登录",

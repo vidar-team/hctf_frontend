@@ -1,6 +1,6 @@
 <template>
   <el-row class="hello">
-    <el-col :span="20" :offset="1" style="font-size: 10vh">{{ msg }}</el-col>
+    <el-col :span="20" :offset="1" style="font-size: 10vh">{{ $t('root.welcomeMessage') }}</el-col>
   </el-row>
 </template>
 
@@ -9,7 +9,7 @@ export default {
   name: 'hello',
   data () {
     return {
-      msg: this.$t('root.welcomeMessage')
+
     }
   },
 }

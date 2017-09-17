@@ -4,7 +4,7 @@
       <el-menu-item index="/">
         HCTF
       </el-menu-item>
-      <el-menu-item index="/Challenge/submit">
+      <el-menu-item index="/challenge/submit">
         {{ $t("root.submitFlag") }}
       </el-menu-item>
       <template v-if="inited">
