@@ -16,8 +16,31 @@
           <el-input v-model="form.description"></el-input>
         </el-form-item>
         <el-form-item label="Flag">
-          <el-input v-model="form.flag"></el-input>
+          <el-input v-model="form.flag" :disabled="disableFlagInput"></el-input>
+          <el-button type="text" @click="viewMultiFlagForm">多 Flag 设定</el-button>
         </el-form-item>
+
+        <el-dialog title="多 Flag 设定" :visible.sync="multiFlagDialogVisible">
+          <el-form>
+            <span>
+              多 Flag 意味着需要为每一个队伍设定一个 Flag，请在下方提供多于队伍数量的 Flag。
+              <br>
+              注意，当用于二进制题时，需要为每一个队伍分配不一样的文件，请确定 URL 中使用了合适的占位符。
+              <br>
+              格式说明: 请提供一个 JSON 数组，其中每一项含有两个属性，team_id 为队伍 ID， flag 为 flag 内容。
+              <br>
+              示例：<span style="font-family: Consolas, monospace;">[{"team_id": 1, "flag": "hctf_flag_example"}]</span>
+            </span>
+            <el-form-item label="Flag 设定">
+              <el-input type="textarea" v-model="form.multiFlag"></el-input>
+            </el-form-item>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="multiFlagDialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="saveMultiFlag">确 定</el-button>
+          </div>
+        </el-dialog>
+
         <el-form-item label="Level">
           <el-cascader
             :options="parsedCategories"
@@ -55,8 +78,13 @@
           description: "",
           score: 0,
           url: "",
-          flag: ""
-        }
+          flag: "",
+          multiFlag: "",
+          config: {}
+        },
+        multiFlagDialogVisible: false,
+        disableFlagInput: false,
+        flags: []
       }
     },
     async mounted(){
@@ -71,19 +99,57 @@
     },
     methods: {
       async submit(){
-        if (!this.form.title || !this.form.description || !this.form.url || !this.form.score || !this.form.flag || !this.form.releaseTime || this.form.levelId.length === 0){
+        if (!this.form.title || !this.form.description || !this.form.url || !this.form.score || !this.form.releaseTime || this.form.levelId.length === 0){
           return this.$handleError({
             message: "请填写表单全部内容"
           });
         }
         this.loading = true;
+        if (!this.form.flag){
+          if (this.flags.length === 0){
+            return this.$handleError({
+              message: "请填写表单全部内容"
+            });
+          }
+        }
+        else{
+          this.flags = [{
+            flag: this.form.flag
+          }];
+        }
+
         try{
-          let challenge = await ChallengeModel.createChallenge(this.form.title, this.form.url, this.form.description, this.form.score, [this.form.flag], this.form.levelId[1], this.form.releaseTime);
+          let challenge = await ChallengeModel.createChallenge(this.form.title, this.form.url, this.form.description, this.form.score, this.flags, this.form.levelId[1], this.form.releaseTime);
         }
         catch (e){
           this.$handleError(e);
         }
         this.loading = false;
+      },
+      viewMultiFlagForm(){
+        this.multiFlagDialogVisible = true;
+      },
+      saveMultiFlag(){
+        let multiFlag = this.form.multiFlag;
+        try{
+          multiFlag = JSON.parse(multiFlag)
+        }
+        catch (e){
+          return this.$handleError({
+            message: "JSON 不合法"
+          });
+        }
+        for (let flag of multiFlag){
+          if (!flag.hasOwnProperty("flag") || !flag.hasOwnProperty("team_id")){
+            return this.$handleError({
+              message: "JSON 不合法"
+            })
+          }
+        }
+
+        this.flags = multiFlag;
+        this.multiFlagDialogVisible = false;
+        this.disableFlagInput = true;
       }
     },
     computed: {

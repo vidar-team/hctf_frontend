@@ -7,10 +7,12 @@ Vue.use(VueI18n);
 
 import zh from "./messages/zh-cn";
 import en from  "./messages/en";
+import ja from "./messages/ja"
 
 const messages = {
   "zh-cn": zh,
-  "en": en
+  "en": en,
+  "ja": ja
 };
 
 const i18n = new VueI18n({

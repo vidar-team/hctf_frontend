@@ -1,7 +1,7 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-  </div>
+  <el-row class="hello">
+    <el-col :span="20" :offset="1" style="font-size: 10vh">{{ msg }}</el-col>
+  </el-row>
 </template>
 
 <script>
@@ -9,7 +9,7 @@ export default {
   name: 'hello',
   data () {
     return {
-      msg: 'Welcome to HCTF'
+      msg: this.$t('root.welcomeMessage')
     }
   },
 }

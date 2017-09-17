@@ -33,9 +33,18 @@
         </template>
       </template>
       <template v-else></template>
-      <el-menu-item index="#" class="float-right" @click="switchLanguage" :key="switchLanguage">
-        {{ switchLanguageButton }}
-      </el-menu-item>
+      <el-submenu index="#" class="float-right">
+        <template slot="title">Language</template>
+        <el-menu-item index="#en" @click="switchLanguage('en')">
+          English
+        </el-menu-item>
+        <el-menu-item index="#zh-cn"  @click="switchLanguage('zh-cn')">
+          中文
+        </el-menu-item>
+        <el-menu-item index="#ja"  @click="switchLanguage('ja')">
+          日本語
+        </el-menu-item>
+      </el-submenu>
     </el-menu>
     <div class="main-container">
       <router-view></router-view>
@@ -64,9 +73,6 @@
       isAdmin(){
         return this.$store.state.user.isAdmin;
       },
-      switchLanguageButton(){
-        return this.$i18n.locale === "en" ? "中文" : "English"
-      }
     },
     async mounted(){
       if (!Auth.isLogin()){
@@ -88,8 +94,8 @@
       }
     },
     methods: {
-      switchLanguage(){
-        return this.$i18n.locale = this.$i18n.locale === "en" ? "zh-cn" : "en";
+      switchLanguage(lang){
+        return this.$i18n.locale = lang;
       }
     }
   }
