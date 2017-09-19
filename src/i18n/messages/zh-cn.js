@@ -4,6 +4,7 @@ export default {
     logout: "登出",
     register: "注册",
     submitFlag: "提交 Flag",
+    challengeList: "Challenge 列表",
     welcomeMessage: "欢迎来到 HCTF 2017 / 占位"
   },
   login: {
@@ -21,6 +22,13 @@ export default {
   },
   challenge: {
     submitFlagPlaceholder: "在此处输入 Flag",
-    submit: "提交"
+    submit: "提交",
+    description: "描述",
+    baseScore: "基准分数",
+    emptyTip: "当前无可用题目"
+  },
+  banned: {
+    banTitle: "封停",
+    banDescription: "由于您难以描述的操作，您的账号已经被封停。如有任何疑问，请联系我们"
   }
 }

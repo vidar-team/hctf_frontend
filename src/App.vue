@@ -4,6 +4,9 @@
       <el-menu-item index="/">
         HCTF
       </el-menu-item>
+      <el-menu-item index="/challenge/list">
+        {{ $t("root.challengeList") }}
+      </el-menu-item>
       <el-menu-item index="/challenge/submit">
         {{ $t("root.submitFlag") }}
       </el-menu-item>

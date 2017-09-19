@@ -3,7 +3,8 @@ export default {
     login: "ログイン",
     logout: "ログアウト",
     register: "新規チーム登録",
-    submitFlag: "Flag 送信",
+    submitFlag: "Flag 入力",
+    challengeList: "チャレンジリスト",
     welcomeMessage: "HCTF 2017 へよくそ"
   },
   login: {
@@ -21,6 +22,13 @@ export default {
   },
   challenge: {
     submitFlagPlaceholder: "ここに Flag を入力してください",
-    submit: "送信"
+    submit: "送信",
+    description: "説明",
+    baseScore: "基準スコア",
+    emptyTip: "ただいま、アクセス可能のチャレンジがありません。"
+  },
+  banned: {
+    banTitle: "ブロック",
+    banDescription: "容認できない操作のため、無期限ブロックされていました。"
   }
 }

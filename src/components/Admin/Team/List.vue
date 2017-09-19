@@ -21,7 +21,7 @@
         label="密码"
         width="80">
         <template scope="scope">
-            <el-button type="text" @click="resetPassword(scope.row.id)">重置</el-button>
+            <el-button type="text" @click="resetPassword(scope.row.team_id)">重置</el-button>
         </template>
       </el-table-column>
       <el-table-column

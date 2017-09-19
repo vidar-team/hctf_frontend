@@ -6,9 +6,9 @@
     <el-col :span="20">
       <div class="grid-content">
         <el-alert
-          title="账号已被封停"
+          :title="$t('banned.banTitle')"
           type="error"
-          description="由于您难以描述的操作，您的账号已经被封停。"
+          :description="$t('banned.banDescription')"
           :closable="false"
           show-icon>
         </el-alert>
@@ -19,3 +19,6 @@
     </el-col>
   </el-row>
 </template>
+<script>
+  export default {}
+</script>

@@ -1,0 +1,57 @@
+<template>
+  <article class="challenge-body">
+    <h3>{{ challenge.title }}</h3>
+    <div class="challenge-content">
+      <div class="challenge-item">
+        <span class="challenge-item-key">{{ $t('challenge.description') }}</span>
+        <div class="challenge-item-value">
+          {{ challenge.description }}
+        </div>
+      </div>
+      <div class="challenge-item">
+        <span class="challenge-item-key">URL</span>
+        <div class="challenge-item-value">
+          <a :href="challenge.url" target="_blank">{{ challenge.url }}</a>
+        </div>
+      </div>
+      <div class="challenge-item">
+        <span class="challenge-item-key">{{ $t('challenge.baseScore') }}</span>
+        <div class="challenge-item-value">
+          {{ challenge.score }}
+        </div>
+      </div>
+    </div>
+  </article>
+</template>
+<style>
+  .challenge-body{
+    margin: 2rem auto;
+    clear: both;
+  }
+  .challenge-item{
+    line-height: 2;
+  }
+  .challenge-item-key{
+    color: #aaa;
+    display: inline-block;
+    margin-right: 1rem;
+  }
+  .challenge-item-value{
+    display: inline-block;
+  }
+  a{
+    text-decoration: none;
+    color: #4db3ff;
+  }
+  a:hover{
+    color: #1c8de0;
+  }
+</style>
+<script>
+  export default {
+    data(){
+      return {}
+    },
+    props: ["challenge"]
+  }
+</script>

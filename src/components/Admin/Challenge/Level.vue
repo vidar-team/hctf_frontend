@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2>Level 设定</h2>
-    <el-tabs v-model="activeTab">
+    <el-tabs v-model="activeTabName">
       <el-tab-pane label="概览" name="overview">
         <el-form ref="form" :model="form" label-width="80px" v-loading="loading">
           <el-form-item label="Level 名">
@@ -19,13 +19,61 @@
           </el-form-item>
         </el-form>
       </el-tab-pane>
-      <el-tab-pane label="Challenge 管理"></el-tab-pane>
+      <el-tab-pane label="Challenge 管理">
+        <el-table :data="level.challenges">
+          <el-table-column type="expand">
+            <template scope="scope">
+              <el-form label-position="left" inline class="table-expand">
+                <el-form-item label="Level ID">
+                  <span>{{ scope.row.level_id }}</span>
+                </el-form-item>
+                <el-form-item label="描述">
+                  <span>{{ scope.row.description }}</span>
+                </el-form-item>
+                <el-form-item label="基准分数">
+                  <span>{{ scope.row.score }}</span>
+                </el-form-item>
+                <el-form-item label="URL">
+                  <span>{{ scope.row.url }}</span>
+                </el-form-item>
+                <el-form-item label="发布时间">
+                  <span>{{ scope.row.release_time }}</span>
+                </el-form-item>
+              </el-form>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="challenge_id"
+            label="Challenge ID"
+            >
+          </el-table-column>
+          <el-table-column
+            prop="title"
+            label="标题"
+          >
+          </el-table-column>
+        </el-table>
+      </el-tab-pane>
       <el-tab-pane label="开放条件设置" name="rules" v-loading="loading">
         <rules mode="edit" :rules="this.level.rules" :info="info" @update="updateRule"></rules>
       </el-tab-pane>
     </el-tabs>
   </div>
 </template>
+<style>
+  .table-expand {
+    font-size: 0;
+  }
+  .table-expand label {
+    width: 90px;
+    color: #99a9bf;
+  }
+  .table-expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 50%;
+  }
+</style>
 <script>
   import Level from '@/model/admin/Level';
   import Category from '@/model/admin/Category';
@@ -35,7 +83,7 @@
   export default {
     data() {
       return {
-        activeTab: "overview",
+        activeTabName: "overview",
         level: {},
         rules: [],
         info: [],
