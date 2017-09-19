@@ -25,7 +25,9 @@ export default {
     submit: "Submit",
     description: "Description",
     baseScore: "Base Score",
-    emptyTip: "There is no available challenge at the moment."
+    emptyTip: "There is no available challenge at the moment.",
+    pleaseFillTheForm: "Please fill the form carefully",
+    flagCorrect: "Congratulations! Score +{0}"
   },
   banned: {
     banTitle: "BANNAD",

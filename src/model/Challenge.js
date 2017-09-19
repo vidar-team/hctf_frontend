@@ -8,7 +8,7 @@ class Challenge extends Model{
   getValidChallenges(){
     return new Promise(async (resolve, reject) => {
       try{
-        let result = this.request("GET", "/Challenge/list", {}, {
+        let result = await this.request("GET", "/Challenge/list", {}, {
           needAuth: true
         });
         resolve(result);
@@ -17,6 +17,27 @@ class Challenge extends Model{
         reject(e);
       }
     });
+  }
+
+  /**
+   * 提交 Flag
+   * @param flag
+   * @returns {Promise}
+   */
+  submitFlag(flag){
+    return new Promise(async (resolve, reject) => {
+      try{
+        let result = await this.request("POST", "/Challenge/submitFlag", {
+          flag: flag
+        }, {
+          needAuth: true
+        });
+        resolve(result);
+      }
+      catch (e){
+        reject(e);
+      }
+    })
   }
 }
 
