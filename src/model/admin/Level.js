@@ -92,6 +92,27 @@ class Level extends Model{
       }
     })
   }
+
+  /**
+   * 删除 Level
+   * @param levelId
+   * @returns {Promise}
+   */
+  deleteLevel(levelId){
+    return new Promise(async (resolve, reject) => {
+      try{
+        let result = this.request("POST", "/Level/deleteLevel", {
+          levelId: levelId
+        }, {
+          needAuth: true
+        });
+        resolve(result);
+      }
+      catch (e){
+        reject(e);
+      }
+    })
+  }
 }
 
 export default Level;

@@ -76,8 +76,10 @@
 </style>
 <script>
   import Category from '@/model/admin/Category';
+  import Level from '@/model/admin/Level'
   import Rules from './RuleComponents/Rules.vue';
   let CategoryModel = new Category();
+  let LevelModel = new Level();
   export default {
     data(){
       return {
@@ -142,17 +144,25 @@
 
         }
         catch (e){
-
+          this.$handleError(e);
         }
       },
       async removeLevel(level){
         let categoryId = level.category_id;
         let category = this.categories.find(i => i.category_id === categoryId);
         if (category.challenges.find(i => i.level_id === level.level_id)){
-          this.$handleError({
+          return this.$handleError({
             message: "无法删除，该 Level 下仍有 Challenge"
           })
         }
+        this.loading = true;
+        try{
+          await LevelModel.deleteLevel(level.level_id);
+        }
+        catch (e){
+          this.$handleError(e);
+        }
+        this.loading = false;
       },
       editLevel(levelId){
         this.$router.push({
