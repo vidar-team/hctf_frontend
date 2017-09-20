@@ -10,7 +10,7 @@
           <el-input placeholder="可用占位符: {teamId}" v-model="form.url"></el-input>
         </el-form-item>
         <el-form-item label="基准分数">
-          <el-input type="number" v-model="form.score"></el-input>
+          <el-input type="number" v-model.number="form.score"></el-input>
         </el-form-item>
         <el-form-item label="描述">
           <el-input v-model="form.description"></el-input>
@@ -40,7 +40,10 @@
             <el-button type="primary" @click="saveMultiFlag">确 定</el-button>
           </div>
         </el-dialog>
-
+        <el-form-item label="最小解决时间">
+          <el-input type="number" v-model.number="form.config.minimumSolveTime"></el-input>
+          <span>从 Level 开放到提交正确 Flag 的时间小于该值将会被封禁，单位为秒，0为不限制。</span>
+        </el-form-item>
         <el-form-item label="Level">
           <el-cascader
             :options="parsedCategories"
@@ -80,7 +83,10 @@
           url: "",
           flag: "",
           multiFlag: "",
-          config: {}
+          config: {
+            multiFlag: false,
+            minimumSolveTime: 0
+          }
         },
         multiFlagDialogVisible: false,
         disableFlagInput: false,
@@ -99,10 +105,7 @@
     },
     methods: {
       async submit(){
-        let config = {
-          multiFlag: false,
-          minimumSolveTime: 0
-        };
+        let config = this.form.config;
         if (!this.form.title || !this.form.description || !this.form.url || !this.form.score || !this.form.releaseTime || this.form.levelId.length === 0){
           return this.$handleError({
             message: "请填写表单全部内容"
@@ -127,6 +130,17 @@
 
         try{
           let challenge = await ChallengeModel.createChallenge(this.form.title, this.form.url, this.form.description, this.form.score, this.flags, config, this.form.levelId[1], this.form.releaseTime);
+          this.$message({
+            showClose: true,
+            message: '创建成功啦',
+            type: 'success'
+          });
+          this.$router.push({
+            name: "Admin-Challenge-Level",
+            query: {
+              id: this.form.levelId[1]
+            }
+          })
         }
         catch (e){
           this.$handleError(e);
