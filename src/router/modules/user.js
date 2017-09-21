@@ -14,6 +14,14 @@ export default {
       component: resolve => require(['@/components/User/Login.vue'], resolve)
     },
     {
+      path: "logout",
+      name: "User-Logout",
+      component: resolve => require(['@/components/User/Logout.vue'], resolve),
+      meta: {
+        needLogin: true
+      }
+    },
+    {
       path: 'index',
       name: 'User-Info',
       component: resolve => require(['@/components/User/Index.vue'], resolve),

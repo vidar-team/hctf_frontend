@@ -13,7 +13,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Hello',
+      name: 'Index',
       component: Hello
     },
     user,

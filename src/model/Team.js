@@ -34,6 +34,23 @@ class User extends Model{
   }
 
   /**
+   * 登出
+   * @returns {Promise}
+   */
+  logout(){
+    return new Promise(async (resolve, reject) => {
+      try{
+        let result = await this.request("POST", '/User/logout', {}, {
+          needAuth: true
+        });
+        resolve(result);
+      }
+      catch (e){
+        reject(e);
+      }
+    })
+  }
+  /**
    * 注册
    * @param teamName
    * @param email
