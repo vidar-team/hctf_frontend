@@ -52,11 +52,30 @@
               </el-table-column>
             </el-table>
             <hr>
-            <el-button type="primary" size="small">添加 Level</el-button>
+            <el-button type="primary" size="small" @click="addLevel(category.category_id)">添加 Level</el-button>
+
           </template>
         </el-tab-pane>
       </template>
       <br>
+      <el-dialog title="多 Flag 设定" :visible.sync="levelFormVisible">
+        <el-form>
+          <el-form-item label="Level 名">
+            <el-input type="text" v-model="form.levelName"></el-input>
+          </el-form-item>
+          <el-form-item label="开放时间">
+            <el-date-picker
+              v-model="form.releaseTime"
+              type="datetime"
+              placeholder="选择日期时间">
+            </el-date-picker>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="levelFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="createLevel">确 定</el-button>
+        </div>
+      </el-dialog>
       <el-button type="primary" size="small" @click="addCategory">添加分类</el-button>
     </el-tabs>
   </div>
@@ -65,10 +84,12 @@
   .table-expand {
     font-size: 0;
   }
+
   .table-expand label {
     width: 90px;
     color: #99a9bf;
   }
+
   .table-expand .el-form-item {
     margin-right: 0;
     margin-bottom: 0;
@@ -79,42 +100,67 @@
   import Category from '@/model/admin/Category';
   import Level from '@/model/admin/Level'
   import Rules from './RuleComponents/Rules.vue';
+
   let CategoryModel = new Category();
   let LevelModel = new Level();
   export default {
-    data(){
+    data() {
       return {
         categories: [],
         activeTabName: "",
         nameFilter: "",
-        loading: false
+        loading: false,
+        levelFormVisible: false,
+        form: {
+          levelName: "",
+          releaseTime: "",
+          categoryId: ""
+        }
       }
     },
     computed: {
-      categoryNames(){
+      categoryNames() {
         return Array.from(this.categories, i => i["category_name"]);
       }
     },
     components: {
       Rules
     },
-    mounted(){
+    mounted() {
       this.loadCategories();
     },
     methods: {
-      async loadCategories(){
+      async createLevel(){
+        if (!this.form.levelName || !this.form.releaseTime || !this.form.categoryId){
+          return this.$handleError({
+            message: "请填写表单所有项目"
+          })
+        }
         this.loading = true;
         try{
-          this.categories = await CategoryModel.getAllCategories();
-          this.activeTabName = "" + (this.categories[0] && this.categories[0]["category_id"]);
+          let newLevel = await LevelModel.createLevel(this.form.categoryId, this.form.levelName, this.form.releaseTime);
+          this.categories.filter(i => i.category_id === this.form.categoryId)[0].levels.push(newLevel);
+          this.levelFormVisible = false;
+          this.form.categoryId = this.form.releaseTime = this.form.levelName = "";
         }
         catch (e){
           this.$handleError(e);
         }
         this.loading = false;
       },
-      async addCategory(){
-        try{
+      async loadCategories() {
+        this.loading = true;
+        try {
+          this.categories = await CategoryModel.getAllCategories();
+          this.activeTabName = "" + (this.categories[0] && this.categories[0]["category_id"]);
+        }
+        catch (e) {
+          this.$handleError(e);
+        }
+        this.loading = false;
+      },
+      async addCategory() {
+        try {
           let categoryName = (await this.$prompt('请输入分类名', '用户输入', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
@@ -123,49 +169,57 @@
           let newCategory = await CategoryModel.createCategory(categoryName);
           this.categories.push(newCategory);
         }
-        catch (e){
+        catch (e) {
           this.$handleError(e);
         }
         this.loading = false;
       },
-      async removeCategory(categoryId){
+      async removeCategory(categoryId) {
         categoryId = parseInt(categoryId);
         let category = this.categories.find(i => i["category_id"] === categoryId);
-        if (category["challenges"].length > 0){
+        if (category["challenges"].length > 0) {
           return this.$handleError({
             message: "无法删除，该分类下仍有 Challenge"
           })
         }
-        if (category["levels"].length > 0){
+        if (category["levels"].length > 0) {
           return this.$handleError({
             message: "无法删除，该分类下仍有 Level"
           })
         }
-        try{
-
+        try {
+          // TODO
+          return this.$handleError({
+            message: "本功能没有实现"
+          });
         }
-        catch (e){
+        catch (e) {
           this.$handleError(e);
         }
       },
-      async removeLevel(level){
+      addLevel(categoryId) {
+        this.levelFormVisible = true;
+        this.form.categoryId = categoryId;
+      },
+      async removeLevel(level) {
         let categoryId = level.category_id;
         let category = this.categories.find(i => i.category_id === categoryId);
-        if (category.challenges.find(i => i.level_id === level.level_id)){
+        if (category.challenges.find(i => i.level_id === level.level_id)) {
           return this.$handleError({
             message: "无法删除，该 Level 下仍有 Challenge"
           })
         }
         this.loading = true;
-        try{
+        try {
           await LevelModel.deleteLevel(level.level_id);
+          this.loadCategories();
         }
-        catch (e){
+        catch (e) {
           this.$handleError(e);
         }
         this.loading = false;
       },
-      editLevel(levelId){
+      editLevel(levelId) {
         this.$router.push({
           name: "Admin-Challenge-Level",
           query: {
@@ -173,7 +227,7 @@
           }
         })
       },
-      hasPassed(t){
+      hasPassed(t) {
         return new Date(t) < new Date();
       }
     }
