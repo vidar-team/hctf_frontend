@@ -53,10 +53,11 @@
             </el-table>
             <hr>
             <el-button type="primary" size="small">添加 Level</el-button>
-            <el-button type="primary" size="small" @click="addCategory">添加分类</el-button>
           </template>
         </el-tab-pane>
       </template>
+      <br>
+      <el-button type="primary" size="small" @click="addCategory">添加分类</el-button>
     </el-tabs>
   </div>
 </template>
@@ -105,7 +106,7 @@
         this.loading = true;
         try{
           this.categories = await CategoryModel.getAllCategories();
-          this.activeTabName = "" + this.categories[0] && this.categories[0]["category_id"];
+          this.activeTabName = "" + (this.categories[0] && this.categories[0]["category_id"]);
         }
         catch (e){
           this.$handleError(e);
