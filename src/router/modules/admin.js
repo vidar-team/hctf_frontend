@@ -3,7 +3,8 @@ export default {
   name: "Admin-Layout",
   component: resolve => require(['@/components/Admin/Layout.vue'], resolve),
   meta: {
-    needLogin: true
+    needLogin: true,
+    needAdmin: true
   },
   children: [
     {

@@ -35,21 +35,34 @@ Vue.use(GlobalErrorHandler, {
 });
 
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   NProgress.start();
   if (to.matched.some(record => record.meta.needLogin)){
-    // 需要登录的操作。
-    if (Auth.isLogin()){
-      next();
+    if (to.matched.some(record => record.meta.needAdmin)){
+      // 需要管理员
+      if (await Auth.isAdmin()){
+        next();
+      }
+      else{
+        next({
+          name: 'Index'
+        })
+      }
     }
     else{
-      store.commit("logout");
-      next({
-        name: 'User-Login',
-        query: {
-          'return': to.name
-        }
-      })
+      // 需要登录的操作。
+      if (Auth.isLogin()){
+        next();
+      }
+      else{
+        store.commit("logout");
+        next({
+          name: 'User-Login',
+          query: {
+            'return': to.name
+          }
+        })
+      }
     }
   }
   else{
