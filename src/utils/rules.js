@@ -52,6 +52,7 @@ class Rules {
   append(rule){
     rule._ruleId = this.ruleCount++;
     this.rules.push(rule);
+    console.log(this.rules);
     return this;
   }
   toString(){

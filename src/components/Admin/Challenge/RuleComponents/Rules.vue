@@ -77,7 +77,7 @@
     },
     methods: {
       flushRules(){
-        if (this.rules && this.rules.length > 0 && this.parsedRules.rules.length === 0) {
+        if (this.rules && this.rules.length > 0) {
           this.parsedRules = new Rules(this.rules);
         }
         else{
