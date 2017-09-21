@@ -168,7 +168,7 @@
         }
       },
       handleSelectionChange(rows){
-        this.selectedTeamIds = Array.from(rows, i => i.id);
+        this.selectedTeamIds = Array.from(rows, i => i.team_id);
       }
     }
   }

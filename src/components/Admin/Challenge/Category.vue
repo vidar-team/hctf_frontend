@@ -58,7 +58,7 @@
         </el-tab-pane>
       </template>
       <br>
-      <el-dialog title="多 Flag 设定" :visible.sync="levelFormVisible">
+      <el-dialog title="新增 Level" :visible.sync="levelFormVisible">
         <el-form>
           <el-form-item label="Level 名">
             <el-input type="text" v-model="form.levelName"></el-input>
