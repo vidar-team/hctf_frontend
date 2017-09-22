@@ -73,6 +73,27 @@ class Team extends Model{
   }
 
   /**
+   * 解除封禁
+   * @param teamId
+   * @returns {Promise}
+   */
+  unbanTeam(teamId){
+    return new Promise(async (resolve, reject) => {
+      try{
+        let result = await this.request("POST", "/User/unban", {
+          teamId: teamId
+        }, {
+          needAuth: true
+        });
+        resolve(result);
+      }
+      catch (e){
+        reject(e);
+      }
+    })
+  }
+
+  /**
    * 设定管理员
    * @param teamId
    * @returns {Promise}

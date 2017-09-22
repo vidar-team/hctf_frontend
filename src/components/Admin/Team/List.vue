@@ -54,7 +54,8 @@
         label="搞事情"
         >
         <template scope="scope">
-          <el-button type="text" @click="banTeam(scope.row.team_id)">BAN!</el-button>
+          <el-button type="text" @click="banTeam(scope.row.team_id)" v-if="!scope.row.banned">BAN!</el-button>
+          <el-button type="text" @click="unbanTeam(scope.row.team_id)" v-else>UNBAN!</el-button>
           <el-button type="text" @click="setAdmin(scope.row.team_id)">钦点管理员!</el-button>
         </template>
       </el-table-column>
@@ -115,6 +116,17 @@
         this.loading = true;
         try{
           await TeamModel.banTeam(Array.isArray(teamId) ? teamId : [teamId]);
+          this.loadTeamData(this.currentPage);
+        }
+        catch (e){
+          this.$handleError(e);
+        }
+        this.loading = false;
+      },
+      async unbanTeam(teamId){
+        this.loading = true;
+        try{
+          await TeamModel.unbanTeam(Array.isArray(teamId) ? teamId : [teamId]);
           this.loadTeamData(this.currentPage);
         }
         catch (e){
