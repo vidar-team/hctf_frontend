@@ -43,11 +43,17 @@
         prop="admin"
         label="管理"
         width="80">
+        <template scope="scope">
+          {{scope.row.admin}}
+        </template>
       </el-table-column>
       <el-table-column
         prop="banned"
         label="封禁"
         width="80">
+        <template scope="scope">
+          {{scope.row.banned}}
+        </template>
       </el-table-column>
       <el-table-column
         prop="banned"
