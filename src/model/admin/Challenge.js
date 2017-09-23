@@ -37,6 +37,27 @@ class Challenge extends Model{
       }
     })
   }
+
+  /**
+   * 删除 Challenge
+   * @param challengeId
+   * @returns {Promise}
+   */
+  deleteChallenge(challengeId){
+    return new Promise(async (resolve, reject) => {
+      try{
+        let result = this.request("POST", "/Challenge/delete", {
+          challengeId: challengeId
+        }, {
+          needAuth: true
+        });
+        resolve(result);
+      }
+      catch (e){
+        reject(e);
+      }
+    })
+  }
 }
 
 export default Challenge;

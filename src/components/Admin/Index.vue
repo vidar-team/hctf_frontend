@@ -14,7 +14,7 @@
 </template>
 <style>
   .system-log{
-    font-family: Consolas, "Microsoft YaHei UI Light", monospace;
+    font-family: Consolas, "Noto Sans CJK SC Regular", "Microsoft YaHei UI Light", monospace;
   }
   .system-log-time{
     color: #aaa;
@@ -63,7 +63,7 @@
           for (let log of recentLogs.reverse()){
             this.logs.unshift(log)
           }
-          this.nowId = this.logs[0].id;
+          this.nowId = this.logs[0] && this.logs[0].id;
         }
         catch (e){
           this.$handleError(e);
