@@ -90,5 +90,15 @@ class User extends Model{
       }
     })
   }
+
+  /**
+   * 获得排行
+   * @returns {Promise}
+   */
+  getRanking(){
+    return new Promise(async (resolve, reject) => {
+      resolve(await this.request("GET", "/User/ranking"));
+    })
+  }
 }
 export default User;

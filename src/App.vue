@@ -112,5 +112,4 @@
     margin: 0 auto 1rem auto;
     box-shadow: #aaa 1px 1px 1px 0px;
   }
-
 </style>
