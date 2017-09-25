@@ -57,6 +57,9 @@
     },
     methods: {
       async loadLogs(startId = 0){
+        if (this.$route.name !== "Admin-Index"){
+          return;
+        }
         this.loading = true;
         try{
           let recentLogs = await SystemLogModel.list(startId);

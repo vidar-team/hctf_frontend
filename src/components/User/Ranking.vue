@@ -32,8 +32,11 @@
     margin-bottom: 10px;
   }
   .ranking-body {
-    margin: 0px auto;
+    margin: 4px auto;
     transition: all .5s;
+  }
+  .ranking-body:hover{
+    border-color: #eef1f6;
   }
   .ranking-header-column, .ranking-item{
     text-align: center;
@@ -72,6 +75,9 @@
         }
       },
       async fresh(){
+        if (this.$route.name !== "Index"){
+          return;
+        }
         let newRanking = await TeamModel.getRanking();
         for (let index in this.ranking){
           this.ranking[index].index = +index + 1;
