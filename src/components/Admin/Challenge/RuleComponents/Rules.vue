@@ -8,7 +8,7 @@
         -->
      </component>
    </template>
-   <span v-if="parsedRules.length === 0">
+   <span v-if="parsedRules.rules.length === 0">
        未设定
    </span>
  </span>

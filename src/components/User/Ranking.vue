@@ -61,9 +61,17 @@
         ranking: []
       }
     },
-    mounted(){
+    async mounted(){
       this.getRanking();
-      setInterval(this.fresh, 5000);
+      while(true){
+        if (this.$route.name !== "Index"){
+          break;
+        }
+        this.fresh();
+        await (() => {
+          return new Promise(resolve => setTimeout(resolve, 5000))
+        })();
+      }
     },
     methods: {
       async getRanking(){
@@ -75,9 +83,6 @@
         }
       },
       async fresh(){
-        if (this.$route.name !== "Index"){
-          return;
-        }
         let newRanking = await TeamModel.getRanking();
         for (let index in this.ranking){
           this.ranking[index].index = +index + 1;

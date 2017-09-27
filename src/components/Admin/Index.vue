@@ -49,17 +49,18 @@
     },
     async mounted(){
       this.loadLogs();
-      setInterval(() => {
-        if (!this.loading){
-          this.loadLogs(this.nowId);
+      while (true){
+        if (this.$route.name !== "Admin-Index"){
+          break;
         }
-      }, 3000)
+        this.loadLogs();
+        await (() => {
+          return new Promise(resolve => setTimeout(resolve, 3000))
+        })();
+      }
     },
     methods: {
       async loadLogs(startId = 0){
-        if (this.$route.name !== "Admin-Index"){
-          return;
-        }
         this.loading = true;
         try{
           let recentLogs = await SystemLogModel.list(startId);

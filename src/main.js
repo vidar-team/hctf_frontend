@@ -16,7 +16,7 @@ import Element from 'element-ui'
 import NProgress from 'nprogress/nprogress';
 import NProgressCss from 'nprogress/nprogress.css';
 
-// global css
+// global css & js
 import '@/assets/css/global.css';
 
 // global error handler
