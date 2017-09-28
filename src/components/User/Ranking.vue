@@ -1,5 +1,6 @@
 <template>
   <div class="ranking-container">
+    <h2>Ranking</h2>
     <div class="ranking-header">
       <div class="ranking-header-column ranking-header-column-left">#</div>
       <div class="ranking-header-column">Team Name</div>
@@ -9,14 +10,14 @@
     <div class="ranking-body" v-for="(team, index) in ranking">
       <div class="ranking-item ranking-item-left">{{ index + 1 }}</div>
       <div class="ranking-item">{{ team.team_name }}</div>
-      <div class="ranking-item">{{ team.score }}</div>
+      <div class="ranking-item" :class="team.effect">{{ team.score }}</div>
       <div class="ranking-item">{{ team.more || '--' }}</div>
     </div>
   </div>
 </template>
 <style>
   .ranking-container{
-    width: 70%;
+    width: 100%;
   }
   .ranking-header, .ranking-body{
     border: 1px solid #aaa;
@@ -36,7 +37,7 @@
     transition: all .5s;
   }
   .ranking-body:hover{
-    border-color: #eef1f6;
+    border: 1px solid #4db3ff;
   }
   .ranking-header-column, .ranking-item{
     text-align: center;
@@ -50,6 +51,30 @@
     margin-left: 1rem;
     margin-right: -1rem;
     text-align: left;
+  }
+  .score-desc{
+    animation-duration: 4s;
+    animation-name: desc;
+  }
+  .score-inc {
+    animation-duration: 4s;
+    animation-name: inc;
+  }
+  @keyframes desc {
+    from {
+      color: #ff6d6d;
+    }
+    to {
+      color: black;
+    }
+  }
+  @keyframes inc {
+    from {
+      color: #11b95c;
+    }
+    to {
+      color: black;
+    }
   }
 </style>
 <script>
@@ -93,6 +118,8 @@
         // do diff
         for (let team of newRanking){
           let oldTeam = this.ranking.find(i => i.team_name === team.team_name);
+
+          // 排位变更
           if (oldTeam.index !== undefined){
             if (oldTeam.index < team.index){
               team.more = "↓"
@@ -107,8 +134,17 @@
           else{
             team.more = "New"
           }
+
+          // 分数变更动画效果
+          if (oldTeam.score !== team.score){
+            let diff = team.score - oldTeam.score;
+            team.effect = diff < 0 ? "score-desc" : "score-inc"
+          }
         }
         this.ranking = newRanking;
+      },
+      sleep(time){
+        return new Promise(resolve => setTimeout(resolve, time))
       }
     }
   }

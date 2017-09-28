@@ -1,34 +1,46 @@
 <template>
-  <div class="content">
+  <el-row class="content">
     <!--<span class="main-notice">{{ $t('root.welcomeMessage') }}</span>-->
-    <ranking></ranking>
-  </div>
+    <el-col :span="12">
+      <el-card>
+        <ranking></ranking>
+      </el-card>
+    </el-col>
+    <el-col :span="12">
+      <el-card>
+        <countdown></countdown>
+      </el-card>
+    </el-col>
+  </el-row>
 </template>
 
 <script>
   import Ranking from '@/components/User/Ranking';
-export default {
-  name: 'hello',
-  data () {
-    return {
+  import Countdown from '@/components/Common/Countdown';
 
+  export default {
+    name: 'hello',
+    data() {
+      return {}
+    },
+    components: {
+      Ranking,
+      Countdown
     }
-  },
-  components: {
-    Ranking
   }
-}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .main-notice{
+  .main-notice {
     font-size: 10vh;
   }
-  .content{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+  .content {
     height: 92vh;
+  }
+
+  .content .el-col {
+    padding: 0 1rem;
   }
 </style>
