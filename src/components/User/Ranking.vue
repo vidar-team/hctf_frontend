@@ -68,9 +68,9 @@
           break;
         }
         this.fresh();
-        await (() => {
-          return new Promise(resolve => setTimeout(resolve, 5000))
-        })();
+        await (() =>
+            new Promise(resolve => setTimeout(resolve, 5000))
+        )();
       }
     },
     methods: {

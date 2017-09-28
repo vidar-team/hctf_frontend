@@ -88,6 +88,7 @@
             this.$store.commit("enterAdminMode");
           }
           this.$store.commit("setTeamName", result.team_name);
+          this.$store.commit("setTeamId", result.team_id);
           this.$store.commit("login");
           this.inited = true;
         }

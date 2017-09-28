@@ -11,7 +11,7 @@
       <div class="challenge-item">
         <span class="challenge-item-key">URL</span>
         <div class="challenge-item-value">
-          <a :href="challenge.url" target="_blank">{{ challenge.url }}</a>
+          <a :href="challenge.url" target="_blank">{{ formatURL(challenge.url) }}</a>
         </div>
       </div>
       <div class="challenge-item">
@@ -52,6 +52,17 @@
     data(){
       return {}
     },
-    props: ["challenge"]
+    props: ["challenge"],
+    methods: {
+      formatURL(url){
+        let mappings = {
+          "teamId": this.$store.state.user.teamId
+        };
+        for (let key of Object.keys(mappings)){
+          url = url.replace("${" + key + "}", mappings[key]);
+        }
+        return url;
+      }
+    }
   }
 </script>

@@ -1,5 +1,6 @@
 const state = {
   teamName: "",
+  teamId: undefined,
   isLogin: false
 };
 
@@ -8,6 +9,9 @@ const actions = {};
 const mutations = {
   setTeamName: (state, payload) => {
     state.teamName = payload;
+  },
+  setTeamId: (state, payload) => {
+    state.teamId = payload;
   },
   enterAdminMode: state => {
     state.isAdmin = true;

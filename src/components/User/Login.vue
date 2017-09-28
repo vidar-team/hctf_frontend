@@ -43,6 +43,7 @@
           }
           result = await UserModel.getTeamInfo();
           this.$store.commit("setTeamName", result.team_name);
+          this.$store.commit("setTeamId", result.team_id);
           this.$store.commit("login");
           if (result.admin){
             this.$store.commit("enterAdminMode");
