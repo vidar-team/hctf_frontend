@@ -7,6 +7,13 @@ export default {
     challengeList: "チャレンジリスト",
     welcomeMessage: "HCTF 2017 へよくそ"
   },
+  ranking: {
+    ranking: "ランキング"
+  },
+  countdown: {
+    untilStart: "開幕まで",
+    untilClose: "閉幕まで"
+  },
   login: {
     login: "ログイン",
     password: "パスワード",

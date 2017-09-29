@@ -1,6 +1,6 @@
 <template>
   <div class="ranking-container">
-    <h2>Ranking</h2>
+    <h2> {{ $t("ranking.ranking") }}</h2>
     <div class="ranking-header">
       <div class="ranking-header-column ranking-header-column-left">#</div>
       <div class="ranking-header-column">Team Name</div>
@@ -21,13 +21,17 @@
   }
   .ranking-header, .ranking-body{
     border: 1px solid #aaa;
-    min-height: 3rem;
-    box-shadow: #aaa 1px 1px 1px 0;
+    min-height: 2.5rem;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.12), 0 0 6px 0 rgba(0,0,0,.04);
     border-radius: 2px;
     width: 100%;
     overflow: hidden;
     -ms-text-overflow: ellipsis;
     text-overflow: ellipsis;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
   .ranking-header {
     margin-bottom: 10px;
@@ -44,8 +48,8 @@
     vertical-align: middle;
     float: left;
     width: 25%;
-    font-size: 1.5rem;
-    line-height: 3rem;
+    font-size: 1rem;
+    line-height: 2.5rem;
   }
   .ranking-header-column-left, .ranking-item-left{
     margin-left: 1rem;

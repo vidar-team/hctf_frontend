@@ -1,22 +1,48 @@
 <template>
   <div class="countdown">
     <span>{{ countdown.days }} Days {{ countdown.hours }} Hours {{ countdown.minutes }} Minutes {{ countdown.seconds }} Seconds</span>
+    <div class="countdown-title">{{ countdownTitle }}</div>
   </div>
 </template>
+<style>
+  .countdown {
+    text-align: center;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  .countdown span{
+    font-size: xx-large;
+  }
+  .countdown-title{
+    color: #aaa;
+  }
+</style>
 <script>
   export default {
     data(){
       return {
-        endTime: new Date("2017-11-11T03:11:11.000Z"),
+        startTime: new Date("2017-11-11T03:11:11.000Z"),
+        endTime: new Date("2017-11-13T03:11:11.000Z"),
         countdown: {
           days: 0,
           hours: 0,
           minutes: 0,
           seconds: 0
+        },
+      }
+    },
+    computed: {
+      countdownTitle(){
+        if (new Date() < this.startTime){
+          return this.$t("countdown.untilStart")
+        }
+        else{
+          return this.$t("countdown.untilClose");
         }
       }
     },
-    props: ['time'],
     async mounted(){
       while(true){
         if (this.$route.name !== "Index"){
@@ -28,14 +54,9 @@
         )();
       }
     },
-    watch: {
-      time(){
-        this.endTime = time;
-      }
-    },
     methods: {
       flush(){
-        let diff = Math.round(Math.abs(this.endTime.valueOf() - new Date().valueOf())/1000);
+        let diff = Math.round(Math.abs(this.startTime.valueOf() - new Date().valueOf())/1000);
         let days = Math.floor(diff / 86400);
         diff = diff % 86400;
         let hours = Math.floor(diff / 3600);

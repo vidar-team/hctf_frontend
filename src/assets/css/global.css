@@ -2,7 +2,11 @@
   min-height: 1px;
 }
 .main-container {
-  margin-top: 0rem;
+  margin-top: 0;
+}
+.el-card{
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,.12), 0 0 2px 0 rgba(0,0,0,.04);
+  border-radius: 1px;
 }
 body {
   margin: 0;

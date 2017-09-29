@@ -1,6 +1,11 @@
 <template>
   <el-row class="content">
     <!--<span class="main-notice">{{ $t('root.welcomeMessage') }}</span>-->
+    <el-col :span="24" style="padding-bottom: 2rem;">
+      <el-card>
+        <countdown></countdown>
+      </el-card>
+    </el-col>
     <el-col :span="12">
       <el-card>
         <ranking></ranking>
@@ -8,7 +13,7 @@
     </el-col>
     <el-col :span="12">
       <el-card>
-        <countdown></countdown>
+          <h2>这里放图表</h2>
       </el-card>
     </el-col>
   </el-row>

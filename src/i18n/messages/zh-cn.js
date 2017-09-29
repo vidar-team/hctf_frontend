@@ -7,6 +7,13 @@ export default {
     challengeList: "Challenge 列表",
     welcomeMessage: "欢迎来到 HCTF 2017 / 占位"
   },
+  ranking: {
+    ranking: "排行"
+  },
+  countdown: {
+    untilStart: "至比赛开始",
+    untilClose: "至比赛结束"
+  },
   login: {
     login: "登录",
     password: "密码",

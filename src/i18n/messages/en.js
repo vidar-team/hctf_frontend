@@ -7,6 +7,13 @@ export default {
     challengeList: "Challenge List",
     welcomeMessage: "Welcome to HCTF 2017"
   },
+  ranking: {
+    ranking: "Ranking"
+  },
+  countdown: {
+    untilStart: "To begin",
+    untilClose: "To close"
+  },
   login: {
     login: "Login",
     password: "Password",
@@ -20,6 +27,7 @@ export default {
     pleaseFillTheForm: "Please fill the form carefully",
     pleaseConfirmPassword: "Passwords must match"
   },
+
   challenge: {
     submitFlagPlaceholder: "Input your flag here",
     submit: "Submit",
