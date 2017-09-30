@@ -1,6 +1,5 @@
 <template>
   <el-row class="content">
-    <!--<span class="main-notice">{{ $t('root.welcomeMessage') }}</span>-->
     <el-col :span="24" style="padding-bottom: 2rem;">
       <el-card>
         <countdown></countdown>
@@ -13,15 +12,15 @@
     </el-col>
     <el-col :span="12">
       <el-card>
-          <h2>这里放图表</h2>
+          <recent-logs></recent-logs>
       </el-card>
     </el-col>
   </el-row>
 </template>
-
 <script>
   import Ranking from '@/components/User/Ranking';
   import Countdown from '@/components/Common/Countdown';
+  import RecentLogs from '@/components/Common/RecentLogs';
 
   export default {
     name: 'hello',
@@ -30,7 +29,8 @@
     },
     components: {
       Ranking,
-      Countdown
+      Countdown,
+      RecentLogs
     }
   }
 </script>

@@ -1,6 +1,10 @@
 <template>
   <div class="countdown">
-    <span>{{ countdown.days }} Days {{ countdown.hours }} Hours {{ countdown.minutes }} Minutes {{ countdown.seconds }} Seconds</span>
+    <span>
+      {{ countdown.days }} {{ countdown.days > 1 ? 'Days' : 'Day'}}
+      {{ countdown.hours }} {{ countdown.hours > 1 ? 'Hours' : 'Hour'}}
+      {{ countdown.minutes }} {{ countdown.minutes > 1 ? 'Minutes' : 'Minute'}}
+      {{ countdown.seconds }} {{ countdown.seconds > 1 ? 'Seconds' : 'Second'}}   </span>
     <div class="countdown-title">{{ countdownTitle }}</div>
   </div>
 </template>
