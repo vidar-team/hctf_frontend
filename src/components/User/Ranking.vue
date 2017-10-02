@@ -87,7 +87,8 @@
   export default {
     data(){
       return {
-        ranking: []
+        ranking: [],
+        teamList: [],
       }
     },
     async mounted(){
@@ -103,9 +104,15 @@
       }
     },
     methods: {
+      checkChange(){
+        let teams = Array.from(this.ranking, i => {
+          return i.team_id
+        }).filter(i => i !== null);
+      },
       async getRanking(){
         try{
           this.ranking = await TeamModel.getRanking();
+          this.checkChange();
         }
         catch (e){
           this.$handleError(e);
@@ -113,6 +120,7 @@
       },
       async fresh(){
         let newRanking = await TeamModel.getRanking();
+        this.checkChange();
         for (let index in this.ranking){
           this.ranking[index].index = +index + 1;
         }

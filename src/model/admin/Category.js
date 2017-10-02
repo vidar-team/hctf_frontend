@@ -27,12 +27,33 @@ class Category extends Model {
   createCategory(categoryName){
     return new Promise(async (resolve, reject) => {
       try{
-        let newCategory = this.request("POST", "/Category/create", {
+        let newCategory = await this.request("POST", "/Category/create", {
           categoryName: categoryName
         }, {
           needAuth: true
         });
         resolve(newCategory);
+      }
+      catch (e){
+        reject(e);
+      }
+    })
+  }
+
+  /**
+   * 删除分类
+   * @param categoryId
+   * @returns {Promise}
+   */
+  removeCategory(categoryId){
+    return new Promise(async (resolve, reject) => {
+      try{
+        let result = await this.request("POST", "/Category/deleteCategory", {
+          categoryId: categoryId
+        }, {
+          needAuth: true
+        });
+        resolve(result);
       }
       catch (e){
         reject(e);

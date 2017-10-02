@@ -194,15 +194,15 @@
             message: "无法删除，该分类下仍有 Level"
           })
         }
+        this.loading = true;
         try {
-          // TODO
-          return this.$handleError({
-            message: "本功能没有实现"
-          });
+          let result = await CategoryModel.removeCategory(categoryId);
+          this.loadCategories();
         }
         catch (e) {
           this.$handleError(e);
         }
+        this.loading = false;
       },
       addLevel(categoryId) {
         this.levelFormVisible = true;
