@@ -97,7 +97,30 @@ class User extends Model{
    */
   getRanking(){
     return new Promise(async (resolve, reject) => {
-      resolve(await this.request("GET", "/User/ranking"));
+      try{
+        resolve(await this.request("GET", "/User/ranking"));
+      }
+      catch (e){
+        reject(e);
+      }
+    })
+  }
+
+  /**
+   * 获得用户信息（多选）
+   * @param teamId
+   * @returns {Promise}
+   */
+  select(teamId){
+    return new Promise(async (resolve, reject) => {
+      try{
+        resolve(await this.request("GET", "/User/select", {
+          teamId: teamId
+        }));
+      }
+      catch (e){
+        reject(e);
+      }
     })
   }
 }

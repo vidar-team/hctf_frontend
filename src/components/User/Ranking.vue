@@ -10,7 +10,7 @@
     <div class="ranking-body" v-for="(team, index) in ranking">
       <div class="ranking-item ranking-item-left">{{ index + 1 }}</div>
       <div class="ranking-item">{{ team.team_name }}</div>
-      <div class="ranking-item" :class="team.effect">{{ team.score }}</div>
+      <div class="ranking-item" :class="team.effect">{{ team.dynamic_total_score || 0 }}</div>
       <div class="ranking-item">{{ team.more || '--' }}</div>
     </div>
   </div>
@@ -108,6 +108,7 @@
         let teams = Array.from(this.ranking, i => {
           return i.team_id
         }).filter(i => i !== null);
+        this.$emit("change", teams);
       },
       async getRanking(){
         try{
@@ -119,7 +120,13 @@
         }
       },
       async fresh(){
-        let newRanking = await TeamModel.getRanking();
+        let newRanking;
+        try{
+          newRanking = await TeamModel.getRanking();
+        }
+        catch (e){
+          return this.$handleError(e);
+        }
         this.checkChange();
         for (let index in this.ranking){
           this.ranking[index].index = +index + 1;

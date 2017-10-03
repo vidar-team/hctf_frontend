@@ -7,12 +7,12 @@
     </el-col>
     <el-col :span="12">
       <el-card>
-        <ranking></ranking>
+        <ranking @change="updateTopTeams"></ranking>
       </el-card>
     </el-col>
     <el-col :span="12">
       <el-card>
-          <recent-logs></recent-logs>
+          <recent-logs :teams="topTeams"></recent-logs>
       </el-card>
     </el-col>
   </el-row>
@@ -25,12 +25,19 @@
   export default {
     name: 'hello',
     data() {
-      return {}
+      return {
+        topTeams: []
+      }
     },
     components: {
       Ranking,
       Countdown,
       RecentLogs
+    },
+    methods: {
+      updateTopTeams(topTeams){
+        this.topTeams = topTeams;
+      }
     }
   }
 </script>
