@@ -13,8 +13,14 @@ class Auth{
     return !Auth.isTokenExpired();
   }
   static async isAdmin(){
-    let teamInfo = await TeamModel.getTeamInfo();
-    return teamInfo.admin;
+    try{
+      let teamInfo = await TeamModel.getTeamInfo();
+      return teamInfo.admin;
+    }
+    catch (e){
+      return false;
+    }
+
   }
 }
 export default Auth;
