@@ -97,10 +97,10 @@
         if (this.$route.name !== "Index"){
           break;
         }
-        this.fresh();
         await (() =>
             new Promise(resolve => setTimeout(resolve, 5000))
         )();
+        this.fresh();
       }
     },
     methods: {

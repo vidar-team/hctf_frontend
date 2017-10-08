@@ -2,7 +2,7 @@
   <el-card>
     <el-form v-loading="loading">
       <el-form-item>
-        <el-input :placeholder="$t('challenge.submitFlagPlaceholder')" class="submit-flag" v-model="form.flag" @keyup.enter.native="submit"></el-input>
+        <el-input :placeholder="$t('challenge.submitFlagPlaceholder')" class="submit-flag" v-model="form.flag" @keyup.enter.prevent.native="submit"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submit">{{ $t('challenge.submit') }}</el-button>

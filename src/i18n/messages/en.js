@@ -27,7 +27,6 @@ export default {
     pleaseFillTheForm: "Please fill the form carefully",
     pleaseConfirmPassword: "Passwords must match"
   },
-
   challenge: {
     submitFlagPlaceholder: "Input your flag here",
     submit: "Submit",
@@ -40,5 +39,8 @@ export default {
   banned: {
     banTitle: "BANNAD",
     banDescription: "Because of your unacceptable operations, your team has been banned forever. If you have any question, please contact us."
+  },
+  user: {
+    score: "score"
   }
 }

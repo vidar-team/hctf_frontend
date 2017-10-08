@@ -39,5 +39,8 @@ export default {
   banned: {
     banTitle: "封停",
     banDescription: "由于您难以描述的操作，您的账号已经被封停。如有任何疑问，请联系我们"
+  },
+  user: {
+    score: "分数"
   }
 }

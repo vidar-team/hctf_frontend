@@ -39,5 +39,8 @@ export default {
   banned: {
     banTitle: "ブロック",
     banDescription: "容認できない操作のため、無期限ブロックされていました。"
+  },
+  user: {
+    score: "スコア"
   }
 }

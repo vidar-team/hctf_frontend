@@ -2,10 +2,16 @@
   <el-card v-loading="loading">
     <h2> {{ team.team_name }} </h2>
     <div>
-      <span>Total score: {{ team.score }}</span>
+      <p>Total score: {{ team.score }}</p>
+      <p>Token: <span class="token">{{ team.token }}</span></p>
     </div>
   </el-card>
 </template>
+<style scoped>
+  .token{
+    background-color: #e7e7e7;
+  }
+</style>
 <script>
   import User from '../../model/Team';
   let UserModel = new User();
