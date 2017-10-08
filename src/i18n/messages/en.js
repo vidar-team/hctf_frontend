@@ -34,7 +34,9 @@ export default {
     baseScore: "Base Score",
     emptyTip: "There is no available challenge at the moment.",
     pleaseFillTheForm: "Please fill the form carefully",
-    flagCorrect: "Congratulations! Score +{0}"
+    flagCorrect: "Congratulations! Score +{0}",
+    maintenanceTitle: "Now Under Maintenance",
+    maintenanceDescription: "Available from {0} to {1}"
   },
   banned: {
     banTitle: "BANNAD",

@@ -1,6 +1,6 @@
 <template>
   <el-card v-loading="loading">
-    <el-tabs v-model="activeTabName">
+    <el-tabs v-model="activeTabName" v-if="available">
       <template v-for="categoryName in categoryNames">
         <el-tab-pane :label="categoryName" :name="categoryName">
             <span v-if="Object.keys(categories[categoryName]).length === 0">
@@ -13,6 +13,13 @@
         </el-tab-pane>
       </template>
     </el-tabs>
+    <el-alert v-else
+      :title="$t('challenge.maintenanceTitle')"
+      type="error"
+      :description="maintenanceDescription"
+      :closable="false"
+      show-icon>
+    </el-alert>
   </el-card>
 </template>
 <script>
@@ -24,7 +31,10 @@
       return {
         categories: [],
         activeTabName: "",
-        loading: false
+        loading: false,
+        available: true,
+        startTime: undefined,
+        endTime: undefined
       };
     },
     async mounted(){
@@ -36,6 +46,12 @@
     computed: {
       categoryNames(){
         return Object.keys(this.categories);
+      },
+      maintenanceDescription(){
+        return this.$t("challenge.maintenanceDescription", [
+          this.startTime,
+          this.endTime
+        ])
       }
     },
     methods: {
@@ -46,7 +62,14 @@
           this.activeTabName = this.categoryNames[0];
         }
         catch (e){
-          this.$handleError(e);
+          if (e.code === "under_maintenance"){
+            this.available = false;
+            this.startTime = new Date(e.message[0]);
+            this.endTime = new Date(e.message[1]);
+          }
+          else{
+            this.$handleError(e);
+          }
         }
         this.loading = false;
       }

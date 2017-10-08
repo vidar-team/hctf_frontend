@@ -88,6 +88,7 @@ class Model {
 
   parseErrorResponse(e) {
     let parsedError = {
+      code: "",
       message: ""
     };
     if (e.response){
@@ -95,6 +96,7 @@ class Model {
         if (e.response.data.data.error.code === "banned"){
           parsedError.redirect = "Banned";
         }
+        parsedError.code = e.response.data.data.error.code;
         if (Array.isArray(e.response.data.data.error.message)){
           parsedError.message = e.response.data.data.error.message.join(',');
         }
