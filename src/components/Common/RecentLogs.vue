@@ -1,6 +1,9 @@
 <template>
   <div class="chart-container">
-    <chart :options="data" v-loading="loading"></chart>
+    <chart :options="data" v-loading="loading" v-if="!isEmpty()"></chart>
+    <div v-else>
+      Not Available
+    </div>
   </div>
 </template>
 <style scoped>
@@ -43,7 +46,8 @@
 
           ]
         },
-        loading: false
+        loading: false,
+        teamData: []
       }
     },
     components: {
@@ -57,12 +61,13 @@
         if (this.teams.length > 0){
           this.loading = true;
           let teams = await TeamModel.select(this.teams);
+          this.teamData = teams;
           for (let team of teams){
             let data = [];
             let score = 0;
             legend.push(team.team_name);
             // 共同起点
-            let startTime = new Date("2017-09-24T03:11:11.000Z");
+            let startTime = new Date("2017-09-29T03:11:11.000Z");
             data.push({
               name:`${startTime.getFullYear()}-${startTime.getMonth() + 1}-${startTime.getDate()} ${startTime.getHours()}:${startTime.getMinutes()}:${startTime.getSeconds()}`,
               value: [
@@ -92,5 +97,12 @@
         this.loading = false;
       }
     },
+    methods: {
+      isEmpty(){
+        return !this.teamData.some(i => {
+          return !!i.score
+        })
+      }
+    }
   }
 </script>

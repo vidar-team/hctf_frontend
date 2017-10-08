@@ -137,7 +137,6 @@
         // do diff
         for (let team of newRanking){
           let oldTeam = this.ranking.find(i => i.team_name === team.team_name);
-
           // 排位变更
           if (oldTeam.index !== undefined){
             if (oldTeam.index < team.index){
@@ -155,8 +154,8 @@
           }
 
           // 分数变更动画效果
-          if (oldTeam.score !== team.score){
-            let diff = team.score - oldTeam.score;
+          if (oldTeam.dynamic_total_score !== team.dynamic_total_score){
+            let diff = team.dynamic_total_score - oldTeam.dynamic_total_score;
             team.effect = diff < 0 ? "score-desc" : "score-inc"
           }
         }
@@ -164,6 +163,11 @@
       },
       sleep(time){
         return new Promise(resolve => setTimeout(resolve, time))
+      },
+      isEmpty(){
+        return !this.ranking.some(i => {
+          return !!i.dynamic_total_score;
+        })
       }
     }
   }
