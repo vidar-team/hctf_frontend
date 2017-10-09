@@ -64,8 +64,8 @@
         catch (e){
           if (e.code === "under_maintenance"){
             this.available = false;
-            this.startTime = new Date(e.message[0]);
-            this.endTime = new Date(e.message[1]);
+            this.startTime = new Date(e.originalMessage[0]);
+            this.endTime = new Date(e.originalMessage[1]);
           }
           else{
             this.$handleError(e);
