@@ -6,8 +6,11 @@
       </el-card>
     </el-col>
     <el-col :span="12">
-      <el-card>
+      <el-card style="margin-bottom: 2rem;">
         <ranking @change="updateTopTeams"></ranking>
+      </el-card>
+      <el-card>
+        <bulletin></bulletin>
       </el-card>
     </el-col>
     <el-col :span="12">
@@ -21,6 +24,7 @@
   import Ranking from '@/components/User/Ranking';
   import Countdown from '@/components/Common/Countdown';
   import RecentLogs from '@/components/Common/RecentLogs';
+  import Bulletin from '@/components/Common/Bulletin';
 
   export default {
     name: 'hello',
@@ -32,7 +36,8 @@
     components: {
       Ranking,
       Countdown,
-      RecentLogs
+      RecentLogs,
+      Bulletin
     },
     methods: {
       updateTopTeams(topTeams){

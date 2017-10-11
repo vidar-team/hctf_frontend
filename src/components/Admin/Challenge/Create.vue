@@ -18,6 +18,7 @@
         <el-form-item label="Flag">
           <el-input v-model="form.flag" :disabled="disableFlagInput"></el-input>
           <el-button type="text" @click="viewMultiFlagForm">多 Flag 设定</el-button>
+          <el-button type="text" @click="viewDynamicFlagForm">开启动态 Flag</el-button>
         </el-form-item>
 
         <el-dialog title="多 Flag 设定" :visible.sync="multiFlagDialogVisible">
@@ -40,6 +41,23 @@
             <el-button type="primary" @click="saveMultiFlag">确 定</el-button>
           </div>
         </el-dialog>
+
+        <el-dialog title="动态 Flag 设定" :visible.sync="dynamicFlagDialogVisible">
+          <el-form>
+            <span>
+              动态 Flag 意味着每个队伍的 Flag 将会根据用户的答题 Token 和题目答案计算。公式如下：
+            </span>
+            <br>
+            <span style="font-family: Consolas, monospace">
+              userFlag = SHA256(userToken + flag)
+            </span>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="dynamicFlagDialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="saveDynamicFlag">设定为动态 Flag</el-button>
+          </div>
+        </el-dialog>
+
         <el-form-item label="最小解决时间">
           <el-input type="number" v-model.number="form.config.minimumSolveTime"></el-input>
           <span>从 Level 开放到提交正确 Flag 的时间小于该值将会被封禁，单位为秒，0为不限制。</span>
@@ -83,12 +101,14 @@
           url: "",
           flag: "",
           multiFlag: "",
+          isDynamicFlag: false,
           config: {
             multiFlag: false,
             minimumSolveTime: 0
           }
         },
         multiFlagDialogVisible: false,
+        dynamicFlagDialogVisible: false,
         disableFlagInput: false,
         flags: []
       }
@@ -112,10 +132,10 @@
           });
         }
         this.loading = true;
-        if (!this.form.flag){
+        if (!this.form.flag && !this.form.isDynamicFlag){
           if (this.flags.length === 0){
             return this.$handleError({
-              message: "请填写表单全部内容"
+              message: "请设定 Flag"
             });
           }
           else{
@@ -123,13 +143,15 @@
           }
         }
         else{
-          this.flags = [{
-            flag: this.form.flag
-          }];
+          if (this.form.flag !== ""){
+            this.flags = [{
+              flag: this.form.flag
+            }];
+          }
         }
 
         try{
-          let challenge = await ChallengeModel.createChallenge(this.form.title, this.form.url, this.form.description, this.form.score, this.flags, config, this.form.levelId[1], this.form.releaseTime);
+          let challenge = await ChallengeModel.createChallenge(this.form.title, this.form.url, this.form.description, this.form.score, this.flags, config, this.form.levelId[1], this.form.releaseTime, this.form.isDynamicFlag);
           this.$message({
             showClose: true,
             message: '创建成功啦',
@@ -148,7 +170,20 @@
         this.loading = false;
       },
       viewMultiFlagForm(){
+        if (this.form.isDynamicFlag){
+          return this.$handleError({
+            message: "多 Flag 与动态 Flag 不可同时设定"
+          });
+        }
         this.multiFlagDialogVisible = true;
+      },
+      viewDynamicFlagForm(){
+        if (this.flags.length > 1){
+          return this.$handleError({
+            message: "多 Flag 与动态 Flag 不可同时设定"
+          });
+        }
+        this.dynamicFlagDialogVisible = true;
       },
       saveMultiFlag(){
         let multiFlag = this.form.multiFlag;
@@ -171,6 +206,16 @@
         this.flags = multiFlag;
         this.multiFlagDialogVisible = false;
         this.disableFlagInput = true;
+      },
+      saveDynamicFlag(){
+        if (!this.form.flag){
+          this.dynamicFlagDialogVisible = false;
+          return this.$handleError({
+            message: "请先填写 Flag"
+          });
+        }
+        this.form.isDynamicFlag = true;
+        this.dynamicFlagDialogVisible = false;
       }
     },
     computed: {

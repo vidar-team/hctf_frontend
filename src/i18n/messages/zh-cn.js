@@ -7,6 +7,9 @@ export default {
     challengeList: "Challenge 列表",
     welcomeMessage: "欢迎来到 HCTF 2017 / 占位"
   },
+  bulletin: {
+    title: "公告"
+  },
   ranking: {
     ranking: "排行"
   },

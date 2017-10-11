@@ -11,9 +11,10 @@ class Challenge extends Model{
    * @param config
    * @param levelId
    * @param releaseTime
+   * @param isDynamicFlag
    * @returns {Promise}
    */
-  createChallenge(title, url, description, score, flag, config, levelId, releaseTime){
+  createChallenge(title, url, description, score, flag, config, levelId, releaseTime, isDynamicFlag){
     let time = new Date(releaseTime);
     let timeString = `${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()} ${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`;
     return new Promise(async (resolve, reject) => {
@@ -26,7 +27,8 @@ class Challenge extends Model{
           flag: flag,
           config: JSON.stringify(config),
           levelId: levelId,
-          releaseTime: timeString
+          releaseTime: timeString,
+          isDynamicFlag: isDynamicFlag
         }, {
           needAuth: true
         });

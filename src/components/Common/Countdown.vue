@@ -27,8 +27,8 @@
   export default {
     data(){
       return {
-        startTime: new Date("2017-11-11T03:11:11.000Z"),
-        endTime: new Date("2017-11-13T03:11:11.000Z"),
+        startTime: new Date("2017-11-11T00:00:00.000Z"),
+        endTime: new Date("2017-11-13T00:00:00.000Z"),
         countdown: {
           days: 0,
           hours: 0,

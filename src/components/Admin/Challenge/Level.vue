@@ -39,6 +39,9 @@
                 <el-form-item label="发布时间">
                   <span>{{ scope.row.release_time }}</span>
                 </el-form-item>
+                <el-form-item label="动态 Flag">
+                  <span>{{ scope.row.is_dynamic_flag }}</span>
+                </el-form-item>
               </el-form>
             </template>
           </el-table-column>

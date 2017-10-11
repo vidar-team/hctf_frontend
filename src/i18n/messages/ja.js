@@ -7,6 +7,9 @@ export default {
     challengeList: "チャレンジリスト",
     welcomeMessage: "HCTF 2017 へよくそ"
   },
+  bulletin: {
+    title: "お知らせ"
+  },
   ranking: {
     ranking: "ランキング"
   },
