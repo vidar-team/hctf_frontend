@@ -9,7 +9,7 @@
 </template>
 <style scoped>
   .token{
-    background-color: #e7e7e7;
+    font-family: Consolas, monospace;
   }
 </style>
 <script>
@@ -31,6 +31,8 @@
         this.$handleError(e);
       }
       this.loading = false;
+    },
+    methods: {
     }
   }
 </script>

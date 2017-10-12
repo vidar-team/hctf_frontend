@@ -1,6 +1,10 @@
 <template>
   <article class="challenge-body">
-    <h3>{{ challenge.title }}</h3>
+    <h3>{{ challenge.title }}
+      <el-tooltip :content="$t('challenge.dynamicFlagDescription')" placement="top">
+        <span v-if="challenge.is_dynamic_flag" class="dynamic-flag-badge">[{{ $t('challenge.dynamicFlagBadge') }}]</span>
+      </el-tooltip>
+    </h3>
     <div class="challenge-content">
       <div class="challenge-item">
         <span class="challenge-item-key">{{ $t('challenge.description') }}</span>
@@ -38,6 +42,11 @@
   }
   .challenge-item-value{
     display: inline-block;
+  }
+  .dynamic-flag-badge{
+    vertical-align: super;
+    font-size: smaller;
+    font-weight: normal;
   }
   a{
     text-decoration: none;

@@ -39,7 +39,9 @@ export default {
     pleaseFillTheForm: "Please fill the form carefully",
     flagCorrect: "Congratulations! Score +{0}",
     maintenanceTitle: "Now Under Maintenance",
-    maintenanceDescription: "Available from {0} to {1}"
+    maintenanceDescription: "Available from {0} to {1}",
+    dynamicFlagBadge: "Dynamic Flag",
+    dynamicFlagDescription: "Flag is based on Team Token which can be checked at your team page"
   },
   banned: {
     banTitle: "BANNAD",

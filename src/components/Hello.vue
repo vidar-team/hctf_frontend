@@ -40,14 +40,16 @@
       Bulletin
     },
     methods: {
+      /**
+       * 更新 Top 20 队伍名单
+       * @param topTeams
+       */
       updateTopTeams(topTeams){
         this.topTeams = topTeams;
       }
     }
   }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   .main-notice {
     font-size: 10vh;
