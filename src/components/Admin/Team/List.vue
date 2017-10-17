@@ -20,7 +20,7 @@
         prop="password"
         label="密码"
         width="80">
-        <template scope="scope">
+        <template slot-scope="scope">
             <el-button type="text" @click="resetPassword(scope.row.team_id)">重置</el-button>
         </template>
       </el-table-column>
@@ -43,7 +43,7 @@
         prop="admin"
         label="管理"
         width="80">
-        <template scope="scope">
+        <template slot-scope="scope">
           {{scope.row.admin}}
         </template>
       </el-table-column>
@@ -51,7 +51,7 @@
         prop="banned"
         label="封禁"
         width="80">
-        <template scope="scope">
+        <template slot-scope="scope">
           {{scope.row.banned}}
         </template>
       </el-table-column>
@@ -59,7 +59,7 @@
         prop="banned"
         label="搞事情"
         >
-        <template scope="scope">
+        <template slot-scope="scope">
           <el-button type="text" @click="banTeam(scope.row.team_id)" v-if="!scope.row.banned">BAN!</el-button>
           <el-button type="text" @click="unbanTeam(scope.row.team_id)" v-else>UNBAN!</el-button>
           <el-button type="text" @click="setAdmin(scope.row.team_id)">钦点管理员!</el-button>

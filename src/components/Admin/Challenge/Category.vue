@@ -9,7 +9,7 @@
               :data="category.levels"
               style="width: auto">
               <el-table-column type="expand">
-                <template scope="scope">
+                <template slot-scope="scope">
                   <el-form label-position="left" inline class="table-expand">
                     <el-form-item label="Level ID">
                       <span>{{ scope.row.level_id }}</span>
@@ -45,7 +45,7 @@
               <el-table-column
                 label="操作"
                 prop="release_time">
-                <template scope="scope">
+                <template slot-scope="scope">
                   <el-button type="text" @click="editLevel(scope.row.level_id)">编辑</el-button>
                   <el-button type="text" style="color: red" @click="removeLevel(scope.row)">删除</el-button>
                 </template>

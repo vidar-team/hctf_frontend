@@ -22,7 +22,7 @@
       <el-tab-pane label="Challenge 管理">
         <el-table :data="level.challenges">
           <el-table-column type="expand">
-            <template scope="scope">
+            <template slot-scope="scope">
               <el-form label-position="left" inline class="table-expand">
                 <el-form-item label="Level ID">
                   <span>{{ scope.row.level_id }}</span>
@@ -58,7 +58,7 @@
           <el-table-column
             label="操作"
           >
-            <template scope="scope">
+            <template slot-scope="scope">
               <el-button type="text" @click="">编辑</el-button>
               <el-button type="text" style="color: red" @click="deleteChallenge(scope.row.challenge_id)">删除</el-button>
             </template>
