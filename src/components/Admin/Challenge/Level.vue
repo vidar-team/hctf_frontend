@@ -59,7 +59,7 @@
             label="操作"
           >
             <template slot-scope="scope">
-              <el-button type="text" @click="">编辑</el-button>
+              <el-button type="text" @click="editChallenge(scope.row.challenge_id)">编辑</el-button>
               <el-button type="text" style="color: red" @click="deleteChallenge(scope.row.challenge_id)">删除</el-button>
             </template>
           </el-table-column>
@@ -178,6 +178,14 @@
           this.$handleError(e);
         }
         this.loading = false;
+      },
+      editChallenge(challengeId){
+        this.$router.push({
+          name: "Admin-Challenge-Edit",
+          query: {
+            challengeId: challengeId
+          }
+        })
       }
     }
   }

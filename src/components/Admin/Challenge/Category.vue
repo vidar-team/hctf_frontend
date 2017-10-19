@@ -137,7 +137,7 @@
           })
         }
         try{
-          if (this.form.releaseTime <= new Date()){
+          if (new Date(this.form.releaseTime) <= new Date()){
             await this.$confirm('开放时间小于当前时间，创建后将立即可见，生产环境不建议进行此操作，确认继续?', '危险操作确认', {
               confirmButtonText: '确定',
               cancelButtonText: '取消',
