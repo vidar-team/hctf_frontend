@@ -110,6 +110,50 @@ class Challenge extends Model{
       }
     })
   }
+
+  /**
+   * 修改基准分数
+   * @param challengeId
+   * @param score
+   * @returns {Promise}
+   */
+  resetScore(challengeId, score){
+    return new Promise(async (resolve, reject) => {
+      try {
+          let result = await this.request("POST", "/Challenge/resetScore", {
+            challengeId: challengeId,
+            score: score
+          }, {
+            needAuth: true
+          });
+          resolve(result);
+      }
+      catch (e){
+        reject(e);
+      }
+    })
+  }
+
+  /**
+   * 获得 Flags 信息
+   * @param challengeId
+   * @returns {Promise}
+   */
+  getFlagsInfo(challengeId){
+    return new Promise(async (resolve, reject) => {
+      try{
+        let flags = await this.request("GET", "/Challenge/getFlags", {
+          challengeId: challengeId
+        }, {
+          needAuth: true
+        });
+        resolve(flags);
+      }
+      catch (e){
+        reject(e);
+      }
+    })
+  }
 }
 
 export default Challenge;

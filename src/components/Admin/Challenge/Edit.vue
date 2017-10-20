@@ -16,20 +16,65 @@
           </el-date-picker>
         </el-form-item>
         <el-form-item label="一些功能">
-          <el-button type="text">修订基准分数</el-button>
+          <el-button type="text" @click="resetScoreDialogVisible = true">修订基准分数</el-button>
         </el-form-item>
+
+        <!-- Dialogs -->
+
+        <el-dialog title="危险操作确认" :visible.sync="resetScoreDialogVisible">
+          <span>警告：修改题目的基准分数，将会重新计算全部已经通过该题的队伍在本题的得分，生产环境请谨慎操作。</span>
+          <el-form v-model="form" v-loading="dialogLoading">
+            <el-form-item label="基准分数">
+              <el-input v-model="form.score" type="number"></el-input>
+            </el-form-item>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="resetScoreDialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="resetScore">确认</el-button>
+          </div>
+        </el-dialog>
         <el-form-item>
           <el-button type="primary" @click="submitOverview">保存</el-button>
         </el-form-item>
       </el-form>
     </el-tab-pane>
+    <el-tab-pane label="Flag 管理" name="flags" v-loading="loading">
+      <el-table :data="flags">
+        <el-table-column
+          prop="flag_id"
+          label="Flag ID"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="flag"
+          label="Flag"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="team_id"
+          label="限定队伍 ID(0为不限制)"
+        >
+        </el-table-column>
+        <el-table-column
+          label="操作"
+        >
+          <template slot-scope="scope">
+            <el-button type="text" @click="">编辑</el-button>
+            <el-button type="text" style="color: red" @click="deleteFlag(scope.row.flag_id)">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-tab-pane>
   </el-tabs>
 </template>
 <script>
   import Challenge from '@/model/admin/Challenge';
+  import Flag from '@/model/admin/Flag';
+
+  let FlagModel = new Flag();
   let ChallengeModel = new Challenge();
   export default {
-    data(){
+    data() {
       return {
         activeTabName: "overview",
         form: {
@@ -37,18 +82,37 @@
           description: "",
           releaseTime: ""
         },
-        loading: false
+        loading: false,
+        dialogLoading: false,
+        resetScoreDialogVisible: false,
+        flags: [],
+        isFlagLoaded: false
+      }
+    },
+    watch: {
+      async activeTabName(){
+        if (this.activeTabName === "flags" && !this.isFlagLoaded){
+          this.loading = true;
+          try{
+            this.flags = await ChallengeModel.getFlagsInfo(this.$route.query.challengeId);
+            this.isFlagLoaded = true;
+          }
+          catch (e){
+            this.$handleError(e);
+          }
+          this.loading = false;
+        }
       }
     },
     methods: {
-      async submitOverview(){
-        if (!this.form.title || !this.form.description || !this.form.releaseTime){
+      async submitOverview() {
+        if (!this.form.title || !this.form.description || !this.form.releaseTime) {
           return this.$handleError({
             message: "信息均不能为空"
           });
         }
-        try{
-          if (new Date(this.form.releaseTime) <= new Date()){
+        try {
+          if (new Date(this.form.releaseTime) <= new Date()) {
             await this.$confirm('开放时间小于当前时间，创建后将立即可见，生产环境不建议进行此操作，确认继续?', '危险操作确认', {
               confirmButtonText: '确定',
               cancelButtonText: '取消',
@@ -56,12 +120,34 @@
             });
           }
         }
-        catch (e){
-
+        catch (e) {
+          this.$handleError(e);
         }
         this.loading = true;
-        try{
+        try {
           await ChallengeModel.editChallenge(this.$route.query.challengeId, this.form.title, this.form.description, this.form.releaseTime);
+        }
+        catch (e) {
+          this.$handleError(e);
+        }
+        this.loading = false;
+      },
+      async resetScore(){
+        this.dialogLoading = true;
+        try{
+          await ChallengeModel.resetScore(this.$route.query.challengeId, this.form.score);
+          this.resetScoreDialogVisible = false;
+        }
+        catch (e){
+          this.$handleError(e);
+        }
+        this.dialogLoading = false;
+      },
+      async deleteFlag(flagId){
+        this.loading = true;
+        try{
+          await FlagModel.deleteFlag(flagId);
+          this.flags = await ChallengeModel.getFlagsInfo(this.$route.query.challengeId);
         }
         catch (e){
           this.$handleError(e);
@@ -69,8 +155,8 @@
         this.loading = false;
       }
     },
-    async mounted(){
-      if (!this.$route.query.challengeId){
+    async mounted() {
+      if (!this.$route.query.challengeId) {
         this.$router.push({
           name: "Admin-Challenge-Category"
         })
@@ -81,6 +167,7 @@
       this.form.title = challengeInfo.title;
       this.form.description = challengeInfo.description;
       this.form.releaseTime = challengeInfo.release_time;
+      this.form.score = challengeInfo.score;
     }
   }
 </script>
