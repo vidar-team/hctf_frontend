@@ -1,6 +1,6 @@
 import Model from '@/model/model'
 
-class Challenge extends Model{
+class Challenge extends Model {
   /**
    * 创建新的 Challenge
    * @param title
@@ -14,11 +14,11 @@ class Challenge extends Model{
    * @param isDynamicFlag
    * @returns {Promise}
    */
-  createChallenge(title, url, description, score, flag, config, levelId, releaseTime, isDynamicFlag){
+  createChallenge(title, url, description, score, flag, config, levelId, releaseTime, isDynamicFlag) {
     let time = new Date(releaseTime);
     let timeString = `${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()} ${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`;
     return new Promise(async (resolve, reject) => {
-      try{
+      try {
         let newChallenge = this.request("POST", "/Challenge/create", {
           title: title,
           url: url,
@@ -34,7 +34,7 @@ class Challenge extends Model{
         });
         resolve(newChallenge);
       }
-      catch (e){
+      catch (e) {
         reject(e);
       }
     })
@@ -45,9 +45,9 @@ class Challenge extends Model{
    * @param challengeId
    * @returns {Promise}
    */
-  deleteChallenge(challengeId){
+  deleteChallenge(challengeId) {
     return new Promise(async (resolve, reject) => {
-      try{
+      try {
         let result = this.request("POST", "/Challenge/delete", {
           challengeId: challengeId
         }, {
@@ -55,7 +55,7 @@ class Challenge extends Model{
         });
         resolve(result);
       }
-      catch (e){
+      catch (e) {
         reject(e);
       }
     })
@@ -66,9 +66,9 @@ class Challenge extends Model{
    * @param challengeId
    * @returns {Promise}
    */
-  getChallengeInfo(challengeId){
+  getChallengeInfo(challengeId) {
     return new Promise(async (resolve, reject) => {
-      try{
+      try {
         let challengeInfo = await this.request("GET", "/Challenge/info", {
           challengeId: challengeId
         }, {
@@ -76,7 +76,7 @@ class Challenge extends Model{
         });
         resolve(challengeInfo);
       }
-      catch (e){
+      catch (e) {
         reject(e);
       }
     })
@@ -90,11 +90,11 @@ class Challenge extends Model{
    * @param releaseTime
    * @returns {Promise}
    */
-  editChallenge(challengeId, title, description, releaseTime){
+  editChallenge(challengeId, title, description, releaseTime) {
     let time = new Date(releaseTime);
     let timeString = `${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()} ${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`;
     return new Promise(async (resolve, reject) => {
-      try{
+      try {
         let challenge = await this.request("POST", "/Challenge/edit", {
           challengeId: challengeId,
           title: title,
@@ -105,7 +105,7 @@ class Challenge extends Model{
         });
         resolve(challenge);
       }
-      catch (e){
+      catch (e) {
         reject(e);
       }
     })
@@ -117,18 +117,18 @@ class Challenge extends Model{
    * @param score
    * @returns {Promise}
    */
-  resetScore(challengeId, score){
+  resetScore(challengeId, score) {
     return new Promise(async (resolve, reject) => {
       try {
-          let result = await this.request("POST", "/Challenge/resetScore", {
-            challengeId: challengeId,
-            score: score
-          }, {
-            needAuth: true
-          });
-          resolve(result);
+        let result = await this.request("POST", "/Challenge/resetScore", {
+          challengeId: challengeId,
+          score: score
+        }, {
+          needAuth: true
+        });
+        resolve(result);
       }
-      catch (e){
+      catch (e) {
         reject(e);
       }
     })
@@ -139,9 +139,9 @@ class Challenge extends Model{
    * @param challengeId
    * @returns {Promise}
    */
-  getFlagsInfo(challengeId){
+  getFlagsInfo(challengeId) {
     return new Promise(async (resolve, reject) => {
-      try{
+      try {
         let flags = await this.request("GET", "/Challenge/getFlags", {
           challengeId: challengeId
         }, {
@@ -149,7 +149,28 @@ class Challenge extends Model{
         });
         resolve(flags);
       }
-      catch (e){
+      catch (e) {
+        reject(e);
+      }
+    })
+  }
+
+  /**
+   * 删除所有关联 Flag
+   * @param challengeId
+   * @returns {Promise}
+   */
+  deleteAllFlags(challengeId) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        await this.request("POST", "/Challenge/deleteFlags", {
+          challengeId: challengeId
+        }, {
+          needAuth: true
+        });
+        resolve();
+      }
+      catch (e) {
         reject(e);
       }
     })

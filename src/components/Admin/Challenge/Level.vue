@@ -48,7 +48,7 @@
           <el-table-column
             prop="challenge_id"
             label="Challenge ID"
-            >
+          >
           </el-table-column>
           <el-table-column
             prop="title"
@@ -75,10 +75,12 @@
   .table-expand {
     font-size: 0;
   }
+
   .table-expand label {
     width: 90px;
     color: #99a9bf;
   }
+
   .table-expand .el-form-item {
     margin-right: 0;
     margin-bottom: 0;
@@ -90,6 +92,7 @@
   import Category from '@/model/admin/Category';
   import Challenge from '@/model/admin/Challenge';
   import Rules from './RuleComponents/Rules.vue';
+
   let LevelModel = new Level();
   let CategoryModel = new Category();
   let ChallengeModel = new Challenge();
@@ -128,10 +131,10 @@
           this.level = await LevelModel.getLevelInfo(levelId);
           this.info = await CategoryModel.getAllCategories();
           this.form.levelName = this.level.level_name;
-          try{
+          try {
             this.form.releaseTime = new Date(this.level.release_time).toISOString();
           }
-          catch (e){
+          catch (e) {
             this.form.releaseTime = "";
           }
         }
@@ -140,32 +143,32 @@
         }
         this.loading = false;
       },
-      async update(){
+      async update() {
         this.loading = true;
-        try{
+        try {
           let level = await LevelModel.setReleaseTime(this.level.level_id, this.form.releaseTime);
-          if (this.form.levelName !== this.level.level_name){
+          if (this.form.levelName !== this.level.level_name) {
             level = await LevelModel.setLevelName(this.level.level_id, this.form.levelName);
           }
         }
-        catch (e){
+        catch (e) {
           this.$handleError(e);
         }
         this.loading = false;
       },
-      async updateRule(rules){
+      async updateRule(rules) {
         this.loading = true;
-        try{
+        try {
           await LevelModel.setRules(this.level.level_id, rules.toString());
         }
-        catch (e){
+        catch (e) {
           this.$handleError(e);
         }
         this.loading = false;
       },
-      async deleteChallenge(challengeId){
+      async deleteChallenge(challengeId) {
         this.loading = true;
-        try{
+        try {
           await this.$confirm('本操作将会删除该问题及其所有关联Flag、关联答题记录，全部队伍的分数将会重新计算，生产环境下不建议进行此操作，是否确认？', '危险操作确认', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
@@ -174,12 +177,12 @@
           await ChallengeModel.deleteChallenge(challengeId);
           this.loadLevelInfo(this.$route.query.id);
         }
-        catch (e){
+        catch (e) {
           this.$handleError(e);
         }
         this.loading = false;
       },
-      editChallenge(challengeId){
+      editChallenge(challengeId) {
         this.$router.push({
           name: "Admin-Challenge-Edit",
           query: {

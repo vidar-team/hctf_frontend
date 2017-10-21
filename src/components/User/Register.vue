@@ -22,6 +22,7 @@
 </template>
 <script>
   import User from '../../model/Team';
+
   let UserModel = new User();
   export default {
     data() {
@@ -44,13 +45,13 @@
           return this.$message.error(this.$t("register.pleaseConfirmPassword"));
         }
         this.loading = true;
-        try{
+        try {
           let result = await UserModel.register(this.form.teamName, this.form.email, this.form.password2);
           this.$router.push({
             name: "User-Login"
           });
         }
-        catch(e){
+        catch (e) {
           this.$message.error(e.message);
         }
         this.loading = false;

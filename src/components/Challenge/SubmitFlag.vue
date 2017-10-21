@@ -2,7 +2,8 @@
   <el-card>
     <el-form v-loading="loading">
       <el-form-item>
-        <el-input :placeholder="$t('challenge.submitFlagPlaceholder')" class="submit-flag" v-model="form.flag" @keyup.enter.prevent.native="submit"></el-input>
+        <el-input :placeholder="$t('challenge.submitFlagPlaceholder')" class="submit-flag" v-model="form.flag"
+                  @keyup.enter.prevent.native="submit"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submit">{{ $t('challenge.submit') }}</el-button>
@@ -11,21 +12,24 @@
   </el-card>
 </template>
 <style>
-  .submit-flag input::placeholder{
+  .submit-flag input::placeholder {
     font-family: Consolas, monospace;
   }
-  .submit-flag input:-ms-input-placeholder{
+
+  .submit-flag input:-ms-input-placeholder {
     font-family: Consolas, monospace;
   }
-  .submit-flag input::-webkit-input-placeholder{
+
+  .submit-flag input::-webkit-input-placeholder {
     font-family: Consolas, monospace;
   }
 </style>
 <script>
   import Challenge from '@/model/Challenge';
+
   let ChallengeModel = new Challenge();
   export default {
-    data(){
+    data() {
       return {
         form: {
           flag: ""
@@ -34,14 +38,14 @@
       }
     },
     methods: {
-      async submit(){
-        if (!this.form.flag){
+      async submit() {
+        if (!this.form.flag) {
           return this.$handleError({
             message: this.$t("challenge.pleaseFillTheForm")
           });
         }
         this.loading = true;
-        try{
+        try {
           let result = await ChallengeModel.submitFlag(this.form.flag);
           this.form.flag = "";
           this.$message({
@@ -50,7 +54,7 @@
             type: 'success'
           });
         }
-        catch (e){
+        catch (e) {
           this.$handleError(e);
         }
         this.loading = false;

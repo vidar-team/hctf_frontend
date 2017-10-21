@@ -1,4 +1,5 @@
 import Vue from 'vue'
+
 class Rules {
   rules = [];
   data = {};
@@ -43,20 +44,22 @@ class Rules {
     let index = this.rules.findIndex(i => i._ruleId === ruleId);
     let newRules = this.rules.slice(0, index).concat(this.rules.slice(index + 1, this.rules.length));
     Vue.set(this, 'rules', newRules);
-    if (index === 0 && this.rules.length > 0){
+    if (index === 0 && this.rules.length > 0) {
       Vue.delete(this.rules[0], 'logicOperator');
     }
     this.reIndex();
     return this;
   }
-  append(rule){
+
+  append(rule) {
     rule._ruleId = this.ruleCount++;
     this.rules.push(rule);
     return this;
   }
-  toString(){
+
+  toString() {
     let r = JSON.parse(JSON.stringify(this.rules));
-    for (let i of r){
+    for (let i of r) {
       delete i["_ruleId"];
     }
     return JSON.stringify(r);

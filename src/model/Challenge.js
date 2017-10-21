@@ -1,19 +1,19 @@
 import Model from '@/model/model';
 
-class Challenge extends Model{
+class Challenge extends Model {
   /**
    * 获得所有可用的题目
    * @returns {Promise}
    */
-  getValidChallenges(){
+  getValidChallenges() {
     return new Promise(async (resolve, reject) => {
-      try{
+      try {
         let result = await this.request("GET", "/Challenge/list", {}, {
           needAuth: true
         });
         resolve(result);
       }
-      catch (e){
+      catch (e) {
         reject(e);
       }
     });
@@ -24,9 +24,9 @@ class Challenge extends Model{
    * @param flag
    * @returns {Promise}
    */
-  submitFlag(flag){
+  submitFlag(flag) {
     return new Promise(async (resolve, reject) => {
-      try{
+      try {
         let result = await this.request("POST", "/Challenge/submitFlag", {
           flag: flag
         }, {
@@ -34,7 +34,7 @@ class Challenge extends Model{
         });
         resolve(result);
       }
-      catch (e){
+      catch (e) {
         reject(e);
       }
     })

@@ -13,68 +13,74 @@
   </section>
 </template>
 <style>
-  .system-log{
+  .system-log {
     font-family: Consolas, "Noto Sans CJK SC Regular", "Microsoft YaHei UI Light", monospace;
   }
-  .system-log-time{
+
+  .system-log-time {
     color: #aaa;
   }
-  .system-log-level-info{
+
+  .system-log-level-info {
     color: #1b559f;
   }
-  .system-log-level-notice{
+
+  .system-log-level-notice {
     color: #aaa;
   }
-  .system-log-level-error{
+
+  .system-log-level-error {
     color: red;
   }
-  .system-log-level-emergency{
+
+  .system-log-level-emergency {
     color: red;
     font-size: larger;
   }
-  .system-log-level-warning{
+
+  .system-log-level-warning {
     color: #ad9931;
   }
 </style>
 <script>
   import SystemLog from '@/model/admin/SystemLog';
+
   let SystemLogModel = new SystemLog();
   export default {
-    data(){
+    data() {
       return {
         logs: [],
         nowId: 0,
         loading: false
       }
     },
-    async mounted(){
+    async mounted() {
       this.loadLogs();
-      while (true){
-        if (this.$route.name !== "Admin-Index"){
+      while (true) {
+        if (this.$route.name !== "Admin-Index") {
           break;
         }
         this.loadLogs();
         await (() =>
-            new Promise(resolve => setTimeout(resolve, 3000))
-        )();
+            new Promise(resolve => setTimeout(resolve, 3000)))();
       }
     },
     methods: {
-      async loadLogs(startId = 0){
+      async loadLogs(startId = 0) {
         this.loading = true;
-        try{
+        try {
           let recentLogs = await SystemLogModel.list(startId);
-          for (let log of recentLogs.reverse()){
+          for (let log of recentLogs.reverse()) {
             this.logs.unshift(log)
           }
           this.nowId = this.logs[0] && this.logs[0].id;
         }
-        catch (e){
+        catch (e) {
           this.$handleError(e);
         }
         this.loading = false;
       },
-      parseLevel(level){
+      parseLevel(level) {
         return `system-log-level-${level.toLowerCase()}`
       }
     }

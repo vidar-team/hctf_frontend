@@ -5,15 +5,15 @@ class Category extends Model {
    * 获得所有分类
    * @returns {Promise}
    */
-  getAllCategories(){
+  getAllCategories() {
     return new Promise(async (resolve, reject) => {
-      try{
+      try {
         let lists = this.request("GET", "/Category/list", {}, {
           needAuth: true
         });
         resolve(lists);
       }
-      catch (e){
+      catch (e) {
         reject(e);
       }
     })
@@ -24,9 +24,9 @@ class Category extends Model {
    * @param categoryName
    * @returns {Promise}
    */
-  createCategory(categoryName){
+  createCategory(categoryName) {
     return new Promise(async (resolve, reject) => {
-      try{
+      try {
         let newCategory = await this.request("POST", "/Category/create", {
           categoryName: categoryName
         }, {
@@ -34,7 +34,7 @@ class Category extends Model {
         });
         resolve(newCategory);
       }
-      catch (e){
+      catch (e) {
         reject(e);
       }
     })
@@ -45,9 +45,9 @@ class Category extends Model {
    * @param categoryId
    * @returns {Promise}
    */
-  removeCategory(categoryId){
+  removeCategory(categoryId) {
     return new Promise(async (resolve, reject) => {
-      try{
+      try {
         let result = await this.request("POST", "/Category/deleteCategory", {
           categoryId: categoryId
         }, {
@@ -55,7 +55,7 @@ class Category extends Model {
         });
         resolve(result);
       }
-      catch (e){
+      catch (e) {
         reject(e);
       }
     })

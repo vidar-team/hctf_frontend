@@ -1,13 +1,13 @@
 import makeHash from 'sha.js';
 import Model from '@/model/model'
 
-class Team extends Model{
+class Team extends Model {
   /**
    * Do SHA-256 Hashing
    * @param text
    * @returns {*}
    */
-  sha256(text = ''){
+  sha256(text = '') {
     let sha256 = makeHash('sha256');
     return sha256.update(text).digest('hex');
   }
@@ -16,15 +16,15 @@ class Team extends Model{
    * 获取用户信息
    * @returns {Promise}
    */
-  getTeamInfo(){
+  getTeamInfo() {
     return new Promise(async (resolve, reject) => {
-      try{
+      try {
         let result = await this.request("GET", "/User/info", {}, {
           needAuth: true
         });
         resolve(result);
       }
-      catch (e){
+      catch (e) {
         reject(e);
       }
     })
@@ -35,9 +35,9 @@ class Team extends Model{
    * @param page 分页
    * @returns {Promise}
    */
-  getAllTeams(page = 1){
+  getAllTeams(page = 1) {
     return new Promise(async (resolve, reject) => {
-      try{
+      try {
         let result = await this.request("GET", "/User/list", {
           page: page
         }, {
@@ -45,7 +45,7 @@ class Team extends Model{
         });
         resolve(result);
       }
-      catch (e){
+      catch (e) {
         reject(e);
       }
     })
@@ -56,9 +56,9 @@ class Team extends Model{
    * @param teamId
    * @returns {Promise}
    */
-  banTeam(teamId){
+  banTeam(teamId) {
     return new Promise(async (resolve, reject) => {
-      try{
+      try {
         let result = await this.request("POST", "/User/ban", {
           teamId: teamId
         }, {
@@ -66,7 +66,7 @@ class Team extends Model{
         });
         resolve(result);
       }
-      catch (e){
+      catch (e) {
         reject(e);
       }
     })
@@ -77,9 +77,9 @@ class Team extends Model{
    * @param teamId
    * @returns {Promise}
    */
-  unbanTeam(teamId){
+  unbanTeam(teamId) {
     return new Promise(async (resolve, reject) => {
-      try{
+      try {
         let result = await this.request("POST", "/User/unban", {
           teamId: teamId
         }, {
@@ -87,7 +87,7 @@ class Team extends Model{
         });
         resolve(result);
       }
-      catch (e){
+      catch (e) {
         reject(e);
       }
     })
@@ -98,9 +98,9 @@ class Team extends Model{
    * @param teamId
    * @returns {Promise}
    */
-  setAdmin(teamId){
+  setAdmin(teamId) {
     return new Promise(async (resolve, reject) => {
-      try{
+      try {
         let result = await this.request("POST", "/User/setAdmin", {
           teamId: teamId
         }, {
@@ -108,15 +108,15 @@ class Team extends Model{
         });
         resolve(result);
       }
-      catch (e){
+      catch (e) {
         reject(e);
       }
     })
   }
 
-  resetPassword(teamId){
+  resetPassword(teamId) {
     return new Promise(async (resolve, reject) => {
-      try{
+      try {
         let result = await this.request("POST", "/User/forceResetPassword", {
           teamId: teamId
         }, {
@@ -124,10 +124,11 @@ class Team extends Model{
         });
         resolve(result);
       }
-      catch (e){
+      catch (e) {
         reject(e);
       }
     })
   }
 }
+
 export default Team;

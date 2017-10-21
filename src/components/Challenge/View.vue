@@ -2,7 +2,8 @@
   <article class="challenge-body">
     <h3>{{ challenge.title }}
       <el-tooltip :content="$t('challenge.dynamicFlagDescription')" placement="top">
-        <span v-if="challenge.is_dynamic_flag" class="dynamic-flag-badge">[{{ $t('challenge.dynamicFlagBadge') }}]</span>
+        <span v-if="challenge.is_dynamic_flag" class="dynamic-flag-badge">[{{ $t('challenge.dynamicFlagBadge')
+          }}]</span>
       </el-tooltip>
     </h3>
     <div class="challenge-content">
@@ -28,46 +29,52 @@
   </article>
 </template>
 <style>
-  .challenge-body{
+  .challenge-body {
     margin: 2rem auto;
     clear: both;
   }
-  .challenge-item{
+
+  .challenge-item {
     line-height: 2;
   }
-  .challenge-item-key{
+
+  .challenge-item-key {
     color: #aaa;
     display: inline-block;
     margin-right: 1rem;
   }
-  .challenge-item-value{
+
+  .challenge-item-value {
     display: inline-block;
   }
-  .dynamic-flag-badge{
+
+  .dynamic-flag-badge {
     vertical-align: super;
     font-size: smaller;
     font-weight: normal;
   }
-  a{
+
+  a {
     text-decoration: none;
     color: #4db3ff;
   }
-  a:hover{
+
+  a:hover {
     color: #1c8de0;
   }
 </style>
 <script>
   export default {
-    data(){
+    data() {
       return {}
     },
     props: ["challenge"],
     methods: {
-      formatURL(url){
+      formatURL(url) {
         let mappings = {
           "teamId": this.$store.state.user.teamId
         };
-        for (let key of Object.keys(mappings)){
+        for (let key of Object.keys(mappings)) {
           url = url.replace("${" + key + "}", mappings[key]);
         }
         return url;

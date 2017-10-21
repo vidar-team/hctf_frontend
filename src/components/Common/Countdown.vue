@@ -16,16 +16,18 @@
     -ms-user-select: none;
     user-select: none;
   }
-  .countdown span{
+
+  .countdown span {
     font-size: xx-large;
   }
-  .countdown-title{
+
+  .countdown-title {
     color: #aaa;
   }
 </style>
 <script>
   export default {
-    data(){
+    data() {
       return {
         startTime: new Date("2017-11-11T00:00:00.000Z"),
         endTime: new Date("2017-11-13T00:00:00.000Z"),
@@ -38,29 +40,28 @@
       }
     },
     computed: {
-      countdownTitle(){
-        if (new Date() < this.startTime){
+      countdownTitle() {
+        if (new Date() < this.startTime) {
           return this.$t("countdown.untilStart")
         }
-        else{
+        else {
           return this.$t("countdown.untilClose");
         }
       }
     },
-    async mounted(){
-      while(true){
-        if (this.$route.name !== "Index"){
+    async mounted() {
+      while (true) {
+        if (this.$route.name !== "Index") {
           break;
         }
         this.flush();
         await (() =>
-          new Promise(resolve => setTimeout(resolve, 1000))
-        )();
+            new Promise(resolve => setTimeout(resolve, 1000)))();
       }
     },
     methods: {
-      flush(){
-        let diff = Math.round(Math.abs(this.startTime.valueOf() - new Date().valueOf())/1000);
+      flush() {
+        let diff = Math.round(Math.abs(this.startTime.valueOf() - new Date().valueOf()) / 1000);
         let days = Math.floor(diff / 86400);
         diff = diff % 86400;
         let hours = Math.floor(diff / 3600);

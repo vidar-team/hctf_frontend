@@ -1,6 +1,6 @@
 import Model from '@/model/model'
 
-class Level extends Model{
+class Level extends Model {
   /**
    * 创建 Level
    * @param categoryId
@@ -8,11 +8,11 @@ class Level extends Model{
    * @param releaseTime
    * @returns {Promise}
    */
-  createLevel(categoryId, levelName, releaseTime){
+  createLevel(categoryId, levelName, releaseTime) {
     let time = new Date(releaseTime);
     let timeString = `${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()} ${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`;
     return new Promise(async (resolve, reject) => {
-      try{
+      try {
         let result = await this.request("POST", "/Level/create", {
           categoryId: categoryId,
           levelName: levelName,
@@ -22,7 +22,7 @@ class Level extends Model{
         });
         resolve(result);
       }
-      catch (e){
+      catch (e) {
         reject(e);
       }
     })
@@ -33,9 +33,9 @@ class Level extends Model{
    * @param levelId
    * @returns {Promise}
    */
-  getLevelInfo(levelId){
+  getLevelInfo(levelId) {
     return new Promise(async (resolve, reject) => {
-      try{
+      try {
         let levelInfo = await this.request("GET", "/Level/info", {
           "levelId": levelId
         }, {
@@ -43,7 +43,7 @@ class Level extends Model{
         });
         resolve(levelInfo);
       }
-      catch (e){
+      catch (e) {
         reject(e);
       }
     })
@@ -55,9 +55,9 @@ class Level extends Model{
    * @param levelName
    * @returns {Promise}
    */
-  setLevelName(levelId, levelName){
+  setLevelName(levelId, levelName) {
     return new Promise(async (resolve, reject) => {
-      try{
+      try {
         let level = await this.request("POST", "/Level/setName", {
           levelId: levelId,
           levelName: levelName
@@ -66,7 +66,7 @@ class Level extends Model{
         });
         resolve(level);
       }
-      catch (e){
+      catch (e) {
         reject(e);
       }
     })
@@ -78,11 +78,11 @@ class Level extends Model{
    * @param releaseTime
    * @returns {Promise}
    */
-  setReleaseTime(levelId, releaseTime){
+  setReleaseTime(levelId, releaseTime) {
     return new Promise(async (resolve, reject) => {
       let time = new Date(releaseTime);
       let timeString = `${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()} ${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`;
-      try{
+      try {
         let level = await this.request("POST", "/Level/setReleaseTime", {
           levelId: levelId,
           releaseTime: timeString
@@ -91,7 +91,7 @@ class Level extends Model{
         });
         resolve(level);
       }
-      catch (e){
+      catch (e) {
         reject(e);
       }
     })
@@ -103,9 +103,9 @@ class Level extends Model{
    * @param rules
    * @returns {Promise}
    */
-  setRules(levelId, rules){
+  setRules(levelId, rules) {
     return new Promise(async (resolve, reject) => {
-      try{
+      try {
         let level = await this.request("POST", "/Level/setRules", {
           levelId: levelId,
           rules: rules
@@ -114,7 +114,7 @@ class Level extends Model{
         });
         resolve(level);
       }
-      catch (e){
+      catch (e) {
         reject(e);
       }
     })
@@ -125,9 +125,9 @@ class Level extends Model{
    * @param levelId
    * @returns {Promise}
    */
-  deleteLevel(levelId){
+  deleteLevel(levelId) {
     return new Promise(async (resolve, reject) => {
-      try{
+      try {
         let result = this.request("POST", "/Level/deleteLevel", {
           levelId: levelId
         }, {
@@ -135,7 +135,7 @@ class Level extends Model{
         });
         resolve(result);
       }
-      catch (e){
+      catch (e) {
         reject(e);
       }
     })

@@ -8,31 +8,31 @@
   </el-card>
 </template>
 <style scoped>
-  .token{
+  .token {
     font-family: Consolas, monospace;
   }
 </style>
 <script>
   import User from '../../model/Team';
+
   let UserModel = new User();
   export default {
-    data(){
+    data() {
       return {
         team: {},
         loading: false
       }
     },
-    async mounted(){
+    async mounted() {
       this.loading = true;
-      try{
+      try {
         this.team = await UserModel.getTeamInfo();
       }
-      catch (e){
+      catch (e) {
         this.$handleError(e);
       }
       this.loading = false;
     },
-    methods: {
-    }
+    methods: {}
   }
 </script>

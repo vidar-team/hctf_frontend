@@ -12,7 +12,8 @@
     <div v-else class="logic-operator-view-placeholder">
 
     </div>
-    <span class="rule-body">分类 {{categoryName}} 的通过数量 {{rule.compare.compareOperator | parseCompareOperator}} {{rule.compare.compareTo}}</span>
+    <span
+      class="rule-body">分类 {{categoryName}} 的通过数量 {{rule.compare.compareOperator | parseCompareOperator}} {{rule.compare.compareTo}}</span>
   </div>
   <div v-else-if="mode === 'edit'" class="rules-editor-container">
     <el-form :inline="true">
@@ -24,7 +25,8 @@
       </el-form-item>
       <el-form-item label="选择分类">
         <el-select size="small" v-model="form.categoryId">
-          <el-option v-for="category in info" :label="category.category_name" :value="category.category_id" :key="category.category_id"></el-option>
+          <el-option v-for="category in info" :label="category.category_name" :value="category.category_id"
+                     :key="category.category_id"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="比较运算符">
@@ -46,8 +48,9 @@
 </template>
 <script>
   import RulesMixin from './RulesMixin'
+
   export default {
-    data(){
+    data() {
       return {
         form: {
           logicOperator: "",
@@ -58,13 +61,13 @@
       }
     },
     props: ['rule', 'mode', 'info', 'count'],
-    mounted(){
+    mounted() {
 
     },
     computed: {
-      categoryName(){
+      categoryName() {
         let category = this.info.find(i => i.category_id === this.rule.compare.targetId);
-        if (category){
+        if (category) {
           return category["category_name"];
         }
         return false;
@@ -72,14 +75,14 @@
     },
     mixins: [RulesMixin],
     methods: {
-      saveRule(){
-        if (!this.form.compareOperator || !this.form.categoryId || !this.form.compareTo){
+      saveRule() {
+        if (!this.form.compareOperator || !this.form.categoryId || !this.form.compareTo) {
           return this.$handleError({
             message: "请填写所有项目"
           });
         }
-        if (this.count > 0){
-          if (!this.form.logicOperator){
+        if (this.count > 0) {
+          if (!this.form.logicOperator) {
             return this.$handleError({
               message: "必须设定逻辑运算符"
             });
@@ -93,7 +96,7 @@
             compareTo: parseInt(this.form.compareTo)
           }
         };
-        if (this.count > 0){
+        if (this.count > 0) {
           rule.logicOperator = this.form.logicOperator;
         }
         this.$emit("save", rule);

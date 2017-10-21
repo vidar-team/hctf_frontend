@@ -29,7 +29,7 @@
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
-            <el-button @click="resetScoreDialogVisible = false">取 消</el-button>
+            <el-button @click="resetScoreDialogVisible = false">取消</el-button>
             <el-button type="primary" @click="resetScore">确认</el-button>
           </div>
         </el-dialog>
@@ -59,11 +59,29 @@
           label="操作"
         >
           <template slot-scope="scope">
-            <el-button type="text" @click="">编辑</el-button>
+            <el-button type="text" @click="startEditFlag(scope.row.flag_id)">编辑</el-button>
             <el-button type="text" style="color: red" @click="deleteFlag(scope.row.flag_id)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
+      <el-dialog title="编辑 Flag" :visible.sync="editFlagDialogVisible">
+        <el-form v-model="form" v-loading="dialogLoading">
+          <el-form-item label="Flag">
+            <el-input v-model="editFlagForm.flag"></el-input>
+          </el-form-item>
+          <el-form-item label="限定队伍ID (0为不限制)">
+            <el-input v-model="editFlagForm.teamId" type="number"></el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="editFlagDialogVisible = false">取消</el-button>
+          <el-button type="primary" @click="editFlag">确认</el-button>
+        </div>
+      </el-dialog>
+      <div style="margin-top: 1rem;">
+        <el-button type="danger" @click="deleteAllFlags">删除所有 Flag</el-button>
+        <el-button type="primary">批量添加 Flag</el-button>
+      </div>
     </el-tab-pane>
   </el-tabs>
 </template>
@@ -82,22 +100,28 @@
           description: "",
           releaseTime: ""
         },
+        editFlagForm: {
+          flagId: "",
+          flag: "",
+          teamId: 0
+        },
         loading: false,
         dialogLoading: false,
         resetScoreDialogVisible: false,
+        editFlagDialogVisible: false,
         flags: [],
         isFlagLoaded: false
       }
     },
     watch: {
-      async activeTabName(){
-        if (this.activeTabName === "flags" && !this.isFlagLoaded){
+      async activeTabName() {
+        if (this.activeTabName === "flags" && !this.isFlagLoaded) {
           this.loading = true;
-          try{
+          try {
             this.flags = await ChallengeModel.getFlagsInfo(this.$route.query.challengeId);
             this.isFlagLoaded = true;
           }
-          catch (e){
+          catch (e) {
             this.$handleError(e);
           }
           this.loading = false;
@@ -105,6 +129,10 @@
       }
     },
     methods: {
+      /**
+       * 提交简介修改
+       * @returns {Promise.<void>}
+       */
       async submitOverview() {
         if (!this.form.title || !this.form.description || !this.form.releaseTime) {
           return this.$handleError({
@@ -132,24 +160,87 @@
         }
         this.loading = false;
       },
-      async resetScore(){
+      /**
+       * 提交基准分数修改
+       * @returns {Promise.<void>}
+       */
+      async resetScore() {
         this.dialogLoading = true;
-        try{
+        try {
           await ChallengeModel.resetScore(this.$route.query.challengeId, this.form.score);
           this.resetScoreDialogVisible = false;
         }
-        catch (e){
+        catch (e) {
           this.$handleError(e);
         }
         this.dialogLoading = false;
       },
-      async deleteFlag(flagId){
+      /**
+       * 提交删除Flag
+       * @param flagId
+       * @returns {Promise.<void>}
+       */
+      async deleteFlag(flagId) {
         this.loading = true;
-        try{
+        try {
           await FlagModel.deleteFlag(flagId);
           this.flags = await ChallengeModel.getFlagsInfo(this.$route.query.challengeId);
         }
-        catch (e){
+        catch (e) {
+          this.$handleError(e);
+        }
+        this.loading = false;
+      },
+      /**
+       * 开始编辑 Flag / 准备数据
+       * @param flagId
+       */
+      startEditFlag(flagId) {
+        this.editFlagDialogVisible = true;
+        let flag = this.flags.find(i => i.flag_id === flagId);
+        this.editFlagForm.flag = flag.flag;
+        this.editFlagForm.teamId = flag.team_id;
+        this.editFlagForm.flagId = flag.flag_id;
+      },
+      /**
+       * 提交 Flag 编辑
+       * @returns {Promise.<void>}
+       */
+      async editFlag() {
+        this.dialogLoading = true;
+        try {
+          let editedFlag = await FlagModel.editFlag(this.editFlagForm.flagId, this.editFlagForm.flag, this.editFlagForm.teamId);
+          let nowFlag = this.flags.find(i => i.flag_id === this.editFlagForm.flagId);
+          nowFlag.flag = editedFlag.flag;
+          nowFlag.teamId = editedFlag.teamId;
+          this.editFlagDialogVisible = false;
+        }
+        catch (e) {
+          this.$handleError(e);
+        }
+        this.dialogLoading = false;
+      },
+      /**
+       * 提交 删除全部关联 Flag
+       * @returns {Promise.<void>}
+       */
+      async deleteAllFlags() {
+        try {
+          await this.$confirm('此操作将会删除该问题下的所有Flag，但不会删除该题目已经产生的提交记录，也不会扣除对应分数。生产环境不建议进行此操作，请谨慎操作。', '危险操作确认', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          });
+        }
+        catch (e) {
+          return;
+        }
+        this.loading = true;
+        try {
+          await ChallengeModel.deleteAllFlags(this.$route.query.challengeId);
+          this.flags = [];
+        }
+        catch (e) {
           this.$handleError(e);
         }
         this.loading = false;

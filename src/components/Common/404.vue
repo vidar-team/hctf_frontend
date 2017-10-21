@@ -16,7 +16,7 @@
   </el-row>
 </template>
 <style>
-  .not_found_message{
+  .not_found_message {
     text-align: center;
     font-size: 5rem;
     color: #aaa;

@@ -1,7 +1,8 @@
 <template>
   <section>
     <h2>队伍概览</h2>
-    <el-table :data="teams" style="width: 100%" v-loading="loading" ref="multipleTable" @selection-change="handleSelectionChange">
+    <el-table :data="teams" style="width: 100%" v-loading="loading" ref="multipleTable"
+              @selection-change="handleSelectionChange">
       <el-table-column
         type="selection"
         width="55">
@@ -21,7 +22,7 @@
         label="密码"
         width="80">
         <template slot-scope="scope">
-            <el-button type="text" @click="resetPassword(scope.row.team_id)">重置</el-button>
+          <el-button type="text" @click="resetPassword(scope.row.team_id)">重置</el-button>
         </template>
       </el-table-column>
       <el-table-column
@@ -58,7 +59,7 @@
       <el-table-column
         prop="banned"
         label="搞事情"
-        >
+      >
         <template slot-scope="scope">
           <el-button type="text" @click="banTeam(scope.row.team_id)" v-if="!scope.row.banned">BAN!</el-button>
           <el-button type="text" @click="unbanTeam(scope.row.team_id)" v-else>UNBAN!</el-button>
@@ -82,18 +83,20 @@
   </section>
 </template>
 <style scoped>
-  .el-pagination{
+  .el-pagination {
     padding: 3px 0px 0px;
   }
-  .operations{
+
+  .operations {
     margin-top: 5px;
   }
 </style>
 <script>
   import Team from '@/model/admin/Team';
+
   let TeamModel = new Team();
   export default {
-    data(){
+    data() {
       return {
         teams: [],
         selectedTeamIds: [],
@@ -102,47 +105,47 @@
         currentPage: 1
       }
     },
-    async mounted(){
+    async mounted() {
       this.loadTeamData(1);
     },
     methods: {
-      async loadTeamData(page = 1){
+      async loadTeamData(page = 1) {
         this.loading = true;
-        try{
+        try {
           let teamsInfo = await TeamModel.getAllTeams(page);
           this.teams = teamsInfo.teams;
           this.total = teamsInfo.total;
         }
-        catch (e){
+        catch (e) {
           this.$handleError(e);
         }
         this.loading = false;
       },
-      async banTeam(teamId){
+      async banTeam(teamId) {
         this.loading = true;
-        try{
+        try {
           await TeamModel.banTeam(Array.isArray(teamId) ? teamId : [teamId]);
           this.loadTeamData(this.currentPage);
         }
-        catch (e){
+        catch (e) {
           this.$handleError(e);
         }
         this.loading = false;
       },
-      async unbanTeam(teamId){
+      async unbanTeam(teamId) {
         this.loading = true;
-        try{
+        try {
           await TeamModel.unbanTeam(Array.isArray(teamId) ? teamId : [teamId]);
           this.loadTeamData(this.currentPage);
         }
-        catch (e){
+        catch (e) {
           this.$handleError(e);
         }
         this.loading = false;
       },
-      async banManyTeams(){
-        try{
-          if (this.selectedTeamIds.length >= 10){
+      async banManyTeams() {
+        try {
+          if (this.selectedTeamIds.length >= 10) {
             await this.$confirm('此操作将封禁大量队伍, 是否继续?', '危险操作确认', {
               confirmButtonText: '确定',
               cancelButtonText: '取消',
@@ -151,10 +154,11 @@
           }
           this.banTeam(this.selectedTeamIds);
         }
-        catch (e) {}
+        catch (e) {
+        }
       },
-      async setAdmin(teamId){
-        try{
+      async setAdmin(teamId) {
+        try {
           await this.$confirm('此操作将赋予该用户管理员权限, 是否继续?', '危险操作确认', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
@@ -164,13 +168,13 @@
           await TeamModel.setAdmin(Array.isArray(teamId) ? teamId : [teamId]);
           this.loadTeamData(this.currentPage);
         }
-        catch (e){
+        catch (e) {
           this.$handleError(e);
         }
         this.loading = false;
       },
-      async resetPassword(teamId){
-        try{
+      async resetPassword(teamId) {
+        try {
           await this.$confirm('此操作将强制重置该队伍密码, 是否继续?', '危险操作确认', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
@@ -181,11 +185,11 @@
             confirmButtonText: '我已经保存新密码',
           });
         }
-        catch (e){
+        catch (e) {
 
         }
       },
-      handleSelectionChange(rows){
+      handleSelectionChange(rows) {
         this.selectedTeamIds = Array.from(rows, i => i.team_id);
       }
     }

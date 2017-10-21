@@ -37,24 +37,24 @@ Vue.use(GlobalErrorHandler, {
 
 router.beforeEach(async (to, from, next) => {
   NProgress.start();
-  if (to.matched.some(record => record.meta.needLogin)){
-    if (to.matched.some(record => record.meta.needAdmin)){
+  if (to.matched.some(record => record.meta.needLogin)) {
+    if (to.matched.some(record => record.meta.needAdmin)) {
       // 需要管理员
-      if (await Auth.isAdmin()){
+      if (await Auth.isAdmin()) {
         next();
       }
-      else{
+      else {
         next({
           name: 'Index'
         })
       }
     }
-    else{
+    else {
       // 需要登录的操作。
-      if (Auth.isLogin()){
+      if (Auth.isLogin()) {
         next();
       }
-      else{
+      else {
         store.commit("logout");
         next({
           name: 'User-Login',
@@ -65,12 +65,12 @@ router.beforeEach(async (to, from, next) => {
       }
     }
   }
-  else{
+  else {
     next();
   }
 });
 
-router.afterEach((options)=>{
+router.afterEach((options) => {
   NProgress.done();
 });
 
@@ -81,7 +81,7 @@ new Vue({
   router,
   store,
   template: '<App/>',
-  components: { App }
+  components: {App}
 });
 
 console.log(`

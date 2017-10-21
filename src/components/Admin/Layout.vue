@@ -25,18 +25,19 @@
   </el-row>
 </template>
 <style scoped>
-  .main-container{
+  .main-container {
     position: relative;
   }
-  .main-container-children{
+
+  .main-container-children {
     margin: auto 1rem;
     padding: 1rem;
     width: auto !important;
   }
 </style>
 <script>
-  export default{
-    data(){
+  export default {
+    data() {
       return {
         defaultOpeneds: ['/admin/team', '/admin/challenge']
       }

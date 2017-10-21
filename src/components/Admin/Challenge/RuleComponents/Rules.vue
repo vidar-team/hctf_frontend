@@ -13,13 +13,14 @@
    </span>
  </span>
   <div v-else-if="mode === 'edit'">
-    <el-row v-if="parsedRules.rules && parsedRules.rules.length > 0" v-for="rule in parsedRules.rules" :key="rule._ruldId" class="rule-view-container">
+    <el-row v-if="parsedRules.rules && parsedRules.rules.length > 0" v-for="rule in parsedRules.rules"
+            :key="rule._ruldId" class="rule-view-container">
       <el-col :span="6" :offset=1>
         <component :is="rule.type" :rule="rule" :info="info" mode="view">
 
         </component>
       </el-col>
-      <el-col :span="1" :offset = 1>
+      <el-col :span="1" :offset=1>
         <el-button type="text" @click="removeRule(rule._ruleId)">
           <i class="el-icon-close"></i>
         </el-button>
@@ -37,7 +38,8 @@
       </el-col>
       <el-col :span="23" :offset="1">
         <template v-if="form.type">
-          <component :is="form.type" :info="info" mode="edit" :key="new Date().valueOf()" :count="parsedRules.ruleCount" @save="saveRule">
+          <component :is="form.type" :info="info" mode="edit" :key="new Date().valueOf()" :count="parsedRules.ruleCount"
+                     @save="saveRule">
 
           </component>
         </template>
@@ -71,34 +73,34 @@
       this.flushRules();
     },
     watch: {
-      rules(){
+      rules() {
         this.flushRules();
       }
     },
     methods: {
-      flushRules(){
+      flushRules() {
         if (this.rules && this.rules.length > 0) {
           this.parsedRules = new Rules(this.rules);
         }
-        else{
+        else {
           this.parsedRules = new Rules([]);
         }
       },
-      removeRule(ruleId){
-         this.parsedRules = this.parsedRules.remove(ruleId);
+      removeRule(ruleId) {
+        this.parsedRules = this.parsedRules.remove(ruleId);
       },
-      appendRule(){
-        if (this.appendMode){
+      appendRule() {
+        if (this.appendMode) {
           return false;
         }
         this.appendMode = true;
       },
-      saveRule(rule){
+      saveRule(rule) {
         this.parsedRules = this.parsedRules.append(rule);
         this.appendMode = false;
         this.form.type = "";
       },
-      updateRule(rule){
+      updateRule(rule) {
         this.$emit('update', this.parsedRules);
       }
     },
@@ -112,21 +114,25 @@
     font-weight: bold;
     color: #8664ff;
   }
-  .logic-operator-view{
+
+  .logic-operator-view {
     color: #8664ff;
     font-weight: bold;
     min-width: 2rem;
     display: inline-block;
   }
-  .logic-operator-view-placeholder{
+
+  .logic-operator-view-placeholder {
     min-width: 2rem;
     display: inline-block;
   }
-  .rule-view-container{
+
+  .rule-view-container {
     line-height: 2;
     font-size: 120%;
   }
-  .rule-view-container i{
+
+  .rule-view-container i {
     font-size: x-small;
   }
 </style>

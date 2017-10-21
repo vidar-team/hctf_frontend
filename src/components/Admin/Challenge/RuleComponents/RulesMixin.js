@@ -1,4 +1,5 @@
 import rulesDefinition from './RulesDefinition'
+
 export default {
   filters: {
     parseLogicOperator(logicOperator) {

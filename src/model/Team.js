@@ -1,13 +1,14 @@
 import makeHash from 'sha.js';
 
 import Model from './model'
-class User extends Model{
+
+class User extends Model {
   /**
    * Do SHA-256 Hashing
    * @param text
    * @returns {*}
    */
-  sha256(text = ''){
+  sha256(text = '') {
     let sha256 = makeHash('sha256');
     return sha256.update(text).digest('hex');
   }
@@ -18,16 +19,16 @@ class User extends Model{
    * @param password
    * @returns {Promise}
    */
-  login(email, password){
+  login(email, password) {
     return new Promise(async (resolve, reject) => {
-      try{
+      try {
         let result = await this.request("POST", '/User/login', {
           email: email,
           password: this.sha256(password)
         });
         resolve(result);
       }
-      catch (e){
+      catch (e) {
         reject(e);
       }
     })
@@ -37,19 +38,20 @@ class User extends Model{
    * 登出
    * @returns {Promise}
    */
-  logout(){
+  logout() {
     return new Promise(async (resolve, reject) => {
-      try{
+      try {
         let result = await this.request("POST", '/User/logout', {}, {
           needAuth: true
         });
         resolve(result);
       }
-      catch (e){
+      catch (e) {
         reject(e);
       }
     })
   }
+
   /**
    * 注册
    * @param teamName
@@ -57,9 +59,9 @@ class User extends Model{
    * @param password
    * @returns {Promise}
    */
-  register(teamName, email, password){
+  register(teamName, email, password) {
     return new Promise(async (resolve, reject) => {
-      try{
+      try {
         let result = await  this.request("POST", "/User/register", {
           teamName: teamName,
           email: email,
@@ -67,7 +69,7 @@ class User extends Model{
         });
         resolve(result);
       }
-      catch (e){
+      catch (e) {
         reject(e);
       }
     })
@@ -77,15 +79,15 @@ class User extends Model{
    * 获取用户信息
    * @returns {Promise}
    */
-  getTeamInfo(){
+  getTeamInfo() {
     return new Promise(async (resolve, reject) => {
-      try{
+      try {
         let result = await this.request("GET", "/User/info", {}, {
           needAuth: true
         });
         resolve(result);
       }
-      catch (e){
+      catch (e) {
         reject(e);
       }
     })
@@ -95,12 +97,12 @@ class User extends Model{
    * 获得排行
    * @returns {Promise}
    */
-  getRanking(){
+  getRanking() {
     return new Promise(async (resolve, reject) => {
-      try{
+      try {
         resolve(await this.request("GET", "/User/ranking"));
       }
-      catch (e){
+      catch (e) {
         reject(e);
       }
     })
@@ -111,17 +113,18 @@ class User extends Model{
    * @param teamId
    * @returns {Promise}
    */
-  select(teamId){
+  select(teamId) {
     return new Promise(async (resolve, reject) => {
-      try{
+      try {
         resolve(await this.request("GET", "/User/select", {
           teamId: teamId
         }));
       }
-      catch (e){
+      catch (e) {
         reject(e);
       }
     })
   }
 }
+
 export default User;

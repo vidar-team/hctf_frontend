@@ -41,10 +41,10 @@
         <el-menu-item index="#en" @click="switchLanguage('en')">
           English
         </el-menu-item>
-        <el-menu-item index="#zh-cn"  @click="switchLanguage('zh-cn')">
+        <el-menu-item index="#zh-cn" @click="switchLanguage('zh-cn')">
           中文
         </el-menu-item>
-        <el-menu-item index="#ja"  @click="switchLanguage('ja')">
+        <el-menu-item index="#ja" @click="switchLanguage('ja')">
           日本語
         </el-menu-item>
       </el-submenu>
@@ -58,33 +58,34 @@
 <script>
   import Auth from './utils/auth';
   import User from './model/Team';
+
   let UserModel = new User();
   export default {
     name: 'hctf',
-    data(){
+    data() {
       return {
         inited: false,
       }
     },
     computed: {
-      teamName(){
+      teamName() {
         return this.$store.state.user.teamName;
       },
-      isLogin(){
+      isLogin() {
         return this.$store.state.user.isLogin;
       },
-      isAdmin(){
+      isAdmin() {
         return this.$store.state.user.isAdmin;
       },
     },
-    async mounted(){
-      if (!Auth.isLogin()){
+    async mounted() {
+      if (!Auth.isLogin()) {
         this.inited = true;
       }
-      else{
-        try{
+      else {
+        try {
           let result = await UserModel.getTeamInfo();
-          if (result.admin){
+          if (result.admin) {
             this.$store.commit("enterAdminMode");
           }
           this.$store.commit("setTeamName", result.team_name);
@@ -92,13 +93,13 @@
           this.$store.commit("login");
           this.inited = true;
         }
-        catch (e){
+        catch (e) {
           this.inited = true;
         }
       }
     },
     methods: {
-      switchLanguage(lang){
+      switchLanguage(lang) {
         return this.$i18n.locale = lang;
       }
     }
@@ -109,6 +110,7 @@
   .float-right {
     float: right !important;
   }
+
   .el-menu {
     margin: 0 auto 1rem auto;
     box-shadow: #aaa 1px 1px 1px 0px;

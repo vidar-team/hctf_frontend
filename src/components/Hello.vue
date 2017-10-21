@@ -15,7 +15,7 @@
     </el-col>
     <el-col :span="12">
       <el-card>
-          <recent-logs :teams="topTeams"></recent-logs>
+        <recent-logs :teams="topTeams"></recent-logs>
       </el-card>
     </el-col>
   </el-row>
@@ -44,7 +44,7 @@
        * 更新 Top 20 队伍名单
        * @param topTeams
        */
-      updateTopTeams(topTeams){
+      updateTopTeams(topTeams) {
         this.topTeams = topTeams;
       }
     }

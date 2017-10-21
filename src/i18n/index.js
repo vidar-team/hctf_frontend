@@ -6,7 +6,7 @@ Vue.use(VueI18n);
 // load languages
 
 import zh from "./messages/zh-cn";
-import en from  "./messages/en";
+import en from "./messages/en";
 import ja from "./messages/ja"
 
 const messages = {

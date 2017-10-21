@@ -85,6 +85,7 @@
 <script>
   import Category from '@/model/admin/Category';
   import Challenge from '@/model/admin/Challenge'
+
   let CategoryModel = new Category();
   let ChallengeModel = new Challenge();
   export default {
@@ -94,7 +95,7 @@
         loading: false,
         form: {
           levelId: [],
-          releaseTime: new Date(new Date().valueOf() + 24*60*60*1000).toISOString(),
+          releaseTime: new Date(new Date().valueOf() + 24 * 60 * 60 * 1000).toISOString(),
           title: "",
           description: "",
           score: 0,
@@ -113,44 +114,44 @@
         flags: []
       }
     },
-    async mounted(){
+    async mounted() {
       this.loading = true;
-      try{
+      try {
         this.categories = await CategoryModel.getAllCategories();
       }
-      catch (e){
+      catch (e) {
         this.$handleError(e);
       }
       this.loading = false;
     },
     methods: {
-      async submit(){
+      async submit() {
         let config = this.form.config;
-        if (!this.form.title || !this.form.description || !this.form.url || !this.form.score || !this.form.releaseTime || this.form.levelId.length === 0){
+        if (!this.form.title || !this.form.description || !this.form.url || !this.form.score || !this.form.releaseTime || this.form.levelId.length === 0) {
           return this.$handleError({
             message: "请填写表单全部内容"
           });
         }
         this.loading = true;
-        if (!this.form.flag && !this.form.isDynamicFlag){
-          if (this.flags.length === 0){
+        if (!this.form.flag && !this.form.isDynamicFlag) {
+          if (this.flags.length === 0) {
             return this.$handleError({
               message: "请设定 Flag"
             });
           }
-          else{
+          else {
             config.multiFlag = true;
           }
         }
-        else{
-          if (this.form.flag !== ""){
+        else {
+          if (this.form.flag !== "") {
             this.flags = [{
               flag: this.form.flag
             }];
           }
         }
 
-        try{
+        try {
           let challenge = await ChallengeModel.createChallenge(this.form.title, this.form.url, this.form.description, this.form.score, this.flags, config, this.form.levelId[1], this.form.releaseTime, this.form.isDynamicFlag);
           this.$message({
             showClose: true,
@@ -164,39 +165,39 @@
             }
           })
         }
-        catch (e){
+        catch (e) {
           this.$handleError(e);
         }
         this.loading = false;
       },
-      viewMultiFlagForm(){
-        if (this.form.isDynamicFlag){
+      viewMultiFlagForm() {
+        if (this.form.isDynamicFlag) {
           return this.$handleError({
             message: "多 Flag 与动态 Flag 不可同时设定"
           });
         }
         this.multiFlagDialogVisible = true;
       },
-      viewDynamicFlagForm(){
-        if (this.flags.length > 1){
+      viewDynamicFlagForm() {
+        if (this.flags.length > 1) {
           return this.$handleError({
             message: "多 Flag 与动态 Flag 不可同时设定"
           });
         }
         this.dynamicFlagDialogVisible = true;
       },
-      saveMultiFlag(){
+      saveMultiFlag() {
         let multiFlag = this.form.multiFlag;
-        try{
+        try {
           multiFlag = JSON.parse(multiFlag)
         }
-        catch (e){
+        catch (e) {
           return this.$handleError({
             message: "JSON 不合法"
           });
         }
-        for (let flag of multiFlag){
-          if (!flag.hasOwnProperty("flag") || !flag.hasOwnProperty("team_id")){
+        for (let flag of multiFlag) {
+          if (!flag.hasOwnProperty("flag") || !flag.hasOwnProperty("team_id")) {
             return this.$handleError({
               message: "JSON 不合法"
             })
@@ -207,8 +208,8 @@
         this.multiFlagDialogVisible = false;
         this.disableFlagInput = true;
       },
-      saveDynamicFlag(){
-        if (!this.form.flag){
+      saveDynamicFlag() {
+        if (!this.form.flag) {
           this.dynamicFlagDialogVisible = false;
           return this.$handleError({
             message: "请先填写 Flag"
@@ -219,19 +220,19 @@
       }
     },
     computed: {
-      parsedCategories(){
+      parsedCategories() {
         let parsedCategories = [];
-        for (let category of this.categories){
+        for (let category of this.categories) {
           let parsedCategory = {
             label: category.category_name,
             value: category.category_id,
             children: []
           };
-          if (category.levels.length === 0){
+          if (category.levels.length === 0) {
             parsedCategory.disabled = true;
           }
-          else{
-            for (let level of category.levels){
+          else {
+            for (let level of category.levels) {
               parsedCategory.children.push({
                 value: level.level_id,
                 label: level.level_name

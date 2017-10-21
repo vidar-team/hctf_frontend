@@ -16,9 +16,10 @@
 </template>
 <script>
   import User from '../../model/Team';
+
   let UserModel = new User();
   export default {
-    data(){
+    data() {
       return {
         form: {
           email: "",
@@ -27,37 +28,37 @@
         loading: false
       }
     },
-    mounted(){
+    mounted() {
 
     },
     methods: {
-      async submit(){
-        if (!this.form.email || !this.form.password){
+      async submit() {
+        if (!this.form.email || !this.form.password) {
           return this.$message.error(this.$t("login.pleaseFillTheForm"));
         }
         this.loading = true;
-        try{
+        try {
           let result = await UserModel.login(this.form.email, this.form.password);
-          if (result["access_token"]){
+          if (result["access_token"]) {
             localStorage.setItem('jwt', result.access_token);
           }
           result = await UserModel.getTeamInfo();
           this.$store.commit("setTeamName", result.team_name);
           this.$store.commit("setTeamId", result.team_id);
           this.$store.commit("login");
-          if (result.admin){
+          if (result.admin) {
             this.$store.commit("enterAdminMode");
           }
-          if (this.$route.query && this.$route.query["return"]){
+          if (this.$route.query && this.$route.query["return"]) {
             this.$router.push({
               name: this.$route.query["return"]
             });
           }
-          else{
+          else {
             this.$router.push('/');
           }
         }
-        catch (e){
+        catch (e) {
           this.$handleError(e);
         }
         this.loading = false;

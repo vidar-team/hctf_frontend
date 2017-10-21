@@ -7,7 +7,7 @@
   </div>
 </template>
 <style scoped>
-  .echarts{
+  .echarts {
     width: 100%;
   }
 </style>
@@ -21,7 +21,7 @@
   let TeamModel = new Team();
 
   export default {
-    data(){
+    data() {
       return {
         data: {
           title: {
@@ -31,9 +31,7 @@
             trigger: 'axis'
           },
           legend: {
-            data: [
-
-            ]
+            data: []
           },
           xAxis: {
             type: "time",
@@ -42,9 +40,7 @@
           yAxis: {
             type: "value"
           },
-          series: [
-
-          ]
+          series: []
         },
         loading: false,
         teamData: []
@@ -55,26 +51,26 @@
     },
     props: ['teams'],
     watch: {
-      async teams(){
+      async teams() {
         let series = [];
         let legend = [];
-        if (this.teams.length > 0){
+        if (this.teams.length > 0) {
           this.loading = true;
           let teams = await TeamModel.select(this.teams);
           this.teamData = teams;
-          for (let team of teams){
+          for (let team of teams) {
             let data = [];
             let score = 0;
             legend.push(team.team_name);
             // 共同起点
             let startTime = new Date("2017-09-29T03:11:11.000Z");
             data.push({
-              name:`${startTime.getFullYear()}-${startTime.getMonth() + 1}-${startTime.getDate()} ${startTime.getHours()}:${startTime.getMinutes()}:${startTime.getSeconds()}`,
+              name: `${startTime.getFullYear()}-${startTime.getMonth() + 1}-${startTime.getDate()} ${startTime.getHours()}:${startTime.getMinutes()}:${startTime.getSeconds()}`,
               value: [
                 startTime, 0
               ]
             });
-            for (let log of team.logs){
+            for (let log of team.logs) {
               let time = new Date(log.created_at);
               score += parseFloat(log.score);
               data.push({
@@ -98,7 +94,7 @@
       }
     },
     methods: {
-      isEmpty(){
+      isEmpty() {
         return !this.teamData.some(i => {
           return !!i.score
         })

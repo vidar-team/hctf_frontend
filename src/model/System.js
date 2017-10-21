@@ -1,17 +1,17 @@
 import model from "./model";
 
-class System extends model{
+class System extends model {
   /**
    * 获得 Meta Info
    * @returns {Promise}
    */
-  getMetaInfo(){
+  getMetaInfo() {
     return new Promise(async (resolve, reject) => {
-      try{
+      try {
         let metaInfo = await this.request("GET", "/System/meta");
         resolve(metaInfo);
       }
-      catch (e){
+      catch (e) {
         reject(e);
       }
     })

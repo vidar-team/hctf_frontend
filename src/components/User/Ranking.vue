@@ -16,13 +16,14 @@
   </div>
 </template>
 <style>
-  .ranking-container{
+  .ranking-container {
     width: 100%;
   }
-  .ranking-header, .ranking-body{
+
+  .ranking-header, .ranking-body {
     border: 1px solid #aaa;
     min-height: 2.5rem;
-    box-shadow: 0 2px 4px 0 rgba(0,0,0,.12), 0 0 6px 0 rgba(0,0,0,.04);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .12), 0 0 6px 0 rgba(0, 0, 0, .04);
     border-radius: 2px;
     width: 100%;
     overflow: hidden;
@@ -33,17 +34,21 @@
     -ms-user-select: none;
     user-select: none;
   }
+
   .ranking-header {
     margin-bottom: 10px;
   }
+
   .ranking-body {
     margin: 4px auto;
     transition: all .5s;
   }
-  .ranking-body:hover{
+
+  .ranking-body:hover {
     border: 1px solid #4db3ff;
   }
-  .ranking-header-column, .ranking-item{
+
+  .ranking-header-column, .ranking-item {
     text-align: center;
     vertical-align: middle;
     float: left;
@@ -51,19 +56,23 @@
     font-size: 1rem;
     line-height: 2.5rem;
   }
-  .ranking-header-column-left, .ranking-item-left{
+
+  .ranking-header-column-left, .ranking-item-left {
     margin-left: 1rem;
     margin-right: -1rem;
     text-align: left;
   }
-  .score-desc{
+
+  .score-desc {
     animation-duration: 4s;
     animation-name: desc;
   }
+
   .score-inc {
     animation-duration: 4s;
     animation-name: inc;
   }
+
   @keyframes desc {
     from {
       color: #ff6d6d;
@@ -72,6 +81,7 @@
       color: black;
     }
   }
+
   @keyframes inc {
     from {
       color: #11b95c;
@@ -83,88 +93,88 @@
 </style>
 <script>
   import Team from '@/model/Team';
+
   let TeamModel = new Team();
   export default {
-    data(){
+    data() {
       return {
         ranking: [],
         teamList: [],
       }
     },
-    async mounted(){
+    async mounted() {
       this.getRanking();
-      while(true){
-        if (this.$route.name !== "Index"){
+      while (true) {
+        if (this.$route.name !== "Index") {
           break;
         }
         await (() =>
-            new Promise(resolve => setTimeout(resolve, 5000))
-        )();
+            new Promise(resolve => setTimeout(resolve, 5000)))();
         this.fresh();
       }
     },
     methods: {
-      checkChange(){
+      checkChange() {
         let teams = Array.from(this.ranking, i => {
           return i.team_id
         }).filter(i => i !== null);
         this.$emit("change", teams);
       },
-      async getRanking(){
-        try{
+      async getRanking() {
+        try {
           this.ranking = await TeamModel.getRanking();
           this.checkChange();
         }
-        catch (e){
+        catch (e) {
           this.$handleError(e);
         }
       },
-      async fresh(){
+      async fresh() {
         let newRanking;
-        try{
+        try {
           newRanking = await TeamModel.getRanking();
         }
-        catch (e){
+        catch (e) {
           return this.$handleError(e);
         }
         this.checkChange();
-        for (let index in this.ranking){
+        for (let index in this.ranking) {
           this.ranking[index].index = +index + 1;
         }
-        for (let index in newRanking){
+        for (let index in newRanking) {
           newRanking[index].index = +index + 1;
         }
         // do diff
-        for (let team of newRanking){
+        for (let team of newRanking) {
           let oldTeam = this.ranking.find(i => i.team_name === team.team_name);
           // 排位变更
-          if (oldTeam.index !== undefined){
-            if (oldTeam.index < team.index){
+          if (oldTeam.index !== undefined) {
+            if (oldTeam.index < team.index) {
               team.more = "↓"
             }
-            else if (oldTeam.index > team.index){
+            else if (oldTeam.index > team.index) {
               team.more = "↑"
             }
-            else{
+            else {
               team.more = '--'
             }
           }
-          else{
+          else {
             team.more = "New"
           }
 
           // 分数变更动画效果
-          if (oldTeam.dynamic_total_score !== team.dynamic_total_score){
+          if (oldTeam.dynamic_total_score !== team.dynamic_total_score) {
             let diff = team.dynamic_total_score - oldTeam.dynamic_total_score;
             team.effect = diff < 0 ? "score-desc" : "score-inc"
           }
         }
         this.ranking = newRanking;
       },
-      sleep(time){
+      sleep(time) {
         return new Promise(resolve => setTimeout(resolve, time))
       },
-      isEmpty(){
+      isEmpty() {
         return !this.ranking.some(i => {
           return !!i.dynamic_total_score;
         })

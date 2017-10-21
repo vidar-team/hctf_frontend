@@ -3,12 +3,12 @@ let install = (Vue, options) => {
     if (e.message) {
       Vue.prototype.$message.error(e.message);
     }
-    if (e.redirect){
+    if (e.redirect) {
       options.router.push({
         name: e.redirect
       })
     }
-    if (e.action === "logout"){
+    if (e.action === "logout") {
       options.store.commit("logout");
     }
   }

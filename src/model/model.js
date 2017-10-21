@@ -1,5 +1,6 @@
 import axios from 'axios';
 import auth from '../utils/auth';
+
 class Model {
   base = '/API';
   instance;
@@ -27,7 +28,7 @@ class Model {
           url: path
         };
         if (config.needAuth) {
-          if (auth.isTokenExpired()){
+          if (auth.isTokenExpired()) {
             reject({
               message: "token_expired",
               redirect: "User-Login",
@@ -47,7 +48,7 @@ class Model {
         let result = await this.instance.request(options);
 
         // jwt auto-renewal
-        if (Object.keys(result.headers).includes("authorization")){
+        if (Object.keys(result.headers).includes("authorization")) {
           localStorage.setItem("jwt", result.headers["authorization"].slice(7));
         }
 
@@ -82,7 +83,7 @@ class Model {
    * @param options
    * @returns {*}
    */
-  post(path = '/', data = {}, options = {}){
+  post(path = '/', data = {}, options = {}) {
     return this.request("POST", path, data, options);
   }
 
@@ -92,21 +93,21 @@ class Model {
       message: "",
       originalMessage: undefined
     };
-    if (e.response){
-      if (e.response.data.data && e.response.data.data.error){
-        if (e.response.data.data.error.code === "banned"){
+    if (e.response) {
+      if (e.response.data.data && e.response.data.data.error) {
+        if (e.response.data.data.error.code === "banned") {
           parsedError.redirect = "Banned";
         }
         parsedError.code = e.response.data.data.error.code;
         parsedError.originalMessage = e.response.data.data.error.message;
-        if (Array.isArray(e.response.data.data.error.message)){
+        if (Array.isArray(e.response.data.data.error.message)) {
           parsedError.message = e.response.data.data.error.message.join(',');
         }
-        else{
+        else {
           parsedError.message = e.response.data.data.error.message.toString();
         }
       }
-      else{
+      else {
         parsedError.message = {
           400: "HTTP 400 Bad Request",
           401: "HTTP 401 Unauthorized",
@@ -124,13 +125,14 @@ class Model {
         }[e.response.status] || `HTTP ${e.response.status}`;
       }
     }
-    else if (e.request){
+    else if (e.request) {
       parsedError.message = "NETWORK ERROR"
     }
-    else{
+    else {
       parsedError.message = "UNKNOWN ERROR"
     }
     return parsedError;
   }
 }
+
 export default Model;
