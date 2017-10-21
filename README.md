@@ -1,5 +1,7 @@
 # hctf_frontend
 
+[![Build Status](https://travis-ci.com/Last-Order/hctf_frontend.svg?token=uBw9xobwdoesz9s114pS&branch=master)](https://travis-ci.com/Last-Order/hctf_frontend)
+
 > HCTF Frontend
 
 ## Build Setup

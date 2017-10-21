@@ -78,9 +78,27 @@
           <el-button type="primary" @click="editFlag">确认</el-button>
         </div>
       </el-dialog>
+      <el-dialog title="添加 Flag" :visible.sync="addFlagDialogVisible">
+        <el-form v-loading="dialogLoading">
+            <span>
+              请按以下格式添加 Flag。
+              <br>
+              格式说明: 请提供一个 JSON 数组，其中每一项含有两个属性，team_id 为队伍 ID， flag 为 flag 内容。
+              <br>
+              示例：<span style="font-family: Consolas, monospace;">[{"team_id": 1, "flag": "hctf_flag_example"}]</span>
+            </span>
+          <el-form-item label="Flag 设定">
+            <el-input type="textarea" v-model="addFlagForm.flag"></el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="addFlagDialogVisible = false">取消</el-button>
+          <el-button type="primary" @click="addFlags">确定</el-button>
+        </div>
+      </el-dialog>
       <div style="margin-top: 1rem;">
         <el-button type="danger" @click="deleteAllFlags">删除所有 Flag</el-button>
-        <el-button type="primary">批量添加 Flag</el-button>
+        <el-button type="primary" @click="addFlagDialogVisible = true">批量添加 Flag</el-button>
       </div>
     </el-tab-pane>
   </el-tabs>
@@ -105,10 +123,14 @@
           flag: "",
           teamId: 0
         },
+        addFlagForm: {
+          flag: ""
+        },
         loading: false,
         dialogLoading: false,
         resetScoreDialogVisible: false,
         editFlagDialogVisible: false,
+        addFlagDialogVisible: false,
         flags: [],
         isFlagLoaded: false
       }
@@ -212,7 +234,7 @@
           let editedFlag = await FlagModel.editFlag(this.editFlagForm.flagId, this.editFlagForm.flag, this.editFlagForm.teamId);
           let nowFlag = this.flags.find(i => i.flag_id === this.editFlagForm.flagId);
           nowFlag.flag = editedFlag.flag;
-          nowFlag.teamId = editedFlag.teamId;
+          nowFlag.team_id = editedFlag.team_id;
           this.editFlagDialogVisible = false;
         }
         catch (e) {
@@ -244,6 +266,43 @@
           this.$handleError(e);
         }
         this.loading = false;
+      },
+      /**
+       * 添加 Flag
+       * @returns {Promise.<void>}
+       */
+      async addFlags(){
+        try{
+          let newFlags = this.addFlagForm.flag;
+          try{
+            newFlags = JSON.parse(newFlags);
+          }
+          catch(e){
+            return this.$handleError({
+              message: "JSON 不合法"
+            })
+          }
+          if (!Array.isArray(newFlags)){
+            return this.$handleError({
+              message: "JSON 不合法"
+            })
+          }
+          for (let flag of newFlags) {
+            if (!flag.hasOwnProperty("flag") || !flag.hasOwnProperty("team_id")) {
+              return this.$handleError({
+                message: "JSON 不合法"
+              })
+            }
+          }
+          this.dialogLoading = true;
+          let flags = await ChallengeModel.addFlags(this.$route.query.challengeId, newFlags);
+          this.flags = flags;
+          this.addFlagDialogVisible = false;
+        }
+        catch (e){
+          this.$handleError(e);
+        }
+        this.dialogLoading = false;
       }
     },
     async mounted() {

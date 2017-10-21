@@ -175,6 +175,29 @@ class Challenge extends Model {
       }
     })
   }
+
+  /**
+   * 添加 Flag
+   * @param challengeId
+   * @param flag
+   * @returns {Promise}
+   */
+  addFlags(challengeId, flag){
+    return new Promise(async (resolve, reject) => {
+      try{
+        let flags = await this.request("POST", "/Challenge/addFlags", {
+          challengeId: challengeId,
+          flag: flag
+        }, {
+          needAuth: true
+        });
+        resolve(flags);
+      }
+      catch (e){
+        reject(e);
+      }
+    })
+  }
 }
 
 export default Challenge;

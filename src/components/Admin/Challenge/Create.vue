@@ -196,6 +196,11 @@
             message: "JSON 不合法"
           });
         }
+        if (!Array.isArray(multiFlag)){
+          return this.$handleError({
+            message: "JSON 不合法"
+          })
+        }
         for (let flag of multiFlag) {
           if (!flag.hasOwnProperty("flag") || !flag.hasOwnProperty("team_id")) {
             return this.$handleError({
