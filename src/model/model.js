@@ -27,6 +27,12 @@ class Model {
           method: method,
           url: path
         };
+
+        let payload = {
+          "language": localStorage.getItem("language") === null ? "en" : localStorage.getItem("language"),
+          ...params
+        };
+
         if (config.needAuth) {
           if (auth.isTokenExpired()) {
             reject({
@@ -40,10 +46,10 @@ class Model {
           }
         }
         if (method === "GET") {
-          options.params = params
+          options.params = payload
         }
         if (method === "POST") {
-          options.data = params
+          options.data = payload
         }
         let result = await this.instance.request(options);
 

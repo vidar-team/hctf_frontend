@@ -44,9 +44,10 @@
         <el-menu-item index="#zh-cn" @click="switchLanguage('zh-cn')">
           中文
         </el-menu-item>
-        <el-menu-item index="#ja" @click="switchLanguage('ja')">
-          日本語
-        </el-menu-item>
+        <!--<el-menu-item index="#ja" @click="switchLanguage('ja')">-->
+          <!-- Japanese is partly supported. If you like, uncomment this and switch to it. -->
+          <!--日本語-->
+        <!--</el-menu-item>-->
       </el-submenu>
     </el-menu>
     <div class="main-container">
@@ -79,6 +80,11 @@
       },
     },
     async mounted() {
+      if (localStorage.getItem("language") === null){
+        // 默认语言设定为英语
+        localStorage.setItem("language", "en");
+        this.$i18n.locale = "en";
+      }
       if (!Auth.isLogin()) {
         this.inited = true;
       }
@@ -100,6 +106,7 @@
     },
     methods: {
       switchLanguage(lang) {
+        localStorage.setItem("language", lang);
         return this.$i18n.locale = lang;
       }
     }
