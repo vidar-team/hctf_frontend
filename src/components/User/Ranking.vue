@@ -109,7 +109,7 @@
           break;
         }
         await (() =>
-            new Promise(resolve => setTimeout(resolve, 5000)))();
+            new Promise(resolve => setTimeout(resolve, 30000)))();
         this.fresh();
       }
     },
@@ -170,9 +170,6 @@
           }
         }
         this.ranking = newRanking;
-      },
-      sleep(time) {
-        return new Promise(resolve => setTimeout(resolve, time))
       },
       isEmpty() {
         return !this.ranking.some(i => {

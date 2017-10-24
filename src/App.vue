@@ -59,8 +59,10 @@
 <script>
   import Auth from './utils/auth';
   import User from './model/Team';
+  import System from './model/System';
 
   let UserModel = new User();
+  let SystemModel = new System();
   export default {
     name: 'hctf',
     data() {
@@ -85,6 +87,18 @@
         localStorage.setItem("language", "en");
         this.$i18n.locale = "en";
       }
+      // 读取配置信息
+      // 不应阻塞
+      SystemModel.getMetaInfo().then(metaInfo => {
+        this.$store.commit("setTime", {
+          startTime: metaInfo.startTime,
+          endTime: metaInfo.endTime
+        });
+        this.$store.commit("setFlagFormat", {
+          prefix: metaInfo.flagPrefix,
+          suffix: metaInfo.flagSuffix
+        });
+      });
       if (!Auth.isLogin()) {
         this.inited = true;
       }

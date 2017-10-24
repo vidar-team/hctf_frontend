@@ -17,3 +17,5 @@ class System extends model {
     })
   }
 }
+
+export default System;

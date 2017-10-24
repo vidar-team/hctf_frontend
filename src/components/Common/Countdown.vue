@@ -29,8 +29,6 @@
   export default {
     data() {
       return {
-        startTime: new Date("2017-11-11T00:00:00.000Z"),
-        endTime: new Date("2017-11-13T00:00:00.000Z"),
         countdown: {
           days: 0,
           hours: 0,
@@ -47,6 +45,12 @@
         else {
           return this.$t("countdown.untilClose");
         }
+      },
+      startTime(){
+        return new Date(this.$store.state.meta.startTime);
+      },
+      endTime(){
+        return new Date(this.$store.state.meta.endTime);
       }
     },
     async mounted() {
@@ -61,19 +65,29 @@
     },
     methods: {
       flush() {
-        let diff = Math.round(Math.abs(this.startTime.valueOf() - new Date().valueOf()) / 1000);
-        let days = Math.floor(diff / 86400);
-        diff = diff % 86400;
-        let hours = Math.floor(diff / 3600);
-        diff = diff % 3600;
-        let minutes = Math.floor(diff / 60);
-        diff = diff - minutes * 60;
-        let seconds = diff;
+        if (this.startTime && this.endTime){
+          let nowTime = new Date();
+          let diff;
+          if (nowTime < this.startTime){
+            diff = Math.round(Math.abs(this.startTime.valueOf() - new Date().valueOf()) / 1000);
+          }
+          else{
+            diff = Math.round(Math.abs(this.endTime.valueOf() - new Date().valueOf()) / 1000);
+          }
 
-        this.countdown.days = days;
-        this.countdown.hours = hours;
-        this.countdown.minutes = minutes;
-        this.countdown.seconds = seconds;
+          let days = Math.floor(diff / 86400);
+          diff = diff % 86400;
+          let hours = Math.floor(diff / 3600);
+          diff = diff % 3600;
+          let minutes = Math.floor(diff / 60);
+          diff = diff - minutes * 60;
+          let seconds = diff;
+
+          this.countdown.days = days;
+          this.countdown.hours = hours;
+          this.countdown.minutes = minutes;
+          this.countdown.seconds = seconds;
+        }
       }
     }
   }

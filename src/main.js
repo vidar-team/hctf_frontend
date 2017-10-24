@@ -36,6 +36,9 @@ Vue.use(GlobalErrorHandler, {
 
 
 router.beforeEach(async (to, from, next) => {
+  if (from.path !== to.path){
+    console.log(from, to);
+  }
   NProgress.start();
   if (to.matched.some(record => record.meta.needLogin)) {
     if (to.matched.some(record => record.meta.needAdmin)) {
