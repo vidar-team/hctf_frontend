@@ -87,6 +87,9 @@
         localStorage.setItem("language", "en");
         this.$i18n.locale = "en";
       }
+      else{
+        this.$i18n.locale = localStorage.getItem("language");
+      }
       // 读取配置信息
       // 不应阻塞
       SystemModel.getMetaInfo().then(metaInfo => {

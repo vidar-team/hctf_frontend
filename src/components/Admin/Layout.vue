@@ -4,6 +4,7 @@
       <div class="grid-content">
         <el-menu default-active="/admin/index" :default-openeds="defaultOpeneds" theme="light" :router="true">
           <el-menu-item index="/admin/index">管理后台</el-menu-item>
+          <el-menu-item index="/admin/config">系统设置</el-menu-item>
           <el-submenu index="/admin/team">
             <template slot="title">队伍管理</template>
             <el-menu-item index="/admin/team/list">队伍概览</el-menu-item>
@@ -41,6 +42,9 @@
       return {
         defaultOpeneds: ['/admin/team', '/admin/challenge']
       }
+    },
+    mounted(){
+
     }
   }
 </script>

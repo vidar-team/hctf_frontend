@@ -37,9 +37,8 @@ Vue.use(GlobalErrorHandler, {
 
 router.beforeEach(async (to, from, next) => {
   if (from.path !== to.path){
-    console.log(from, to);
+    NProgress.start();
   }
-  NProgress.start();
   if (to.matched.some(record => record.meta.needLogin)) {
     if (to.matched.some(record => record.meta.needAdmin)) {
       // 需要管理员
@@ -47,6 +46,7 @@ router.beforeEach(async (to, from, next) => {
         next();
       }
       else {
+        NProgress.done();
         next({
           name: 'Index'
         })
@@ -59,6 +59,7 @@ router.beforeEach(async (to, from, next) => {
       }
       else {
         store.commit("logout");
+        NProgress.done();
         next({
           name: 'User-Login',
           query: {

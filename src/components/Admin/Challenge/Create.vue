@@ -49,7 +49,7 @@
             </span>
             <br>
             <span style="font-family: Consolas, monospace">
-              userFlag = SHA256(userToken + flag)
+              userFlag = "{{ $store.state.meta.flagPrefix }}" + SHA256(userToken + flag) + "{{ $store.state.meta.flagSuffix }}"
             </span>
           </el-form>
           <div slot="footer" class="dialog-footer">

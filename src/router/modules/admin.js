@@ -13,6 +13,11 @@ export default {
       component: resolve => require(['@/components/Admin/Index.vue'], resolve)
     },
     {
+      path: "config",
+      name: "Admin-Config",
+      component: resolve => require(['@/components/Admin/Config.vue'], resolve)
+    },
+    {
       path: "team/list",
       name: "Admin-Team-List",
       component: resolve => require(['@/components/Admin/Team/List.vue'], resolve)

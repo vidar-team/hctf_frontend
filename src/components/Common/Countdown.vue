@@ -1,10 +1,10 @@
 <template>
   <div class="countdown">
     <span>
-      {{ countdown.days }} {{ countdown.days > 1 ? 'Days' : 'Day'}}
-      {{ countdown.hours }} {{ countdown.hours > 1 ? 'Hours' : 'Hour'}}
-      {{ countdown.minutes }} {{ countdown.minutes > 1 ? 'Minutes' : 'Minute'}}
-      {{ countdown.seconds }} {{ countdown.seconds > 1 ? 'Seconds' : 'Second'}}   </span>
+      {{ countdown.days | formatTime }} {{ countdown.days > 1 ? 'Days' : 'Day'}}
+      {{ countdown.hours | formatTime}} {{ countdown.hours > 1 ? 'Hours' : 'Hour'}}
+      {{ countdown.minutes | formatTime}} {{ countdown.minutes > 1 ? 'Minutes' : 'Minute'}}
+      {{ countdown.seconds | formatTime}} {{ countdown.seconds > 1 ? 'Seconds' : 'Second'}}   </span>
     <div class="countdown-title">{{ countdownTitle }}</div>
   </div>
 </template>
@@ -46,10 +46,10 @@
           return this.$t("countdown.untilClose");
         }
       },
-      startTime(){
+      startTime() {
         return new Date(this.$store.state.meta.startTime);
       },
-      endTime(){
+      endTime() {
         return new Date(this.$store.state.meta.endTime);
       }
     },
@@ -60,18 +60,18 @@
         }
         this.flush();
         await (() =>
-            new Promise(resolve => setTimeout(resolve, 1000)))();
+          new Promise(resolve => setTimeout(resolve, 1000)))();
       }
     },
     methods: {
       flush() {
-        if (this.startTime && this.endTime){
+        if (this.startTime && this.endTime) {
           let nowTime = new Date();
           let diff;
-          if (nowTime < this.startTime){
+          if (nowTime < this.startTime) {
             diff = Math.round(Math.abs(this.startTime.valueOf() - new Date().valueOf()) / 1000);
           }
-          else{
+          else {
             diff = Math.round(Math.abs(this.endTime.valueOf() - new Date().valueOf()) / 1000);
           }
 
@@ -88,6 +88,11 @@
           this.countdown.minutes = minutes;
           this.countdown.seconds = seconds;
         }
+      }
+    },
+    filters: {
+      formatTime(str){
+        return isNaN(str) ? "--" : str;
       }
     }
   }
