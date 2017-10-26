@@ -68,14 +68,12 @@
     data() {
       return {}
     },
-    props: ["challenge"],
+    props: ["challenge", "placeholders"],
     methods: {
       formatURL(url) {
-        let mappings = {
-          "teamId": this.$store.state.user.teamId
-        };
+        let mappings = this.placeholders;
         for (let key of Object.keys(mappings)) {
-          url = url.replace("${" + key + "}", mappings[key]);
+          url = url.replace("{" + key + "}", mappings[key]);
         }
         return url;
       }

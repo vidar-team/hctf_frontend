@@ -101,5 +101,5 @@ console.log(`
 
       `);
 console.log(`
-        Vidar Team ©2017
-      `)
+        Vidar Team © 2017
+      `);

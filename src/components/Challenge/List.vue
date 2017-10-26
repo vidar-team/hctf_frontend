@@ -9,7 +9,7 @@
           <div v-for="levelName in Object.keys(categories[categoryName])" class="challenge-container">
             <h2>Level - {{levelName}}</h2>
             <challenge-view v-for="challenge in categories[categoryName][levelName]" :key="challenge.challenge_id"
-                            :challenge="challenge"></challenge-view>
+                            :challenge="challenge" :placeholders="placeholders"></challenge-view>
           </div>
         </el-tab-pane>
       </template>
@@ -60,7 +60,9 @@
       async loadChallenges() {
         this.loading = true;
         try {
-          this.categories = await ChallengeModel.getValidChallenges();
+          let result = await ChallengeModel.getValidChallenges();
+          this.categories = result.challenges;
+          this.placeholders = result.placeholders;
           this.activeTabName = this.categoryNames[0];
         }
         catch (e) {

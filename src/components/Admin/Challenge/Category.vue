@@ -174,7 +174,12 @@
           })).value;
           this.loading = true;
           let newCategory = await CategoryModel.createCategory(categoryName);
-          this.categories.push(newCategory);
+          if (this.categories.length){
+            this.categories.push(newCategory);
+          }
+          else{
+            this.categories = [newCategory];
+          }
         }
         catch (e) {
           this.$handleError(e);
