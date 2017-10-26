@@ -60,10 +60,9 @@
         if (this.$route.name !== "Admin-Index") {
           break;
         }
-        await (() =>
-            new Promise(resolve => setTimeout(resolve, 3000)))();
-        }
-      this.loadLogs(this.nowId);
+        await (() => new Promise(resolve => setTimeout(resolve, 3000)))();
+        this.loadLogs(this.nowId);
+      }
     },
     methods: {
       async loadLogs(startId = 0) {

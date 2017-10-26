@@ -22,12 +22,12 @@
       <el-input v-model="form.flagSuffix"></el-input>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary">提交</el-button>
+      <el-button type="primary" @click="editConfig">提交</el-button>
     </el-form-item>
   </el-form>
 </template>
 <script>
-  import System from '@/model/System';
+  import System from '@/model/admin/System';
 
   let SystemModel = new System();
 
@@ -57,6 +57,18 @@
         this.$handleError(e);
       }
       this.loading = false;
+    },
+    methods: {
+      async editConfig(){
+        this.loading = true;
+        try{
+          await SystemModel.editConfig(this.form.startTime, this.form.endTime, this.form.flagPrefix, this.form.flagSuffix);
+        }
+        catch (e){
+          return this.$handleError(e);
+        }
+        this.loading = false;
+      }
     }
   }
 </script>
