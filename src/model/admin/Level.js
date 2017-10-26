@@ -10,13 +10,12 @@ class Level extends Model {
    */
   createLevel(categoryId, levelName, releaseTime) {
     let time = new Date(releaseTime);
-    let timeString = `${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()} ${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`;
     return new Promise(async (resolve, reject) => {
       try {
         let result = await this.request("POST", "/Level/create", {
           categoryId: categoryId,
           levelName: levelName,
-          releaseTime: timeString
+          releaseTime: releaseTime
         }, {
           needAuth: true
         });
@@ -81,11 +80,10 @@ class Level extends Model {
   setReleaseTime(levelId, releaseTime) {
     return new Promise(async (resolve, reject) => {
       let time = new Date(releaseTime);
-      let timeString = `${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()} ${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`;
       try {
         let level = await this.request("POST", "/Level/setReleaseTime", {
           levelId: levelId,
-          releaseTime: timeString
+          releaseTime: releaseTime
         }, {
           needAuth: true
         });

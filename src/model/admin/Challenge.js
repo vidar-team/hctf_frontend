@@ -16,7 +16,6 @@ class Challenge extends Model {
    */
   createChallenge(title, url, description, score, flag, config, levelId, releaseTime, isDynamicFlag) {
     let time = new Date(releaseTime);
-    let timeString = `${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()} ${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`;
     return new Promise(async (resolve, reject) => {
       try {
         let newChallenge = this.request("POST", "/Challenge/create", {
@@ -27,7 +26,7 @@ class Challenge extends Model {
           flag: flag,
           config: JSON.stringify(config),
           levelId: levelId,
-          releaseTime: timeString,
+          releaseTime: releaseTime,
           isDynamicFlag: isDynamicFlag
         }, {
           needAuth: true
@@ -92,14 +91,13 @@ class Challenge extends Model {
    */
   editChallenge(challengeId, title, description, releaseTime) {
     let time = new Date(releaseTime);
-    let timeString = `${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()} ${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`;
     return new Promise(async (resolve, reject) => {
       try {
         let challenge = await this.request("POST", "/Challenge/edit", {
           challengeId: challengeId,
           title: title,
           description: description,
-          releaseTime: timeString
+          releaseTime: releaseTime
         }, {
           needAuth: true
         });
