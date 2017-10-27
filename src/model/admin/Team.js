@@ -52,6 +52,27 @@ class Team extends Model {
   }
 
   /**
+   * 搜索
+   * @param keyword
+   * @returns {Promise}
+   */
+  search(keyword){
+    return new Promise(async (resolve, reject) => {
+      try{
+        let teams = await this.request("GET", "/User/search", {
+          keyword: keyword
+        }, {
+          needAuth: true
+        });
+        resolve(teams);
+      }
+      catch (e){
+        reject(e);
+      }
+    });
+  }
+
+  /**
    * 封禁队伍
    * @param teamId
    * @returns {Promise}

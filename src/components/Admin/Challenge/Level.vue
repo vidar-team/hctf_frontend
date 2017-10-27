@@ -42,6 +42,9 @@
                 <el-form-item label="动态 Flag">
                   <span>{{ scope.row.is_dynamic_flag }}</span>
                 </el-form-item>
+                <el-form-item label="最小解决时间">
+                  <span>{{ JSON.parse(scope.row.config).minimumSolveTime === 0 ? '不限制' : JSON.parse(scope.row.config).minimumSolveTime + '秒'}}</span>
+                </el-form-item>
               </el-form>
             </template>
           </el-table-column>

@@ -1,6 +1,14 @@
 <template>
   <section>
     <h2>队伍概览</h2>
+    <el-form :inline="true">
+      <el-form-item>
+        <el-input placeholder="搜索" style="width: 293px;" v-model="form.keyword" @keyup.enter.prevent.native="search"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button @click="search">执行</el-button>
+      </el-form-item>
+    </el-form>
     <el-table :data="teams" style="width: 100%" v-loading="loading" ref="multipleTable"
               @selection-change="handleSelectionChange">
       <el-table-column
@@ -84,7 +92,7 @@
 </template>
 <style scoped>
   .el-pagination {
-    padding: 3px 0px 0px;
+    padding: 3px 0 0;
   }
 
   .operations {
@@ -100,6 +108,9 @@
       return {
         teams: [],
         selectedTeamIds: [],
+        form: {
+          keyword: ""
+        },
         total: 0,
         loading: false,
         currentPage: 1
@@ -186,8 +197,19 @@
           });
         }
         catch (e) {
-
+          this.$handleError(e);
         }
+      },
+      async search(){
+        this.loading = true;
+        try{
+          let teams = await TeamModel.search(this.form.keyword);
+          this.teams = teams;
+        }
+        catch (e) {
+          this.$handleError(e);
+        }
+        this.loading = false;
       },
       handleSelectionChange(rows) {
         this.selectedTeamIds = Array.from(rows, i => i.team_id);
