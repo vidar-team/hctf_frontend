@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "axios": "^0.16.2",
-    "element-ui": "^1.4.2",
+    "element-ui": "^2.0.0",
     "nprogress": "^0.2.0",
     "sha.js": "^2.4.8",
     "vue": "^2.5.2",

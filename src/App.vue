@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <el-menu theme="light" default-active="/" class="top-nav" mode="horizontal" :router=true>
+    <el-menu default-active="/" class="top-nav" mode="horizontal" :router=true>
       <el-menu-item index="/">
         HCTF
       </el-menu-item>

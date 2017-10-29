@@ -9,7 +9,7 @@ import store from './store'
 import i18n from './i18n';
 
 // Element
-import 'element-ui/lib/theme-default/index.css'
+import 'element-ui/lib/theme-chalk/index.css'
 import Element from 'element-ui'
 
 // NProgress

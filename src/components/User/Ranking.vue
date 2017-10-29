@@ -23,7 +23,7 @@
   .ranking-header, .ranking-body {
     border: 1px solid #aaa;
     min-height: 2.5rem;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .12), 0 0 6px 0 rgba(0, 0, 0, .04);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .12), 0 0 2px 0 rgba(0, 0, 0, .04);
     border-radius: 2px;
     width: 100%;
     overflow: hidden;

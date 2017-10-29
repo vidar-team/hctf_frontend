@@ -17,6 +17,8 @@
         </el-form-item>
         <el-form-item label="Flag">
           <el-input v-model="form.flag" :disabled="disableFlagInput"></el-input>
+          <span>注意：非动态 Flag 不会自动加上前后缀请手动设定！</span>
+          <br>
           <el-button type="text" @click="viewMultiFlagForm">多 Flag 设定</el-button>
           <el-button type="text" @click="viewDynamicFlagForm">开启动态 Flag</el-button>
         </el-form-item>

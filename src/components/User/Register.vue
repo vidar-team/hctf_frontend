@@ -22,7 +22,7 @@
         <el-input type="password" :placeholder="$t('register.confirmPassword')" v-model="form.password2"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button @click="submit" disabled>{{ $t('register.register') }}</el-button>
+        <el-button @click="submit" type="primary" disabled>{{ $t('register.register') }}</el-button>
       </el-form-item>
     </el-form>
   </el-card>

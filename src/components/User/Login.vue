@@ -9,7 +9,7 @@
         <el-input type="password" :placeholder="$t('login.password')" v-model="form.password"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button @click.prevent="submit">{{ $t("login.login") }}</el-button>
+        <el-button @click.prevent="submit" type="primary">{{ $t("login.login") }}</el-button>
       </el-form-item>
     </el-form>
   </el-card>

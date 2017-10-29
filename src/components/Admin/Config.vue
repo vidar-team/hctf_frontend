@@ -15,10 +15,10 @@
         placeholder="选择日期时间">
       </el-date-picker>
     </el-form-item>
-    <el-form-item label="Flag 前缀" style="width: 293px;">
+    <el-form-item label="Flag 前缀(仅自动应用于动态 Flag)" style="width: 293px;">
       <el-input v-model="form.flagPrefix"></el-input>
     </el-form-item>
-    <el-form-item label="Flag 后缀" style="width: 293px;">
+    <el-form-item label="Flag 后缀(仅自动应用于动态 Flag)" style="width: 293px;">
       <el-input v-model="form.flagSuffix"></el-input>
     </el-form-item>
     <el-form-item>

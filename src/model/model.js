@@ -22,6 +22,7 @@ class Model {
    */
   request(method = "GET", path = '/', params = {}, config = {}) {
     return new Promise(async (resolve, reject) => {
+      console.log(`[${new Date().toISOString()}] ${method} ${path}`);
       try {
         let options = {
           method: method,
