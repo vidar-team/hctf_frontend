@@ -56,10 +56,7 @@
     },
     async mounted() {
       this.loadLogs();
-      while (true) {
-        if (this.$route.name !== "Admin-Index") {
-          break;
-        }
+      while (this.$route.name === "Admin-Index") {
         await (() => new Promise(resolve => setTimeout(resolve, 3000)))();
         this.loadLogs(this.nowId);
       }

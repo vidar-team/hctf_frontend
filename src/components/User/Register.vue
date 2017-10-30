@@ -1,7 +1,7 @@
 <template>
   <el-card>
     <el-alert
-      :title="Unavailable"
+      title="Unavailable"
       type="error"
       description="Registration is now unavailable. Please come back later."
       :closable="false"

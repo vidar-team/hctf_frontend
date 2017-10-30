@@ -104,10 +104,7 @@
     },
     async mounted() {
       this.getRanking();
-      while (true) {
-        if (this.$route.name !== "Index") {
-          break;
-        }
+      while (this.$route.name === "Index") {
         await (() =>
             new Promise(resolve => setTimeout(resolve, 30000)))();
         this.fresh();

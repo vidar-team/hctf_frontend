@@ -2,7 +2,7 @@
   <el-row>
     <el-col :span="4">
       <div class="grid-content">
-        <el-menu default-active="/admin/index" :default-openeds="defaultOpeneds" theme="light" :router="true">
+        <el-menu default-active="/admin/index" :default-openeds="defaultOpeneds" :router="true">
           <el-menu-item index="/admin/index">管理后台</el-menu-item>
           <el-menu-item index="/admin/config">系统设置</el-menu-item>
           <el-submenu index="/admin/team">
