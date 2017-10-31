@@ -54,6 +54,11 @@
       async teams() {
         let series = [];
         let legend = [];
+        while(!this.$store.state.meta.startTime){
+          // 若meta info还未读取则延后执行
+          await (() => new Promise(resolve => setTimeout(resolve, 100)))();
+        }
+
         if (this.teams.length > 0) {
           this.loading = true;
           let teams = await TeamModel.select(this.teams);
@@ -63,7 +68,7 @@
             let score = 0;
             legend.push(team.team_name);
             // 共同起点
-            let startTime = new Date("2017-09-29T03:11:11.000Z");
+            let startTime = new Date(this.$store.state.meta.startTime);
             data.push({
               name: `${startTime.getFullYear()}-${startTime.getMonth() + 1}-${startTime.getDate()} ${startTime.getHours()}:${startTime.getMinutes()}:${startTime.getSeconds()}`,
               value: [
