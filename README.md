@@ -4,7 +4,7 @@
 
 > HCTF Frontend
 
-## Build Setup
+## 构建说明
 
 ``` bash
 # install dependencies
@@ -29,4 +29,6 @@ npm run e2e
 npm test
 ```
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+## 其他
+
+网站根目录为`./dist`文件夹，另默认后台路径为`/API`。
