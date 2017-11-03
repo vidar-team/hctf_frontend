@@ -21,7 +21,7 @@
           </ol>
         </li>
         <li>A special rule will be introduced 2 hours before the qualification.</li>
-        <li>The qualification starts at 2017-11-11T12:00:00.000Z and ends at 2017-11-13T12:00:00.000Z. (48hrs)</li>
+        <li>The qualification starts at 2017-11-10T12:00:00.000Z and ends at 2017-11-12T12:00:00.000Z. (48hrs)</li>
       </ul>
     </article>
     <article>
