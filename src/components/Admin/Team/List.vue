@@ -1,9 +1,9 @@
 <template>
   <section>
     <h2>队伍概览</h2>
-    <el-form :inline="true">
+    <el-form :inline="true" @keyup.enter.native="search" @submit.native.prevent>
       <el-form-item>
-        <el-input placeholder="搜索" style="width: 293px;" v-model="form.keyword" @keyup.enter.prevent.native="search"></el-input>
+        <el-input placeholder="搜索" style="width: 293px;" v-model="form.keyword"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button @click="search">执行</el-button>
@@ -79,8 +79,8 @@
       <div class="block">
         <el-pagination
           layout="prev, pager, next"
-          total="total"
-          current-page="currentPage"
+          :total="total"
+          :current-page="currentPage"
           @current-change="loadTeamData">
         </el-pagination>
       </div>
@@ -200,11 +200,12 @@
           this.$handleError(e);
         }
       },
-      async search(){
+      async search(e){
         this.loading = true;
         try{
           let teams = await TeamModel.search(this.form.keyword);
           this.teams = teams;
+          this.total = 0; // disable pagination
         }
         catch (e) {
           this.$handleError(e);
