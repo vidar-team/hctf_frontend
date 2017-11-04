@@ -16,7 +16,7 @@
   import ECharts from 'vue-echarts/components/ECharts.vue'
   import 'echarts/lib/chart/line'
   import 'echarts/lib/component/tooltip'
-  import 'echarts/lib/component/legend'
+  import 'echarts/lib/component/legendScroll'
 
   let TeamModel = new Team();
 
@@ -31,6 +31,7 @@
             trigger: 'axis'
           },
           legend: {
+            type: "scroll",
             data: []
           },
           xAxis: {
