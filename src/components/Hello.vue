@@ -17,6 +17,9 @@
       <el-card>
         <recent-logs :teams="topTeams"></recent-logs>
       </el-card>
+      <!--<el-card class="logo-container">-->
+        <!--<img src="http://kotori.qiniudn.com/Vidar.png">-->
+      <!--</el-card>-->
     </el-col>
   </el-row>
 </template>
@@ -61,5 +64,13 @@
 
   .content .el-col {
     padding: 0 1rem;
+  }
+
+  .logo-container{
+    text-align: center;
+  }
+  .logo-container img{
+    display: block;
+    margin: auto;
   }
 </style>

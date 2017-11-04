@@ -41,7 +41,8 @@ export default {
     maintenanceTitle: "维护中",
     maintenanceDescription: "{0} ~ {1} 期间开放",
     dynamicFlagBadge: "动态 Flag",
-    dynamicFlagDescription: "Flag 基于队伍 Token 变化，后者请在队伍页查看"
+    dynamicFlagDescription: "Flag 基于队伍 Token 变化，后者请在队伍页查看",
+    solvedCount: "完成队伍数"
   },
   banned: {
     banTitle: "封停",

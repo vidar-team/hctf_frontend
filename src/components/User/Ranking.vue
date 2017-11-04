@@ -49,6 +49,9 @@
   }
 
   .ranking-header-column, .ranking-item {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     text-align: center;
     vertical-align: middle;
     float: left;
@@ -59,7 +62,7 @@
 
   .ranking-header-column-left, .ranking-item-left {
     margin-left: 1rem;
-    margin-right: -1rem;
+    margin-right: -2rem;
     text-align: left;
   }
 

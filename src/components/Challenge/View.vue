@@ -25,6 +25,12 @@
           {{ challenge.score }}
         </div>
       </div>
+      <div class="challenge-item">
+        <span class="challenge-item-key">{{ $t('challenge.solvedCount') }}</span>
+        <div class="challenge-item-value">
+          {{ challenge.solvedCount }}
+        </div>
+      </div>
     </div>
   </article>
 </template>
