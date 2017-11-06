@@ -1,13 +1,6 @@
 <template>
   <el-card>
-    <el-alert
-      title="Unavailable"
-      type="error"
-      description="Registration is now unavailable. Please come back later."
-      :closable="false"
-      show-icon>
-    </el-alert>
-    <el-form @keyup.enter.native="submit" v-loading="loading">
+    <el-form @keyup.enter.native.prevent="submit" @submit.prevent v-loading="loading">
       <h2>{{ $t('register.register') }}</h2>
       <el-form-item :label="$t('register.teamName')">
         <el-input :placeholder="$t('register.teamName')" v-model="form.teamName"></el-input>
@@ -22,7 +15,7 @@
         <el-input type="password" :placeholder="$t('register.confirmPassword')" v-model="form.password2"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button @click="submit" type="primary" disabled>{{ $t('register.register') }}</el-button>
+        <el-button @click="submit" type="primary">{{ $t('register.register') }}</el-button>
       </el-form-item>
     </el-form>
   </el-card>

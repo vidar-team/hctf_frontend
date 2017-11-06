@@ -16,7 +16,7 @@
       <div class="challenge-item">
         <span class="challenge-item-key">URL</span>
         <div class="challenge-item-value">
-          <a :href="challenge.url" target="_blank">{{ formatURL(challenge.url) }}</a>
+          <a :href="formatURL(challenge.url)" target="_blank">{{ formatURL(challenge.url) }}</a>
         </div>
       </div>
       <div class="challenge-item">
