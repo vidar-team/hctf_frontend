@@ -6,11 +6,23 @@
             <span v-if="Object.keys(categories[categoryName]).length === 0">
               {{ $t('challenge.emptyTip') }}
             </span>
-          <div v-for="levelName in Object.keys(categories[categoryName])" class="challenge-container">
-            <h2>Level - {{levelName}}</h2>
-            <challenge-view v-for="challenge in categories[categoryName][levelName]" :key="challenge.challenge_id"
-                            :challenge="challenge" :placeholders="placeholders"></challenge-view>
-          </div>
+          <el-collapse>
+            <el-collapse-item v-for="levelName in Object.keys(categories[categoryName])" class="challenge-container" :key="categoryName + levelName" :name="categoryName + levelName">
+              <template slot="title">
+                <span class="level-title">Level - {{ levelName }}</span>
+              </template>
+              <el-collapse :value="activeChallenges">
+                <el-collapse-item v-for="challenge in categories[categoryName][levelName]" :key="challenge.challenge_id" class="challenge-item" :class="{'challenge-solved': solvedChallengeIds.includes(challenge.challenge_id)}"  :name="challenge.title">
+                  <template slot="title">
+                    <span class="challenge-item-title">{{ challenge.title }}</span>
+                    <template v-if="solvedChallengeIds.includes(challenge.challenge_id)">[{{$t('challenge.solved')}}]</template>
+                  </template>
+                  <challenge-view :challenge="challenge" :placeholders="placeholders"></challenge-view>
+                </el-collapse-item>
+              </el-collapse>
+
+            </el-collapse-item>
+          </el-collapse>
         </el-tab-pane>
       </template>
     </el-tabs>
@@ -23,6 +35,25 @@
     </el-alert>
   </el-card>
 </template>
+<style>
+  .level-title{
+    font-size: larger;
+  }
+  .challenge-item{
+    padding-left: 20px;
+  }
+  .challenge-item-title{
+    font-size: larger;
+  }
+  .challenge-solved .challenge-item-title{
+    color: #19806a;
+    font-size: larger;
+  }
+  .challenge-solved>[role=tab]{
+    border: 1px green solid;
+    padding-left: 1rem;
+  }
+</style>
 <script>
   import Challenge from '@/model/Challenge';
   import View from '@/components/Challenge/View.vue';
@@ -36,7 +67,10 @@
         loading: false,
         available: true,
         startTime: undefined,
-        endTime: undefined
+        endTime: undefined,
+        solvedChallenges: [],
+        solvedChallengeIds: [],
+        activeChallenges: []
       };
     },
     async mounted() {
@@ -63,6 +97,7 @@
           let result = await ChallengeModel.getValidChallenges();
           this.categories = result.challenges;
           this.placeholders = result.placeholders;
+          this.solvedChallenges = result.solvedChallenges;
           this.activeTabName = this.categoryNames[0];
         }
         catch (e) {
@@ -76,6 +111,34 @@
           }
         }
         this.loading = false;
+
+        // 标记已经完成的题目
+        let allChallenges = [];
+        let solvedChallengeIds = [];
+        let unsolvedChallenges = [];
+        console.log(this.categories);
+        for (let key of Object.keys(this.categories)){
+          for (let cKey of Object.keys(this.categories[key])){
+            allChallenges.push(...this.categories[key][cKey]);
+          }
+        }
+        for (let challenge of this.solvedChallenges){
+          if (challenge.status === "correct"){
+            solvedChallengeIds.push(challenge.challenge_id);
+          }
+        }
+        solvedChallengeIds = solvedChallengeIds.filter((c, index, self) => {
+          // 去重复
+          return self.indexOf(c) === index;
+        });
+        this.solvedChallengeIds = solvedChallengeIds;
+        unsolvedChallenges = allChallenges.filter(c => {
+          return !solvedChallengeIds.includes(c.challenge_id);
+        });
+        let unsolvedChallengeNames = Array.from(unsolvedChallenges, c => {
+          return c.title;
+        });
+        this.activeChallenges = unsolvedChallengeNames;
       }
     }
   }

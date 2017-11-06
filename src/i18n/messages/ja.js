@@ -42,7 +42,8 @@ export default {
     maintenanceDescription: "{0}から{1}まで利用可能",
     dynamicFlagBadge: "ダイナミック Flag",
     dynamicFlagDescription: "Flag はあなたのチームページでチェックできるチームトークンに基づいています",
-    solvedCount: "Solved team"
+    solvedCount: "Solved team",
+    solved: "クリア済"
   },
   banned: {
     banTitle: "ブロック",

@@ -42,7 +42,8 @@ export default {
     maintenanceDescription: "Available from {0} to {1}",
     dynamicFlagBadge: "Dynamic Flag",
     dynamicFlagDescription: "Flag is based on Team Token which can be checked at your team page",
-    solvedCount: "Team solved"
+    solvedCount: "Team solved",
+    solved: "SOLVED"
   },
   banned: {
     banTitle: "BANNAD",
