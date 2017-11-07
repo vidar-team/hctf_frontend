@@ -1,6 +1,5 @@
 <template>
   <article class="challenge-body">
-    <h3>{{ challenge.title}}</h3>
     <div class="challenge-content">
       <div class="challenge-item">
         <span class="challenge-item-key">{{ $t('challenge.description') }}</span>

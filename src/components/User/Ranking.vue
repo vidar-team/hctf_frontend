@@ -9,16 +9,16 @@
       </el-table-column>
       <el-table-column
         prop="team_name"
-        label="Team Name">
+        :label="$t('ranking.teamName')">
       </el-table-column>
       <el-table-column
-        label="Score">
+        :label="$t('ranking.score')">
         <template slot-scope="scope">
           <span :class="scope.row.effect">{{ scope.row.dynamic_total_score || 0 }}</span>
         </template>
       </el-table-column>
       <el-table-column
-        label="More">
+        :label="$t('ranking.more')">
         <template slot-scope="scope">
           {{ scope.row.more || '--'}}
         </template>

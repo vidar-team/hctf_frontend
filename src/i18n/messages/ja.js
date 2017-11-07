@@ -11,7 +11,10 @@ export default {
     title: "お知らせ"
   },
   ranking: {
-    ranking: "ランキング"
+    ranking: "ランキング",
+    teamName: "チーム名",
+    score: "スコア",
+    more: "その他"
   },
   countdown: {
     untilStart: "開幕まで",

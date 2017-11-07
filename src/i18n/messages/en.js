@@ -11,7 +11,10 @@ export default {
     title: "Bulletin"
   },
   ranking: {
-    ranking: "Ranking"
+    ranking: "Ranking",
+    teamName: "Team Name",
+    score: "Score",
+    more: "More"
   },
   countdown: {
     untilStart: "To begin",

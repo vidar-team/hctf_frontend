@@ -44,10 +44,9 @@
         <el-menu-item index="#zh-cn" @click="switchLanguage('zh-cn')">
           中文
         </el-menu-item>
-        <!--<el-menu-item index="#ja" @click="switchLanguage('ja')">-->
-          <!-- Japanese is partly supported. If you like, uncomment this and switch to it. -->
-          <!--日本語-->
-        <!--</el-menu-item>-->
+        <el-menu-item index="#ja" @click="switchLanguage('ja')" style="display: none">
+          日本語(beta)
+        </el-menu-item>
       </el-submenu>
     </el-menu>
     <div class="main-container">
@@ -113,6 +112,7 @@
           }
           this.$store.commit("setTeamName", result.team_name);
           this.$store.commit("setTeamId", result.team_id);
+          this.$store.commit("setToken", result.token);
           this.$store.commit("login");
           this.inited = true;
         }

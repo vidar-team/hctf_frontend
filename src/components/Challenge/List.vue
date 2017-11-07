@@ -1,5 +1,10 @@
 <template>
   <el-card v-loading="loading">
+    <el-alert
+      :title="'Team Token: ' + teamToken"
+      type="info"
+      show-icon>
+    </el-alert>
     <el-tabs v-model="activeTabName" v-if="available">
       <template v-for="categoryName in categoryNames">
         <el-tab-pane :label="categoryName" :name="categoryName">
@@ -82,6 +87,9 @@
     computed: {
       categoryNames() {
         return Object.keys(this.categories);
+      },
+      teamToken(){
+        return this.$store.state.user.teamToken;
       },
       maintenanceDescription() {
         return this.$t("challenge.maintenanceDescription", [

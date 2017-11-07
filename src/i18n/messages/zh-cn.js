@@ -11,7 +11,10 @@ export default {
     title: "公告"
   },
   ranking: {
-    ranking: "排行"
+    ranking: "排行",
+    teamName: "队伍名",
+    score: "总分",
+    more: "其他"
   },
   countdown: {
     untilStart: "至比赛开始",

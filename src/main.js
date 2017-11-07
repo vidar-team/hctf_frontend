@@ -34,7 +34,6 @@ Vue.use(GlobalErrorHandler, {
   store: store
 });
 
-
 router.beforeEach(async (to, from, next) => {
   if (from.path !== to.path){
     NProgress.start();
