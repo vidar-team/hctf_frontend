@@ -1,6 +1,6 @@
 <template>
   <el-card>
-    <el-form @keyup.enter.native.prevent="submit" @submit.prevent v-loading="loading">
+    <el-form @submit.native.prevent="submit" v-loading="loading">
       <el-form-item>
         <el-input :placeholder="$t('challenge.submitFlagPlaceholder')" class="submit-flag" v-model="form.flag"></el-input>
       </el-form-item>

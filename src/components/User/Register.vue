@@ -1,6 +1,6 @@
 <template>
   <el-card>
-    <el-form @keyup.enter.native.prevent="submit" @submit.prevent v-loading="loading">
+    <el-form @keyup.enter.native.prevent="submit" @submit.prevent="submit" v-loading="loading">
       <h2>{{ $t('register.register') }}</h2>
       <el-form-item :label="$t('register.teamName')">
         <el-input :placeholder="$t('register.teamName')" v-model="form.teamName"></el-input>

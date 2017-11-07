@@ -1,29 +1,34 @@
 <template>
   <div class="ranking-container">
     <h2> {{ $t("ranking.ranking") }}</h2>
-    <el-table :data="ranking">
-      <el-table-column
-        type="index"
-        label="#"
-      >
-      </el-table-column>
-      <el-table-column
-        prop="team_name"
-        :label="$t('ranking.teamName')">
-      </el-table-column>
-      <el-table-column
-        :label="$t('ranking.score')">
-        <template slot-scope="scope">
-          <span :class="scope.row.effect">{{ scope.row.dynamic_total_score || 0 }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column
-        :label="$t('ranking.more')">
-        <template slot-scope="scope">
-          {{ scope.row.more || '--'}}
-        </template>
-      </el-table-column>
-    </el-table>
+    <template v-if="ranking.length > 0">
+      <el-table :data="ranking">
+        <el-table-column
+          type="index"
+          label="#"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="team_name"
+          :label="$t('ranking.teamName')">
+        </el-table-column>
+        <el-table-column
+          :label="$t('ranking.score')">
+          <template slot-scope="scope">
+            <span :class="scope.row.effect">{{ scope.row.dynamic_total_score || 0 }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
+          :label="$t('ranking.more')">
+          <template slot-scope="scope">
+            {{ scope.row.more || '--'}}
+          </template>
+        </el-table-column>
+      </el-table>
+    </template>
+    <template v-else>
+      Not Available
+    </template>
   </div>
 </template>
 <style>
