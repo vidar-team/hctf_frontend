@@ -1,18 +1,29 @@
 <template>
   <div class="ranking-container">
     <h2> {{ $t("ranking.ranking") }}</h2>
-    <div class="ranking-header">
-      <div class="ranking-header-column ranking-header-column-left">#</div>
-      <div class="ranking-header-column">Team Name</div>
-      <div class="ranking-header-column">Score</div>
-      <div class="ranking-header-column">More</div>
-    </div>
-    <div class="ranking-body" v-for="(team, index) in ranking">
-      <div class="ranking-item ranking-item-left">{{ index + 1 }}</div>
-      <div class="ranking-item">{{ team.team_name }}</div>
-      <div class="ranking-item" :class="team.effect">{{ team.dynamic_total_score || 0 }}</div>
-      <div class="ranking-item">{{ team.more || '--' }}</div>
-    </div>
+    <el-table :data="ranking">
+      <el-table-column
+        type="index"
+        label="#"
+      >
+      </el-table-column>
+      <el-table-column
+        prop="team_name"
+        label="Team Name">
+      </el-table-column>
+      <el-table-column
+        label="Score">
+        <template slot-scope="scope">
+          <span :class="scope.row.effect">{{ scope.row.dynamic_total_score || 0 }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        label="More">
+        <template slot-scope="scope">
+          {{ scope.row.more || '--'}}
+        </template>
+      </el-table-column>
+    </el-table>
   </div>
 </template>
 <style>

@@ -9,13 +9,13 @@
       <el-card style="margin-bottom: 2rem;">
         <ranking @change="updateTopTeams"></ranking>
       </el-card>
-      <el-card>
-        <bulletin></bulletin>
-      </el-card>
     </el-col>
     <el-col :span="12">
       <el-card>
         <recent-logs :teams="topTeams"></recent-logs>
+      </el-card>
+      <el-card class="bulletin-container">
+        <bulletin></bulletin>
       </el-card>
       <!--<el-card class="logo-container">-->
         <!--<img src="http://kotori.qiniudn.com/Vidar.png">-->
@@ -72,5 +72,8 @@
   .logo-container img{
     display: block;
     margin: auto;
+  }
+  .bulletin-container{
+    margin-top: 1rem;
   }
 </style>
