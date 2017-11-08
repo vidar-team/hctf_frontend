@@ -97,10 +97,12 @@ class User extends Model {
    * 获得排行
    * @returns {Promise}
    */
-  getRanking() {
+  getRanking(page = 1) {
     return new Promise(async (resolve, reject) => {
       try {
-        resolve(await this.request("GET", "/User/ranking"));
+        resolve(await this.request("GET", "/User/ranking", {
+          page: page
+        }));
       }
       catch (e) {
         reject(e);

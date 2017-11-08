@@ -5,6 +5,7 @@ export default {
     register: "新規チーム登録",
     submitFlag: "Flag 入力",
     challengeList: "チャレンジリスト",
+    ranking: "ランキング",
     welcomeMessage: "HCTF 2017 へよくそ"
   },
   bulletin: {
@@ -43,8 +44,6 @@ export default {
     flagCorrect: "おめでとう！スコア＋{0}",
     maintenanceTitle: "今メンテナンス中",
     maintenanceDescription: "{0}から{1}まで利用可能",
-    dynamicFlagBadge: "ダイナミック Flag",
-    dynamicFlagDescription: "Flag はあなたのチームページでチェックできるチームトークンに基づいています",
     solvedCount: "Solved team",
     solved: "クリア済"
   },
@@ -53,6 +52,8 @@ export default {
     banDescription: "容認できない操作のため、無期限ブロックされていました。"
   },
   user: {
-    score: "スコア"
+    score: "スコア",
+    totalScore: "总分",
+    ranking: "ランキング"
   }
 }

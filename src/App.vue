@@ -10,6 +10,9 @@
       <el-menu-item index="/challenge/submit">
         {{ $t("root.submitFlag") }}
       </el-menu-item>
+      <el-menu-item index="/ranking/index">
+        {{ $t("root.ranking") }}
+      </el-menu-item>
       <template v-if="inited">
         <template v-if="isLogin">
           <el-menu-item index="/user/logout" class="float-right">

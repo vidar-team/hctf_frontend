@@ -5,6 +5,7 @@ export default {
     register: "注册",
     submitFlag: "提交 Flag",
     challengeList: "Challenge 列表",
+    ranking: "排名",
     welcomeMessage: "欢迎来到 HCTF 2017 / 占位"
   },
   bulletin: {
@@ -51,6 +52,8 @@ export default {
     banDescription: "由于您难以描述的操作，您的账号已经被封停。如有任何疑问，请联系我们"
   },
   user: {
-    score: "分数"
+    score: "分数",
+    totalScore: "总分",
+    ranking: "排名"
   }
 }

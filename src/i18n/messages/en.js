@@ -5,7 +5,8 @@ export default {
     register: "Register",
     submitFlag: "Submit Flag",
     challengeList: "Challenge List",
-    welcomeMessage: "Welcome to HCTF 2017"
+    welcomeMessage: "Welcome to HCTF 2017",
+    ranking: "Ranking"
   },
   bulletin: {
     title: "Bulletin"
@@ -53,6 +54,8 @@ export default {
     banDescription: "Because of your unacceptable operations, your team has been banned forever. If you have any question, please contact us."
   },
   user: {
-    score: "score"
+    score: "score",
+    totalScore: "Total Score",
+    ranking: "Ranking"
   }
 }

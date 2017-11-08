@@ -2,8 +2,9 @@
   <el-card v-loading="loading">
     <h2> {{ team.team_name }} </h2>
     <div>
-      <p>Total score: {{ team.score }}</p>
+      <p>{{ $t('user.totalScore') }}: {{ team.score }}</p>
       <p>Token: <span class="token">{{ team.token }}</span></p>
+      <p>{{ $t('user.ranking') }}: {{team.ranking}} </p>
     </div>
   </el-card>
 </template>

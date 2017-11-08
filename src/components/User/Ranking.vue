@@ -1,5 +1,5 @@
 <template>
-  <div class="ranking-container">
+  <div class="ranking-container" v-loading="loading">
     <h2> {{ $t("ranking.ranking") }}</h2>
     <template v-if="ranking.length > 0">
       <el-table :data="ranking">
@@ -27,7 +27,16 @@
       </el-table>
     </template>
     <template v-else>
-      Not Available
+      <span v-if="!loading"> Not Available</span>
+    </template>
+    <template v-if="isExpandMode">
+      <el-pagination
+        layout="prev, pager, next"
+        :total="100"
+        :page-size="20"
+        :current-page="currentPage"
+        @current-change="getRanking">
+      </el-pagination>
     </template>
   </div>
 </template>
@@ -119,6 +128,8 @@
       return {
         ranking: [],
         teamList: [],
+        currentPage: 1,
+        loading: false
       }
     },
     async mounted() {
@@ -129,6 +140,12 @@
         this.fresh();
       }
     },
+    props: ['expand'],
+    computed:{
+      isExpandMode(){
+        return this.expand !== undefined;
+      }
+    },
     methods: {
       checkChange() {
         let teams = Array.from(this.ranking, i => {
@@ -136,23 +153,30 @@
         }).filter(i => i !== null);
         this.$emit("change", teams);
       },
-      async getRanking() {
+      async getRanking(page) {
+        if (page !== undefined){
+          this.currentPage = page;
+        }
+        this.loading = true;
         try {
-          this.ranking = await TeamModel.getRanking();
+          this.ranking = await TeamModel.getRanking(this.currentPage);
           this.checkChange();
         }
         catch (e) {
           this.$handleError(e);
         }
+        this.loading = false;
       },
       async fresh() {
         let newRanking;
+        this.loading = true;
         try {
-          newRanking = await TeamModel.getRanking();
+          newRanking = await TeamModel.getRanking(this.currentPage);
         }
         catch (e) {
           return this.$handleError(e);
         }
+        this.loading = false;
         this.checkChange();
         for (let index in this.ranking) {
           this.ranking[index].index = +index + 1;
