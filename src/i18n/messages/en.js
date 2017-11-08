@@ -48,7 +48,10 @@ export default {
     dynamicFlagBadge: "Dynamic Flag",
     dynamicFlagDescription: "Flag is based on Team Token which can be checked at your team page",
     solvedCount: "Team solved",
-    solved: "SOLVED"
+    solved: "SOLVED",
+    teamName: "Team Name",
+    solvedTeam: "Solved Team",
+    solvedAt: "Solved At"
   },
   banned: {
     banTitle: "BANNAD",

@@ -22,7 +22,7 @@
       <div class="challenge-item">
         <span class="challenge-item-key">{{ $t('challenge.solvedCount') }}</span>
         <div class="challenge-item-value">
-          {{ challenge.solvedCount }}
+          <a href="javascript:;" @click="showSolvedTeams(challenge.challenge_id)">{{ challenge.solvedCount }}</a>
         </div>
       </div>
     </div>
@@ -76,6 +76,9 @@
           url = url.replace("{" + key + "}", mappings[key]);
         }
         return url;
+      },
+      showSolvedTeams(challengeId){
+        this.$emit("show", challengeId);
       }
     }
   }

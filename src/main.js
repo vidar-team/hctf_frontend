@@ -10,6 +10,7 @@ import i18n from './i18n';
 
 // Element
 import 'element-ui/lib/theme-chalk/index.css'
+import locale from 'element-ui/lib/locale/lang/en'
 import Element from 'element-ui'
 
 // NProgress
@@ -28,7 +29,7 @@ import Auth from './utils/auth';
 // development mode
 Vue.config.productionTip = false;
 // enable plugins
-Vue.use(Element);
+Vue.use(Element, {locale});
 Vue.use(GlobalErrorHandler, {
   router: router,
   store: store

@@ -137,7 +137,7 @@
       this.getRanking();
       while (["Index", "Ranking-Index"].includes(this.$route.name)) {
         await (() =>
-            new Promise(resolve => setTimeout(resolve, 5000)))();
+            new Promise(resolve => setTimeout(resolve, 30000)))();
         this.fresh();
       }
     },

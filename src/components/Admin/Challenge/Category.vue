@@ -53,7 +53,6 @@
             </el-table>
             <hr>
             <el-button type="primary" size="small" @click="addLevel(category.category_id)">添加 Level</el-button>
-
           </template>
         </el-tab-pane>
       </template>

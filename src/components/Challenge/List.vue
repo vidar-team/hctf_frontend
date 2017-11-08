@@ -22,10 +22,9 @@
                     <span class="challenge-item-title">{{ challenge.title }}</span>
                     <template v-if="solvedChallengeIds.includes(challenge.challenge_id)">[{{$t('challenge.solved')}}]</template>
                   </template>
-                  <challenge-view :challenge="challenge" :placeholders="placeholders"></challenge-view>
+                  <challenge-view :challenge="challenge" :placeholders="placeholders" @show="showSolvedTeams"></challenge-view>
                 </el-collapse-item>
               </el-collapse>
-
             </el-collapse-item>
           </el-collapse>
         </el-tab-pane>
@@ -38,6 +37,18 @@
               :closable="false"
               show-icon>
     </el-alert>
+    <el-dialog :title="$t('challenge.solvedTeam')" :visible.sync="solvedTeamsDialogVisible">
+      <el-table :data="solvedTeams" v-loading="dialogLoading">
+        <el-table-column
+          :label="$t('challenge.teamName')"
+          prop="teamName">
+        </el-table-column>
+        <el-table-column
+          :label="$t('challenge.solvedAt')"
+          prop="solvedAt">
+        </el-table-column>
+      </el-table>
+    </el-dialog>
   </el-card>
 </template>
 <style>
@@ -75,7 +86,10 @@
         endTime: undefined,
         solvedChallenges: [],
         solvedChallengeIds: [],
-        activeChallenges: []
+        activeChallenges: [],
+        solvedTeams: [],
+        solvedTeamsDialogVisible: false,
+        dialogLoading: false
       };
     },
     async mounted() {
@@ -124,7 +138,6 @@
         let allChallenges = [];
         let solvedChallengeIds = [];
         let unsolvedChallenges = [];
-        console.log(this.categories);
         for (let key of Object.keys(this.categories)){
           for (let cKey of Object.keys(this.categories[key])){
             allChallenges.push(...this.categories[key][cKey]);
@@ -147,6 +160,18 @@
           return c.title;
         });
         this.activeChallenges = unsolvedChallengeNames;
+      },
+      async showSolvedTeams(challengeId){
+        this.solvedTeamsDialogVisible = true;
+        this.dialogLoading = true;
+        this.solvedTeams = [];
+        try{
+          this.solvedTeams = await ChallengeModel.getSolvedTeams(challengeId);
+        }
+        catch (e){
+          this.$handleError(e);
+        }
+        this.dialogLoading = false;
       }
     }
   }

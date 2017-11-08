@@ -46,7 +46,10 @@ export default {
     maintenanceTitle: "今メンテナンス中",
     maintenanceDescription: "{0}から{1}まで利用可能",
     solvedCount: "Solved team",
-    solved: "クリア済"
+    solved: "クリア済",
+    teamName: "Team Name",
+    solvedTeam: "Solved Team",
+    solvedAt: "Solved At"
   },
   banned: {
     banTitle: "ブロック",

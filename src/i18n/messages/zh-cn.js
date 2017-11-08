@@ -46,7 +46,10 @@ export default {
     maintenanceTitle: "维护中",
     maintenanceDescription: "{0} ~ {1} 期间开放",
     solvedCount: "完成队伍数",
-    solved: "已完成"
+    solved: "已完成",
+    teamName: "队伍名",
+    solvedTeam: "成功提交的队伍",
+    solvedAt: "提交于"
   },
   banned: {
     banTitle: "封停",
