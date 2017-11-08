@@ -13,6 +13,9 @@
       <el-menu-item index="/ranking/index">
         {{ $t("root.ranking") }}
       </el-menu-item>
+      <el-menu-item index="/bulletin/index">
+        {{ $t("root.bulletin") }}
+      </el-menu-item>
       <template v-if="inited">
         <template v-if="isLogin">
           <el-menu-item index="/user/logout" class="float-right">

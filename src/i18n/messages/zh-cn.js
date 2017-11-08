@@ -6,6 +6,7 @@ export default {
     submitFlag: "提交 Flag",
     challengeList: "Challenge 列表",
     ranking: "排名",
+    bulletin: "公告",
     welcomeMessage: "欢迎来到 HCTF 2017 / 占位"
   },
   bulletin: {

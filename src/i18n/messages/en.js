@@ -5,8 +5,9 @@ export default {
     register: "Register",
     submitFlag: "Submit Flag",
     challengeList: "Challenge List",
-    welcomeMessage: "Welcome to HCTF 2017",
-    ranking: "Ranking"
+    ranking: "Ranking",
+    bulletin: "Bulletin",
+    welcomeMessage: "Welcome to HCTF 2017"
   },
   bulletin: {
     title: "Bulletin"

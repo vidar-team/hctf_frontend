@@ -7,6 +7,7 @@ import user from './modules/user'
 import admin from './modules/admin'
 import challenge from './modules/challenge';
 import ranking from './modules/ranking';
+import bulletin from './modules/bulletin';
 
 Vue.use(Router);
 
@@ -21,6 +22,7 @@ export default new Router({
     challenge,
     admin,
     ranking,
+    bulletin,
     // 已经被封禁
     {
       path: '/banned',

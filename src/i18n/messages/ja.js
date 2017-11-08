@@ -6,6 +6,7 @@ export default {
     submitFlag: "Flag 入力",
     challengeList: "チャレンジリスト",
     ranking: "ランキング",
+    bulletin: "お知らせ",
     welcomeMessage: "HCTF 2017 へよくそ"
   },
   bulletin: {
