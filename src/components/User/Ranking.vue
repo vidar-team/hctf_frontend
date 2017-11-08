@@ -135,9 +135,9 @@
     },
     async mounted() {
       this.getRanking();
-      while (this.$route.name === "Index") {
+      while (["Index", "Ranking-Index"].includes(this.$route.name)) {
         await (() =>
-            new Promise(resolve => setTimeout(resolve, 30000)))();
+            new Promise(resolve => setTimeout(resolve, 5000)))();
         this.fresh();
       }
     },
@@ -192,7 +192,7 @@
         for (let team of newRanking) {
           let oldTeam = this.ranking.find(i => i.team_name === team.team_name);
           // 排位变更
-          if (oldTeam.index !== undefined) {
+          if (oldTeam && oldTeam.index !== undefined) {
             if (oldTeam.index < team.index) {
               team.more = "↓"
             }
@@ -202,15 +202,14 @@
             else {
               team.more = '--'
             }
+            // 分数变更动画效果
+            if (oldTeam.dynamic_total_score !== team.dynamic_total_score) {
+              let diff = team.dynamic_total_score - oldTeam.dynamic_total_score;
+              team.effect = diff < 0 ? "score-desc" : "score-inc"
+            }
           }
           else {
             team.more = "New"
-          }
-
-          // 分数变更动画效果
-          if (oldTeam.dynamic_total_score !== team.dynamic_total_score) {
-            let diff = team.dynamic_total_score - oldTeam.dynamic_total_score;
-            team.effect = diff < 0 ? "score-desc" : "score-inc"
           }
         }
         this.ranking = newRanking;
