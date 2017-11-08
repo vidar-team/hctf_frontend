@@ -5,6 +5,7 @@
       <el-table :data="ranking">
         <el-table-column
           type="index"
+          :index="getIndex"
           label="#"
         >
         </el-table-column>
@@ -29,7 +30,7 @@
     <template v-else>
       <span v-if="!loading"> Not Available</span>
     </template>
-    <template v-if="isExpandMode">
+    <template v-if="isExpandMode && ranking.length > 0">
       <el-pagination
         layout="prev, pager, next"
         :total="100"
@@ -147,6 +148,9 @@
       }
     },
     methods: {
+      getIndex(index){
+        return (this.currentPage - 1) * 20 + index + 1;
+      },
       checkChange() {
         let teams = Array.from(this.ranking, i => {
           return i.team_id
@@ -154,12 +158,12 @@
         this.$emit("change", teams);
       },
       async getRanking(page) {
-        if (page !== undefined){
-          this.currentPage = page;
-        }
         this.loading = true;
         try {
           this.ranking = await TeamModel.getRanking(this.currentPage);
+          if (page !== undefined){
+            this.currentPage = page;
+          }
           this.checkChange();
         }
         catch (e) {
