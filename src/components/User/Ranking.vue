@@ -137,7 +137,7 @@
       this.getRanking();
       while (["Index", "Ranking-Index"].includes(this.$route.name)) {
         await (() =>
-            new Promise(resolve => setTimeout(resolve, 5000)))();
+            new Promise(resolve => setTimeout(resolve, 30000)))();
         this.fresh();
       }
     },
@@ -160,7 +160,7 @@
       async getRanking(page) {
         this.loading = true;
         try {
-          this.ranking = await TeamModel.getRanking(this.currentPage);
+          this.ranking = await TeamModel.getRanking(page);
           if (page !== undefined){
             this.currentPage = page;
           }
