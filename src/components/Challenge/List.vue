@@ -59,6 +59,7 @@
     padding-left: 20px;
   }
   .challenge-item-title{
+    padding-left: 1rem;
     font-size: larger;
   }
   .challenge-solved .challenge-item-title{
@@ -67,7 +68,6 @@
   }
   .challenge-solved>[role=tab]{
     border: 1px green solid;
-    padding-left: 1rem;
   }
 </style>
 <script>
