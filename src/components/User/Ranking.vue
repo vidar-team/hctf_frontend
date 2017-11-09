@@ -137,7 +137,7 @@
       this.getRanking();
       while (["Index", "Ranking-Index"].includes(this.$route.name)) {
         await (() =>
-            new Promise(resolve => setTimeout(resolve, 30000)))();
+            new Promise(resolve => setTimeout(resolve, 5000)))();
         this.fresh();
       }
     },
@@ -187,11 +187,11 @@
         for (let index in this.ranking) {
           this.ranking[index].index = +index + 1;
         }
-        for (let index in newRanking) {
-          newRanking[index].index = +index + 1;
+        for (let index in newRanking.ranking) {
+          newRanking.ranking[index].index = +index + 1;
         }
         // do diff
-        for (let team of newRanking) {
+        for (let team of newRanking.ranking) {
           let oldTeam = this.ranking.find(i => i.team_name === team.team_name);
           // 排位变更
           if (oldTeam && oldTeam.index !== undefined) {
@@ -214,7 +214,8 @@
             team.more = "New"
           }
         }
-        this.ranking = newRanking;
+        this.ranking = newRanking.ranking;
+        this.total = newRanking.total;
       },
       isEmpty() {
         return !this.ranking.some(i => {
