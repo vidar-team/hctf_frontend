@@ -3,8 +3,9 @@
     <div class="challenge-content">
       <div class="challenge-item">
         <span class="challenge-item-key">{{ $t('challenge.description') }}</span>
-        <div class="challenge-item-value">
-          {{ challenge.description }}
+        <br>
+        <div class="challenge-item-value" v-html="challenge.description">
+
         </div>
       </div>
       <div class="challenge-item">

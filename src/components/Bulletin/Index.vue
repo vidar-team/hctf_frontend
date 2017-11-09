@@ -3,9 +3,9 @@
     <el-col :span="16" :offset="4">
       <el-card v-for="bulletin in bulletins" :key="bulletin.bulletin_id" class="bulletin-container">
         <h2>{{ bulletin.title }}</h2>
-        <p>
-          {{ bulletin.content }}
-        </p>
+        <div v-html="bulletin.content">
+         
+        </div>
       </el-card>
     </el-col>
   </el-row>
