@@ -40,6 +40,7 @@ export default {
     submit: "提交",
     description: "描述",
     baseScore: "基准分数",
+    nowScore: "当前分数",
     emptyTip: "当前无可用题目",
     pleaseFillTheForm: "请完整填写表单",
     flagCorrect: "恭喜，队伍积分+{0}",

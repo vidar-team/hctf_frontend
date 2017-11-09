@@ -21,6 +21,12 @@
         </div>
       </div>
       <div class="challenge-item">
+        <span class="challenge-item-key">{{ $t('challenge.nowScore') }}</span>
+        <div class="challenge-item-value">
+          {{ challenge.nowScore }}
+        </div>
+      </div>
+      <div class="challenge-item">
         <span class="challenge-item-key">{{ $t('challenge.solvedCount') }}</span>
         <div class="challenge-item-value">
           <a href="javascript:;" @click="showSolvedTeams(challenge.challenge_id)">{{ challenge.solvedCount }}</a>

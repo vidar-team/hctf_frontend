@@ -40,6 +40,7 @@ export default {
     submit: "送信",
     description: "説明",
     baseScore: "基準スコア",
+    nowScore: "現在スコア",
     emptyTip: "ただいま、アクセス可能のチャレンジがありません。",
     pleaseFillTheForm: "ご入力いただいたフォームが正しい内容ではありません",
     flagCorrect: "おめでとう！スコア＋{0}",
