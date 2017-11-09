@@ -4,7 +4,7 @@
       <el-card v-for="bulletin in bulletins" :key="bulletin.bulletin_id" class="bulletin-container">
         <h2>{{ bulletin.title }}</h2>
         <div v-html="bulletin.content">
-         
+
         </div>
       </el-card>
     </el-col>

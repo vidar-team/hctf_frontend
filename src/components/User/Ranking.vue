@@ -33,7 +33,7 @@
     <template v-if="isExpandMode && ranking.length > 0">
       <el-pagination
         layout="prev, pager, next"
-        :total="100"
+        :total="total"
         :page-size="20"
         :current-page="currentPage"
         @current-change="getRanking">
@@ -160,7 +160,9 @@
       async getRanking(page) {
         this.loading = true;
         try {
-          this.ranking = await TeamModel.getRanking(page);
+          let result = await TeamModel.getRanking(page);
+          this.ranking = result.ranking;
+          this.total = result.total;
           if (page !== undefined){
             this.currentPage = page;
           }
