@@ -3,11 +3,11 @@ export default {
   name: 'User-Layout',
   component: resolve => require(['@/components/User/UserLayout.vue'], resolve),
   children: [
-    {
-      path: 'register',
-      name: 'User-Register',
-      component: resolve => require(['@/components/User/Register.vue'], resolve),
-    },
+    // {
+    //   path: 'register',
+    //   name: 'User-Register',
+    //   component: resolve => require(['@/components/User/Register.vue'], resolve),
+    // },
     {
       path: 'login',
       name: 'User-Login',

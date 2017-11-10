@@ -31,10 +31,10 @@
           </el-menu-item>
         </template>
         <template v-else>
-          <el-menu-item index="/user/register" class="float-right">
-            {{ $t("root.register ")}}
+          <!--<el-menu-item index="/user/register" class="float-right">-->
+            <!--{{ $t("root.register ")}}-->
 
-          </el-menu-item>
+          <!--</el-menu-item>-->
           <el-menu-item index="/user/login" class="float-right">
             {{ $t("root.login") }}
 
