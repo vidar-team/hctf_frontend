@@ -8,8 +8,8 @@ class Team extends Model {
    * @returns {*}
    */
   sha256(text = '') {
-    let sha256 = makeHash('sha256');
-    return sha256.update(text).digest('hex');
+    let sha256 = makeHash("sha256");
+    return sha256.update(text).digest("hex");
   }
 
   /**
@@ -19,7 +19,7 @@ class Team extends Model {
   getTeamInfo() {
     return new Promise(async (resolve, reject) => {
       try {
-        let result = await this.request("GET", "/User/info", {}, {
+        let result = await this.request("GET", "/Team/info", {}, {
           needAuth: true
         });
         resolve(result);
@@ -38,7 +38,7 @@ class Team extends Model {
   getAllTeams(page = 1) {
     return new Promise(async (resolve, reject) => {
       try {
-        let result = await this.request("GET", "/User/list", {
+        let result = await this.request("GET", "/Team/list", {
           page: page
         }, {
           needAuth: true,
@@ -59,7 +59,7 @@ class Team extends Model {
   search(keyword){
     return new Promise(async (resolve, reject) => {
       try{
-        let teams = await this.request("GET", "/User/search", {
+        let teams = await this.request("GET", "/Team/search", {
           keyword: keyword
         }, {
           needAuth: true
@@ -80,7 +80,7 @@ class Team extends Model {
   banTeam(teamId) {
     return new Promise(async (resolve, reject) => {
       try {
-        let result = await this.request("POST", "/User/ban", {
+        let result = await this.request("POST", "/Team/ban", {
           teamId: teamId
         }, {
           needAuth: true
@@ -101,7 +101,7 @@ class Team extends Model {
   unbanTeam(teamId) {
     return new Promise(async (resolve, reject) => {
       try {
-        let result = await this.request("POST", "/User/unban", {
+        let result = await this.request("POST", "/Team/unban", {
           teamId: teamId
         }, {
           needAuth: true
@@ -122,7 +122,7 @@ class Team extends Model {
   setAdmin(teamId) {
     return new Promise(async (resolve, reject) => {
       try {
-        let result = await this.request("POST", "/User/setAdmin", {
+        let result = await this.request("POST", "/Team/setAdmin", {
           teamId: teamId
         }, {
           needAuth: true
@@ -138,7 +138,7 @@ class Team extends Model {
   resetPassword(teamId) {
     return new Promise(async (resolve, reject) => {
       try {
-        let result = await this.request("POST", "/User/forceResetPassword", {
+        let result = await this.request("POST", "/Team/forceResetPassword", {
           teamId: teamId
         }, {
           needAuth: true

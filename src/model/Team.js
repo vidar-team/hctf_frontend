@@ -22,7 +22,7 @@ class User extends Model {
   login(email, password) {
     return new Promise(async (resolve, reject) => {
       try {
-        let result = await this.request("POST", '/User/login', {
+        let result = await this.request("POST", "/Team/login", {
           email: email,
           password: this.sha256(password)
         });
@@ -41,7 +41,7 @@ class User extends Model {
   logout() {
     return new Promise(async (resolve, reject) => {
       try {
-        let result = await this.request("POST", '/User/logout', {}, {
+        let result = await this.request("POST", "/Team/logout", {}, {
           needAuth: true
         });
         resolve(result);
@@ -62,7 +62,7 @@ class User extends Model {
   register(teamName, email, password) {
     return new Promise(async (resolve, reject) => {
       try {
-        let result = await  this.request("POST", "/User/register", {
+        let result = await  this.request("POST", "/Team/register", {
           teamName: teamName,
           email: email,
           password: this.sha256(password)
@@ -82,7 +82,7 @@ class User extends Model {
   getTeamInfo() {
     return new Promise(async (resolve, reject) => {
       try {
-        let result = await this.request("GET", "/User/info", {}, {
+        let result = await this.request("GET", "/Team/info", {}, {
           needAuth: true
         });
         resolve(result);
@@ -100,7 +100,7 @@ class User extends Model {
   getRanking(page = 1, withCount = false) {
     return new Promise(async (resolve, reject) => {
       try {
-        resolve(await this.request("GET", "/User/ranking", {
+        resolve(await this.request("GET", "/Team/ranking", {
           page: page,
           withCount: withCount
         }));
@@ -119,7 +119,7 @@ class User extends Model {
   select(teamId) {
     return new Promise(async (resolve, reject) => {
       try {
-        resolve(await this.request("GET", "/User/select", {
+        resolve(await this.request("GET", "/Team/select", {
           teamId: teamId
         }));
       }
