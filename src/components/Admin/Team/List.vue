@@ -101,7 +101,7 @@
   }
 </style>
 <script>
-  import Team from '@/model/admin/Team';
+  import Team from '@/api/admin/Team';
 
   let TeamModel = new Team();
   export default {

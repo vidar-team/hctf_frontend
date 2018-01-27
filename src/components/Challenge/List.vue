@@ -71,7 +71,7 @@
   }
 </style>
 <script>
-  import Challenge from '@/model/Challenge';
+  import Challenge from '@/api/Challenge';
   import View from '@/components/Challenge/View.vue';
 
   let ChallengeModel = new Challenge();

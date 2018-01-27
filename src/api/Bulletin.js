@@ -1,4 +1,4 @@
-import Model from '@/model/model'
+import Model from './model'
 
 class Bulletin extends Model{
   /**
@@ -17,4 +17,4 @@ class Bulletin extends Model{
     })
   }
 }
-export default Bulletin;
+export default new Bulletin();

@@ -14,7 +14,7 @@
   }
 </style>
 <script>
-  import User from '../../model/Team';
+  import User from '@/api/Team';
 
   let UserModel = new User();
   export default {

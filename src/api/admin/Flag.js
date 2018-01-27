@@ -1,4 +1,4 @@
-import Model from '@/model/model'
+import Model from '@/api/model'
 
 class Flag extends Model {
   /**

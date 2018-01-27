@@ -48,7 +48,7 @@
   </el-table>
 </template>
 <script>
-  import Challenge from '@/model/admin/Challenge';
+  import Challenge from '@/api/admin/Challenge';
   let ChallengeModel = new Challenge();
   export default {
     data(){

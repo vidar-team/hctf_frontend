@@ -1,4 +1,4 @@
-import Model from "../model";
+import Model from "@/api/model";
 
 class System extends Model {
   /**

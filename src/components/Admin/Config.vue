@@ -27,7 +27,7 @@
   </el-form>
 </template>
 <script>
-  import System from '@/model/admin/System';
+  import System from '@/api/admin/System';
 
   let SystemModel = new System();
 

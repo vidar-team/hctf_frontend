@@ -16,8 +16,8 @@
   }
 </style>
 <script>
-  import Bulletin from '@/model/Bulletin';
-  let BulletinModel = new Bulletin();
+  import Bulletin from '@/api/Bulletin';
+  
   export default {
     data(){
       return {
@@ -26,7 +26,7 @@
     },
     async mounted(){
       try {
-        this.bulletins = await BulletinModel.getAllBulletins();
+        this.bulletins = await Bulletin.getAllBulletins();
       }
       catch (e){
         this.$handleError(e);

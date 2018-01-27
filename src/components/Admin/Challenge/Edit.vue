@@ -104,8 +104,8 @@
   </el-tabs>
 </template>
 <script>
-  import Challenge from '@/model/admin/Challenge';
-  import Flag from '@/model/admin/Flag';
+  import Challenge from '@/api/admin/Challenge';
+  import Flag from '@/api/admin/Flag';
 
   let FlagModel = new Flag();
   let ChallengeModel = new Challenge();

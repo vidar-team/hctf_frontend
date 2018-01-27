@@ -45,8 +45,8 @@
   }
 </style>
 <script>
-  import Level from '@/model/admin/Level';
-  import Category from '@/model/admin/Category';
+  import Level from '@/api/admin/Level';
+  import Category from '@/api/admin/Category';
   import Rules from './RuleComponents/Rules.vue';
   import ChallengeList from './List.vue';
 

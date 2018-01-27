@@ -85,8 +85,8 @@
   </el-row>
 </template>
 <script>
-  import Category from '@/model/admin/Category';
-  import Challenge from '@/model/admin/Challenge'
+  import Category from '@/api/admin/Category';
+  import Challenge from '@/api/admin/Challenge'
 
   let CategoryModel = new Category();
   let ChallengeModel = new Challenge();

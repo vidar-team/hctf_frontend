@@ -96,8 +96,8 @@
   }
 </style>
 <script>
-  import Category from '@/model/admin/Category';
-  import Level from '@/model/admin/Level'
+  import Category from '@/api/admin/Category';
+  import Level from '@/api/admin/Level'
   import Rules from './RuleComponents/Rules.vue';
 
   let CategoryModel = new Category();

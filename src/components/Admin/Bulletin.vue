@@ -52,7 +52,7 @@
   </el-tabs>
 </template>
 <script>
-  import Bulletin from '@/model/admin/Bulletin';
+  import Bulletin from '@/api/admin/Bulletin';
   let BulletinModel = new Bulletin();
   export default {
     data(){

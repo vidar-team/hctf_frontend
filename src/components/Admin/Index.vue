@@ -43,7 +43,7 @@
   }
 </style>
 <script>
-  import SystemLog from '@/model/admin/SystemLog';
+  import SystemLog from '@/api/admin/SystemLog';
 
   let SystemLogModel = new SystemLog();
   export default {

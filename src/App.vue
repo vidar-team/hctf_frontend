@@ -62,9 +62,9 @@
 </template>
 
 <script>
-  import Auth from './utils/auth';
-  import User from './model/Team';
-  import System from './model/System';
+  import Auth from '@/utils/auth';
+  import User from '@/api/Team';
+  import System from '@/api/System';
 
   let UserModel = new User();
   let SystemModel = new System();

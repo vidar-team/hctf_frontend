@@ -12,7 +12,7 @@
   }
 </style>
 <script>
-  import Team from '@/model/Team';
+  import Team from '@/api/Team';
   import ECharts from 'vue-echarts/components/ECharts.vue'
   import 'echarts/lib/chart/line'
   import 'echarts/lib/component/tooltip'

@@ -1,5 +1,5 @@
 import makeHash from 'sha.js';
-import Model from '@/model/model'
+import Model from '@/api/model'
 
 class Team extends Model {
   /**

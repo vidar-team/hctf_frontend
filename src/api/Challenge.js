@@ -1,4 +1,4 @@
-import Model from '@/model/model';
+import Model from './model';
 
 class Challenge extends Model {
   /**
