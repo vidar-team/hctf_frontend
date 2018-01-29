@@ -26,7 +26,6 @@
 <script>
   import Challenge from '@/api/Challenge';
 
-  let ChallengeModel = new Challenge();
   export default {
     data() {
       return {
@@ -45,7 +44,7 @@
         }
         this.loading = true;
         try {
-          let result = await ChallengeModel.submitFlag(this.form.flag);
+          let result = await Challenge.submitFlag(this.form.flag);
           this.form.flag = "";
           this.$message({
             showClose: true,

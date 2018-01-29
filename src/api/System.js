@@ -18,4 +18,4 @@ class System extends model {
   }
 }
 
-export default System;
+export default new System();

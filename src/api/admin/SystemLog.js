@@ -18,4 +18,4 @@ class SystemLog extends Model {
   }
 }
 
-export default SystemLog;
+export default new SystemLog();

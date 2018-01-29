@@ -21,9 +21,8 @@
   </el-card>
 </template>
 <script>
-  import User from './api/Team';
+  import Team from './api/Team';
 
-  let UserModel = new User();
   export default {
     data() {
       return {
@@ -46,7 +45,7 @@
         }
         this.loading = true;
         try {
-          let result = await UserModel.register(this.form.teamName, this.form.email, this.form.password2);
+          let result = await Team.register(this.form.teamName, this.form.email, this.form.password2);
           this.$router.push({
             name: "User-Login"
           });

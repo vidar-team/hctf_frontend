@@ -61,4 +61,4 @@ class Challenge extends Model {
   }
 }
 
-export default Challenge;
+export default new Challenge();

@@ -2,9 +2,6 @@
 
 </template>
 <script>
-  import Team from '@/api/Team';
-
-  let TeamModel = new Team();
   export default {
     async mounted() {
       try {

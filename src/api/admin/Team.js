@@ -152,4 +152,4 @@ class Team extends Model {
   }
 }
 
-export default Team;
+export default new Team();

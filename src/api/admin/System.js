@@ -44,4 +44,4 @@ class System extends Model {
   }
 }
 
-export default System;
+export default new System();

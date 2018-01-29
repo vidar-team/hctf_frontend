@@ -140,4 +140,4 @@ class Level extends Model {
   }
 }
 
-export default Level;
+export default new Level();

@@ -53,7 +53,6 @@
 </template>
 <script>
   import Bulletin from '@/api/admin/Bulletin';
-  let BulletinModel = new Bulletin();
   export default {
     data(){
       return {
@@ -76,7 +75,7 @@
     async mounted(){
       this.loading = true;
       try{
-        this.bulletins = await BulletinModel.getAllBulletins();
+        this.bulletins = await Bulletin.getAllBulletins();
       }
       catch (e){
         this.$handleError(e);
@@ -96,8 +95,8 @@
       async deleteBulletin(bulletinId){
         this.loading = true;
         try{
-          await BulletinModel.deleteBulletin(bulletinId);
-          this.bulletins = await BulletinModel.getAllBulletins();
+          await Bulletin.deleteBulletin(bulletinId);
+          this.bulletins = await Bulletin.getAllBulletins();
         }
         catch (e){
           this.$handleError(e);
@@ -112,7 +111,7 @@
         }
         this.loading = true;
         try{
-          this.bulletins.push(await BulletinModel.createBulletin(this.form.title, this.form.content));
+          this.bulletins.push(await Bulletin.createBulletin(this.form.title, this.form.content));
         }
         catch (e){
           this.$handleError(e);
@@ -127,8 +126,8 @@
         }
         this.dialogLoading = true;
         try{
-          await BulletinModel.editBulletin(this.editForm.bulletinId, this.editForm.title, this.editForm.content);
-          this.bulletins = await BulletinModel.getAllBulletins();
+          await Bulletin.editBulletin(this.editForm.bulletinId, this.editForm.title, this.editForm.content);
+          this.bulletins = await Bulletin.getAllBulletins();
           this.editDialogVisible = false;
         }
         catch (e){

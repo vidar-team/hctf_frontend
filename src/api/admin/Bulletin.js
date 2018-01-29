@@ -86,4 +86,4 @@ class Bulletin extends Model{
     })
   }
 }
-export default Bulletin();
+export default new Bulletin();

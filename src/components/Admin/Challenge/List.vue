@@ -49,7 +49,7 @@
 </template>
 <script>
   import Challenge from '@/api/admin/Challenge';
-  let ChallengeModel = new Challenge();
+
   export default {
     data(){
       return {
@@ -74,7 +74,7 @@
             cancelButtonText: '取消',
             type: 'warning'
           });
-          await ChallengeModel.deleteChallenge(challengeId);
+          await Challenge.deleteChallenge(challengeId);
           this.loadLevelInfo(this.$route.query.id);
         }
         catch (e) {

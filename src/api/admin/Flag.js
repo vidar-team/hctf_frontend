@@ -48,4 +48,4 @@ class Flag extends Model {
   }
 }
 
-export default Flag;
+export default new Flag();

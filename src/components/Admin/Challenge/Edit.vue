@@ -107,8 +107,6 @@
   import Challenge from '@/api/admin/Challenge';
   import Flag from '@/api/admin/Flag';
 
-  let FlagModel = new Flag();
-  let ChallengeModel = new Challenge();
   export default {
     data() {
       return {
@@ -140,7 +138,7 @@
         if (this.activeTabName === "flags" && !this.isFlagLoaded) {
           this.loading = true;
           try {
-            this.flags = await ChallengeModel.getFlagsInfo(this.$route.query.challengeId);
+            this.flags = await Challenge.getFlagsInfo(this.$route.query.challengeId);
             this.isFlagLoaded = true;
           }
           catch (e) {
@@ -175,7 +173,7 @@
         }
         this.loading = true;
         try {
-          await ChallengeModel.editChallenge(this.$route.query.challengeId, this.form.title, this.form.description, this.form.releaseTime);
+          await Challenge.editChallenge(this.$route.query.challengeId, this.form.title, this.form.description, this.form.releaseTime);
         }
         catch (e) {
           this.$handleError(e);
@@ -189,7 +187,7 @@
       async resetScore() {
         this.dialogLoading = true;
         try {
-          await ChallengeModel.resetScore(this.$route.query.challengeId, this.form.score);
+          await Challenge.resetScore(this.$route.query.challengeId, this.form.score);
           this.resetScoreDialogVisible = false;
         }
         catch (e) {
@@ -205,8 +203,8 @@
       async deleteFlag(flagId) {
         this.loading = true;
         try {
-          await FlagModel.deleteFlag(flagId);
-          this.flags = await ChallengeModel.getFlagsInfo(this.$route.query.challengeId);
+          await Flag.deleteFlag(flagId);
+          this.flags = await Challenge.getFlagsInfo(this.$route.query.challengeId);
         }
         catch (e) {
           this.$handleError(e);
@@ -231,7 +229,7 @@
       async editFlag() {
         this.dialogLoading = true;
         try {
-          let editedFlag = await FlagModel.editFlag(this.editFlagForm.flagId, this.editFlagForm.flag, this.editFlagForm.teamId);
+          let editedFlag = await Flag.editFlag(this.editFlagForm.flagId, this.editFlagForm.flag, this.editFlagForm.teamId);
           let nowFlag = this.flags.find(i => i.flag_id === this.editFlagForm.flagId);
           nowFlag.flag = editedFlag.flag;
           nowFlag.team_id = editedFlag.team_id;
@@ -259,7 +257,7 @@
         }
         this.loading = true;
         try {
-          await ChallengeModel.deleteAllFlags(this.$route.query.challengeId);
+          await Challenge.deleteAllFlags(this.$route.query.challengeId);
           this.flags = [];
         }
         catch (e) {
@@ -295,7 +293,7 @@
             }
           }
           this.dialogLoading = true;
-          let flags = await ChallengeModel.addFlags(this.$route.query.challengeId, newFlags);
+          let flags = await Challenge.addFlags(this.$route.query.challengeId, newFlags);
           this.flags = flags;
           this.addFlagDialogVisible = false;
         }
@@ -312,7 +310,7 @@
         })
       }
       this.loading = true;
-      let challengeInfo = await ChallengeModel.getChallengeInfo(this.$route.query.challengeId);
+      let challengeInfo = await Challenge.getChallengeInfo(this.$route.query.challengeId);
       this.loading = false;
       this.form.title = challengeInfo.title;
       this.form.description = challengeInfo.description;

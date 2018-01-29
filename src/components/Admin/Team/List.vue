@@ -103,7 +103,6 @@
 <script>
   import Team from '@/api/admin/Team';
 
-  let TeamModel = new Team();
   export default {
     data() {
       return {
@@ -124,7 +123,7 @@
       async loadTeamData(page = 1) {
         this.loading = true;
         try {
-          let teamsInfo = await TeamModel.getAllTeams(page);
+          let teamsInfo = await Team.getAllTeams(page);
           this.teams = teamsInfo.teams;
           this.total = teamsInfo.total;
         }
@@ -136,7 +135,7 @@
       async banTeam(teamId) {
         this.loading = true;
         try {
-          await TeamModel.banTeam(Array.isArray(teamId) ? teamId : [teamId]);
+          await Team.banTeam(Array.isArray(teamId) ? teamId : [teamId]);
           this.loadTeamData(this.currentPage);
         }
         catch (e) {
@@ -147,7 +146,7 @@
       async unbanTeam(teamId) {
         this.loading = true;
         try {
-          await TeamModel.unbanTeam(Array.isArray(teamId) ? teamId : [teamId]);
+          await Team.unbanTeam(Array.isArray(teamId) ? teamId : [teamId]);
           this.loadTeamData(this.currentPage);
         }
         catch (e) {
@@ -177,7 +176,7 @@
             type: 'warning'
           });
           this.loading = true;
-          await TeamModel.setAdmin(Array.isArray(teamId) ? teamId : [teamId]);
+          await Team.setAdmin(Array.isArray(teamId) ? teamId : [teamId]);
           this.loadTeamData(this.currentPage);
         }
         catch (e) {
@@ -192,7 +191,7 @@
             cancelButtonText: '取消',
             type: 'warning'
           });
-          let result = await TeamModel.resetPassword(teamId);
+          let result = await Team.resetPassword(teamId);
           this.$alert(`密码已经被重置为 ${result["newPassword"]}`, '操作完成', {
             confirmButtonText: '我已经保存新密码',
           });
@@ -204,7 +203,7 @@
       async search(e){
         this.loading = true;
         try{
-          let teams = await TeamModel.search(this.form.keyword);
+          let teams = await Team.search(this.form.keyword);
           this.teams = teams;
           this.total = 0; // disable pagination
         }

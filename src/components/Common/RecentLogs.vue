@@ -18,8 +18,6 @@
   import 'echarts/lib/component/tooltip'
   import 'echarts/lib/component/legendScroll'
 
-  let TeamModel = new Team();
-
   export default {
     data() {
       return {
@@ -62,7 +60,7 @@
 
         if (this.teams.length > 0) {
           this.loading = true;
-          let teams = await TeamModel.select(this.teams);
+          let teams = await Team.select(this.teams);
           this.teamData = teams;
           for (let team of teams) {
             let data = [];

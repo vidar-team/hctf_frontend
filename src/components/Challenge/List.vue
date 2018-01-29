@@ -74,7 +74,6 @@
   import Challenge from '@/api/Challenge';
   import View from '@/components/Challenge/View.vue';
 
-  let ChallengeModel = new Challenge();
   export default {
     data() {
       return {
@@ -116,7 +115,7 @@
       async loadChallenges() {
         this.loading = true;
         try {
-          let result = await ChallengeModel.getValidChallenges();
+          let result = await Challenge.getValidChallenges();
           this.categories = result.challenges;
           this.placeholders = result.placeholders;
           this.solvedChallenges = result.solvedChallenges;
@@ -166,7 +165,7 @@
         this.dialogLoading = true;
         this.solvedTeams = [];
         try{
-          this.solvedTeams = await ChallengeModel.getSolvedTeams(challengeId);
+          this.solvedTeams = await Challenge.getSolvedTeams(challengeId);
         }
         catch (e){
           this.$handleError(e);

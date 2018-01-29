@@ -123,7 +123,6 @@
 <script>
   import Team from '@/api/Team';
 
-  let TeamModel = new Team();
   export default {
     data() {
       return {
@@ -160,7 +159,7 @@
       async getRanking(page) {
         this.loading = true;
         try {
-          let result = await TeamModel.getRanking(page);
+          let result = await Team.getRanking(page);
           this.ranking = result.ranking;
           this.total = result.total;
           if (page !== undefined){
@@ -177,7 +176,7 @@
         let newRanking;
         this.loading = true;
         try {
-          newRanking = await TeamModel.getRanking(this.currentPage);
+          newRanking = await Team.getRanking(this.currentPage);
         }
         catch (e) {
           return this.$handleError(e);

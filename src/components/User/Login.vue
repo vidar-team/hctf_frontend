@@ -15,9 +15,8 @@
   </el-card>
 </template>
 <script>
-  import User from '@/api/Team';
+  import Team from '@/api/Team';
 
-  let UserModel = new User();
   export default {
     data() {
       return {
@@ -38,11 +37,11 @@
         }
         this.loading = true;
         try {
-          let result = await UserModel.login(this.form.email, this.form.password);
+          let result = await Team.login(this.form.email, this.form.password);
           if (result["access_token"]) {
             localStorage.setItem('jwt', result.access_token);
           }
-          result = await UserModel.getTeamInfo();
+          result = await Team.getTeamInfo();
           this.$store.commit("setTeamName", result.team_name);
           this.$store.commit("setTeamId", result.team_id);
           this.$store.commit("setToken", result.token);

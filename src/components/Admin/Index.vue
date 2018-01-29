@@ -45,7 +45,6 @@
 <script>
   import SystemLog from '@/api/admin/SystemLog';
 
-  let SystemLogModel = new SystemLog();
   export default {
     data() {
       return {
@@ -65,7 +64,7 @@
       async loadLogs(startId = 0) {
         this.loading = true;
         try {
-          let recentLogs = await SystemLogModel.list(startId);
+          let recentLogs = await SystemLog.list(startId);
           for (let log of recentLogs.reverse()) {
             this.logs.unshift(log)
           }

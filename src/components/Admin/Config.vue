@@ -29,8 +29,6 @@
 <script>
   import System from '@/api/admin/System';
 
-  let SystemModel = new System();
-
   export default {
     data() {
       return {
@@ -47,7 +45,7 @@
     async mounted() {
       this.loading = true;
       try {
-        let metaInfo = await SystemModel.getMetaInfo();
+        let metaInfo = await System.getMetaInfo();
         this.form.startTime = metaInfo.startTime;
         this.form.endTime = metaInfo.endTime;
         this.form.flagPrefix = metaInfo.flagPrefix;
@@ -62,7 +60,7 @@
       async editConfig(){
         this.loading = true;
         try{
-          await SystemModel.editConfig(this.form.startTime, this.form.endTime, this.form.flagPrefix, this.form.flagSuffix);
+          await System.editConfig(this.form.startTime, this.form.endTime, this.form.flagPrefix, this.form.flagSuffix);
         }
         catch (e){
           return this.$handleError(e);

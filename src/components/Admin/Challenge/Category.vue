@@ -100,8 +100,6 @@
   import Level from '@/api/admin/Level'
   import Rules from './RuleComponents/Rules.vue';
 
-  let CategoryModel = new Category();
-  let LevelModel = new Level();
   export default {
     data() {
       return {
@@ -144,7 +142,7 @@
             });
           }
           this.loading = true;
-          let newLevel = await LevelModel.createLevel(this.form.categoryId, this.form.levelName, this.form.releaseTime);
+          let newLevel = await Level.createLevel(this.form.categoryId, this.form.levelName, this.form.releaseTime);
           this.categories.filter(i => i.category_id === this.form.categoryId)[0].levels.push(newLevel);
           this.levelFormVisible = false;
           this.form.categoryId = this.form.releaseTime = this.form.levelName = "";
@@ -157,7 +155,7 @@
       async loadCategories() {
         this.loading = true;
         try {
-          this.categories = await CategoryModel.getAllCategories();
+          this.categories = await Category.getAllCategories();
           this.activeTabName = "" + (this.categories[0] && this.categories[0]["category_id"]);
         }
         catch (e) {
@@ -172,7 +170,7 @@
             cancelButtonText: '取消',
           })).value;
           this.loading = true;
-          let newCategory = await CategoryModel.createCategory(categoryName);
+          let newCategory = await Category.createCategory(categoryName);
           if (this.categories.length){
             this.categories.push(newCategory);
           }
@@ -200,7 +198,7 @@
         }
         this.loading = true;
         try {
-          let result = await CategoryModel.removeCategory(categoryId);
+          let result = await Category.removeCategory(categoryId);
           this.loadCategories();
         }
         catch (e) {
@@ -222,7 +220,7 @@
         }
         this.loading = true;
         try {
-          await LevelModel.deleteLevel(level.level_id);
+          await Level.deleteLevel(level.level_id);
           this.loadCategories();
         }
         catch (e) {

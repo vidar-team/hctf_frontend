@@ -14,9 +14,8 @@
   }
 </style>
 <script>
-  import User from '@/api/Team';
+  import Team from '@/api/Team';
 
-  let UserModel = new User();
   export default {
     data() {
       return {
@@ -27,7 +26,7 @@
     async mounted() {
       this.loading = true;
       try {
-        this.team = await UserModel.getTeamInfo();
+        this.team = await Team.getTeamInfo();
       }
       catch (e) {
         this.$handleError(e);

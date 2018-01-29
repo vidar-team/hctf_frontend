@@ -50,8 +50,6 @@
   import Rules from './RuleComponents/Rules.vue';
   import ChallengeList from './List.vue';
 
-  let LevelModel = new Level();
-  let CategoryModel = new Category();
   export default {
     data() {
       return {
@@ -85,8 +83,8 @@
       async loadLevelInfo(levelId) {
         this.loading = true;
         try {
-          this.level = await LevelModel.getLevelInfo(levelId);
-          this.info = await CategoryModel.getAllCategories();
+          this.level = await Level.getLevelInfo(levelId);
+          this.info = await Category.getAllCategories();
           this.form.levelName = this.level.level_name;
           try {
             this.form.releaseTime = new Date(this.level.release_time).toISOString();
@@ -103,9 +101,9 @@
       async update() {
         this.loading = true;
         try {
-          let level = await LevelModel.setReleaseTime(this.level.level_id, this.form.releaseTime);
+          let level = await Level.setReleaseTime(this.level.level_id, this.form.releaseTime);
           if (this.form.levelName !== this.level.level_name) {
-            level = await LevelModel.setLevelName(this.level.level_id, this.form.levelName);
+            level = await Level.setLevelName(this.level.level_id, this.form.levelName);
           }
         }
         catch (e) {
@@ -116,7 +114,7 @@
       async updateRule(rules) {
         this.loading = true;
         try {
-          await LevelModel.setRules(this.level.level_id, rules.toString());
+          await Level.setRules(this.level.level_id, rules.toString());
         }
         catch (e) {
           this.$handleError(e);

@@ -88,8 +88,6 @@
   import Category from '@/api/admin/Category';
   import Challenge from '@/api/admin/Challenge'
 
-  let CategoryModel = new Category();
-  let ChallengeModel = new Challenge();
   export default {
     data() {
       return {
@@ -119,7 +117,7 @@
     async mounted() {
       this.loading = true;
       try {
-        this.categories = await CategoryModel.getAllCategories();
+        this.categories = await Category.getAllCategories();
       }
       catch (e) {
         this.$handleError(e);
@@ -154,7 +152,7 @@
         }
 
         try {
-          let challenge = await ChallengeModel.createChallenge(this.form.title, this.form.url, this.form.description, this.form.score, this.flags, config, this.form.levelId[1], this.form.releaseTime, this.form.isDynamicFlag);
+          let challenge = await Challenge.createChallenge(this.form.title, this.form.url, this.form.description, this.form.score, this.flags, config, this.form.levelId[1], this.form.releaseTime, this.form.isDynamicFlag);
           this.$message({
             showClose: true,
             message: '创建成功啦',
