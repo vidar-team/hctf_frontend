@@ -1,51 +1,66 @@
 <template>
-  <el-table :data="challenges">
-    <el-table-column type="expand">
-      <template slot-scope="scope">
-        <el-form label-position="left" inline class="table-expand">
-          <el-form-item label="Level ID">
-            <span>{{ scope.row.level_id }}</span>
-          </el-form-item>
-          <el-form-item label="描述">
-            <span>{{ scope.row.description }}</span>
-          </el-form-item>
-          <el-form-item label="基准分数">
-            <span>{{ scope.row.score }}</span>
-          </el-form-item>
-          <el-form-item label="URL">
-            <span>{{ scope.row.url }}</span>
-          </el-form-item>
-          <el-form-item label="发布时间">
-            <span>{{ scope.row.release_time }}</span>
-          </el-form-item>
-          <el-form-item label="动态 Flag">
-            <span>{{ scope.row.is_dynamic_flag }}</span>
-          </el-form-item>
-          <el-form-item label="最小解决时间">
-            <span>{{ JSON.parse(scope.row.config).minimumSolveTime === 0 ? '不限制' : JSON.parse(scope.row.config).minimumSolveTime + '秒'}}</span>
-          </el-form-item>
-        </el-form>
-      </template>
-    </el-table-column>
-    <el-table-column
-      prop="challenge_id"
-      label="Challenge ID"
-    >
-    </el-table-column>
-    <el-table-column
-      prop="title"
-      label="标题"
-    >
-    </el-table-column>
-    <el-table-column
-      label="操作"
-    >
-      <template slot-scope="scope">
-        <el-button type="text" @click="editChallenge(scope.row.challenge_id)">编辑</el-button>
-        <el-button type="text" style="color: red" @click="deleteChallenge(scope.row.challenge_id)">删除</el-button>
-      </template>
-    </el-table-column>
-  </el-table>
+  <div>
+    <el-dialog :title="$t('challenge.solvedTeam')" :visible.sync="solvedTeamsDialogVisible">
+      <el-table :data="solvedTeams" v-loading="dialogLoading">
+        <el-table-column
+          :label="$t('challenge.teamName')"
+          prop="teamName">
+        </el-table-column>
+        <el-table-column
+          :label="$t('challenge.solvedAt')"
+          prop="solvedAt">
+        </el-table-column>
+      </el-table>
+    </el-dialog>
+    <el-table :data="challenges">
+      <el-table-column type="expand">
+        <template slot-scope="scope">
+          <el-form label-position="left" inline class="table-expand">
+            <el-form-item label="Level ID">
+              <span>{{ scope.row.level_id }}</span>
+            </el-form-item>
+            <el-form-item label="描述">
+              <span>{{ scope.row.description }}</span>
+            </el-form-item>
+            <el-form-item label="基准分数">
+              <span>{{ scope.row.score }}</span>
+            </el-form-item>
+            <el-form-item label="URL">
+              <span>{{ scope.row.url }}</span>
+            </el-form-item>
+            <el-form-item label="发布时间">
+              <span>{{ scope.row.release_time }}</span>
+            </el-form-item>
+            <el-form-item label="动态 Flag">
+              <span>{{ scope.row.is_dynamic_flag }}</span>
+            </el-form-item>
+            <el-form-item label="最小解决时间">
+              <span>{{ JSON.parse(scope.row.config).minimumSolveTime === 0 ? '不限制' : JSON.parse(scope.row.config).minimumSolveTime + '秒'}}</span>
+            </el-form-item>
+          </el-form>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="challenge_id"
+        label="Challenge ID"
+      >
+      </el-table-column>
+      <el-table-column
+        prop="title"
+        label="标题"
+      >
+      </el-table-column>
+      <el-table-column
+        label="操作"
+      >
+        <template slot-scope="scope">
+          <el-button type="text" @click="editChallenge(scope.row.challenge_id)">编辑</el-button>
+          <el-button type="text" style="color: red" @click="deleteChallenge(scope.row.challenge_id)">删除</el-button>
+          <el-button type="text" @click="showSolvedTeams(scope.row.challenge_id)">查看已完成队伍</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+  </div>
 </template>
 <script>
   import Challenge from '@/api/admin/Challenge';
@@ -53,7 +68,9 @@
   export default {
     data(){
       return {
-
+        solvedTeamsDialogVisible: false,
+        dialogLoading: false,
+        solvedTeams: []
       }
     },
     props: ["challenges"],
@@ -82,6 +99,18 @@
         }
         this.loading = false;
       },
+      async showSolvedTeams(challengeId) {
+        this.solvedTeamsDialogVisible = true;
+        this.dialogLoading = true;
+        this.solvedTeams = [];
+        try{
+          this.solvedTeams = await Challenge.getSolvedTeams(challengeId);
+        }
+        catch (e){
+          this.$handleError(e);
+        }
+        this.dialogLoading = false;
+      }
     }
   }
 </script>

@@ -196,6 +196,27 @@ class Challenge extends Model {
       }
     })
   }
+
+  /**
+   * 获得已经解出题目的队伍
+   * @param challengeId
+   * @returns {Promise}
+   */
+  getSolvedTeams(challengeId){
+    return new Promise(async (resolve, reject) => {
+      try{
+        let solvedTeams = await this.request("GET", "/Challenge/solvedTeams", {
+          challengeId: challengeId
+        }, {
+          needAuth: true
+        });
+        resolve(solvedTeams);
+      }
+      catch (e){
+        reject(e);
+      }
+    })
+  }
 }
 
 export default new Challenge;
