@@ -31,10 +31,10 @@
           </el-menu-item>
         </template>
         <template v-else>
-          <!--<el-menu-item index="/user/register" class="float-right">-->
-            <!--{{ $t("root.register ")}}-->
+          <el-menu-item index="/user/register" class="float-right">
+            {{ $t("root.register ")}}
 
-          <!--</el-menu-item>-->
+          </el-menu-item>
           <el-menu-item index="/user/login" class="float-right">
             {{ $t("root.login") }}
 
@@ -63,11 +63,9 @@
 
 <script>
   import Auth from '@/utils/auth';
-  import User from '@/api/Team';
+  import Team from '@/api/Team';
   import System from '@/api/System';
 
-  let UserModel = new User();
-  let SystemModel = new System();
   export default {
     name: 'hctf',
     data() {
@@ -97,7 +95,7 @@
       }
       // 读取配置信息
       // 不应阻塞
-      SystemModel.getMetaInfo().then(metaInfo => {
+      System.getMetaInfo().then(metaInfo => {
         this.$store.commit("setTime", {
           startTime: metaInfo.startTime,
           endTime: metaInfo.endTime
@@ -112,7 +110,7 @@
       }
       else {
         try {
-          let result = await UserModel.getTeamInfo();
+          let result = await Team.getTeamInfo();
           if (result.admin) {
             this.$store.commit("enterAdminMode");
           }

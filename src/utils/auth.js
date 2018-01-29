@@ -1,7 +1,5 @@
 import Team from '@/api/Team';
 
-let TeamModel = new Team();
-
 class Auth {
   static isTokenExpired() {
     let token = localStorage.getItem("jwt");
@@ -18,7 +16,7 @@ class Auth {
 
   static async isAdmin() {
     try {
-      let teamInfo = await TeamModel.getTeamInfo();
+      let teamInfo = await Team.getTeamInfo();
       return teamInfo.admin;
     }
     catch (e) {

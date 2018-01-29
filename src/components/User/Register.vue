@@ -21,7 +21,7 @@
   </el-card>
 </template>
 <script>
-  import Team from './api/Team';
+  import Team from '@/api/Team';
 
   export default {
     data() {
