@@ -59,13 +59,17 @@ class User extends Model {
    * @param password
    * @returns {Promise}
    */
-  register(teamName, email, password) {
+  register(teamName, email, password, isHDUStudent, studentNumber, realName, college) {
     return new Promise(async (resolve, reject) => {
       try {
         let result = await  this.request("POST", "/Team/register", {
           teamName: teamName,
           email: email,
-          password: this.sha256(password)
+          password: this.sha256(password),
+          hduer: isHDUStudent,
+          studentId: studentNumber,
+          realName: realName,
+          college: college
         });
         resolve(result);
       }

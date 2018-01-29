@@ -14,7 +14,7 @@ export default {
   },
   ranking: {
     ranking: "Ranking",
-    teamName: "Team Name",
+    teamName: "Nickname",
     score: "Score",
     more: "More"
   },
@@ -28,7 +28,7 @@ export default {
     pleaseFillTheForm: "Please fill the form carefully",
   },
   register: {
-    teamName: "Team Name",
+    teamName: "Nickname",
     password: "Password",
     confirmPassword: "Confirm Password",
     register: "Register",
@@ -48,10 +48,10 @@ export default {
     maintenanceDescription: "Available from {0} to {1}",
     dynamicFlagBadge: "Dynamic Flag",
     dynamicFlagDescription: "Flag is based on Team Token which can be checked at your team page",
-    solvedCount: "Team solved",
+    solvedCount: "User solved",
     solved: "SOLVED",
-    teamName: "Team Name",
-    solvedTeam: "Solved Team",
+    teamName: "Nickname",
+    solvedTeam: "Solved User",
     solvedAt: "Solved At"
   },
   banned: {

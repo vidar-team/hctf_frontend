@@ -14,7 +14,7 @@ export default {
   },
   ranking: {
     ranking: "排行",
-    teamName: "队伍名",
+    teamName: "昵称",
     score: "总分",
     more: "其他"
   },
@@ -28,7 +28,7 @@ export default {
     pleaseFillTheForm: "请完整填写表单",
   },
   register: {
-    teamName: "队伍名",
+    teamName: "昵称",
     password: "密码",
     confirmPassword: "重复密码",
     register: "注册",
@@ -43,13 +43,13 @@ export default {
     nowScore: "当前分数",
     emptyTip: "当前无可用题目",
     pleaseFillTheForm: "请完整填写表单",
-    flagCorrect: "恭喜，队伍积分+{0}",
+    flagCorrect: "恭喜，积分+{0}",
     maintenanceTitle: "维护中",
     maintenanceDescription: "{0} ~ {1} 期间开放",
-    solvedCount: "完成队伍数",
+    solvedCount: "完成人数",
     solved: "已完成",
-    teamName: "队伍名",
-    solvedTeam: "成功提交的队伍",
+    teamName: "昵称",
+    solvedTeam: "成功提交的用户",
     solvedAt: "提交于"
   },
   banned: {

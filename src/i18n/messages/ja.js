@@ -14,7 +14,7 @@ export default {
   },
   ranking: {
     ranking: "ランキング",
-    teamName: "チーム名",
+    teamName: "ニックネーム",
     score: "スコア",
     more: "その他"
   },
@@ -28,10 +28,10 @@ export default {
     pleaseFillTheForm: "ご入力いただいたフォームが正しい内容ではありません",
   },
   register: {
-    teamName: "チーム名",
+    teamName: "ニックネーム",
     password: "パスワード",
     confirmPassword: "パスワードを再度入力してください",
-    register: "チーム登録",
+    register: "新規登録",
     pleaseFillTheForm: "ご入力いただいたフォームが正しい内容ではありません",
     pleaseConfirmPassword: "パスワードが一致しません"
   },
@@ -43,14 +43,14 @@ export default {
     nowScore: "現在スコア",
     emptyTip: "ただいま、アクセス可能のチャレンジがありません。",
     pleaseFillTheForm: "ご入力いただいたフォームが正しい内容ではありません",
-    flagCorrect: "おめでとう！スコア＋{0}",
+    flagCorrect: "クリアおめでとうございます！スコア＋{0}",
     maintenanceTitle: "今メンテナンス中",
     maintenanceDescription: "{0}から{1}まで利用可能",
-    solvedCount: "Solved team",
+    solvedCount: "クリア计数",
     solved: "クリア済",
-    teamName: "Team Name",
-    solvedTeam: "Solved Team",
-    solvedAt: "Solved At"
+    teamName: "ニックネーム",
+    solvedTeam: "クリアした方",
+    solvedAt: "クリアタイム"
   },
   banned: {
     banTitle: "ブロック",
