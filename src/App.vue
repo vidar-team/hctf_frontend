@@ -13,6 +13,9 @@
       <el-menu-item index="/ranking/index">
         {{ $t("root.ranking") }}
       </el-menu-item>
+      <el-menu-item index="/ranking/weekly">
+        周排名
+      </el-menu-item>
       <el-menu-item index="/bulletin/index">
         {{ $t("root.bulletin") }}
       </el-menu-item>

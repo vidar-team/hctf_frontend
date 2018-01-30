@@ -140,10 +140,13 @@
         this.fresh();
       }
     },
-    props: ['expand'],
+    props: ['expand', 'weekly'],
     computed:{
       isExpandMode(){
         return this.expand !== undefined;
+      },
+      isWeeklyMode() {
+        return this.weekly !== undefined;
       }
     },
     methods: {
@@ -159,7 +162,7 @@
       async getRanking(page) {
         this.loading = true;
         try {
-          let result = await Team.getRanking(page);
+          let result = this.isWeeklyMode ? await Team.getWeeklyRanking(page): await Team.getRanking(page);
           this.ranking = result.ranking;
           this.total = result.total;
           if (page !== undefined){
@@ -176,7 +179,7 @@
         let newRanking;
         this.loading = true;
         try {
-          newRanking = await Team.getRanking(this.currentPage);
+          newRanking = this.isWeeklyMode ? await Team.getWeeklyRanking(this.currentPage): await Team.getRanking(this.currentPage);
         }
         catch (e) {
           return this.$handleError(e);

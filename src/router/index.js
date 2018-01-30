@@ -21,7 +21,7 @@ export default new Router({
     user,
     challenge,
     admin,
-    ranking,
+    ...ranking,
     bulletin,
     // 已经被封禁
     {

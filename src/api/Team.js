@@ -116,6 +116,24 @@ class User extends Model {
   }
 
   /**
+   * 获得排行
+   * @returns {Promise}
+   */
+  getWeeklyRanking(page = 1, withCount = false) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        resolve(await this.request("GET", "/Team/weekRanking", {
+          page: page,
+          withCount: withCount
+        }));
+      }
+      catch (e) {
+        reject(e);
+      }
+    })
+  }
+
+  /**
    * 获得用户信息（多选）
    * @param teamId
    * @returns {Promise}
