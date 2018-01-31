@@ -14,9 +14,9 @@
       <el-card>
         <recent-logs :teams="topTeams"></recent-logs>
       </el-card>
-      <el-card class="bulletin-container">
-        <bulletin></bulletin>
-      </el-card>
+      <!--<el-card class="bulletin-container">-->
+        <!--<bulletin></bulletin>-->
+      <!--</el-card>-->
       <!--<el-card class="logo-container">-->
         <!--<img src="http://kotori.qiniudn.com/Vidar.png">-->
       <!--</el-card>-->

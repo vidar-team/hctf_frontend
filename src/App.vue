@@ -2,7 +2,7 @@
   <div id="app">
     <el-menu default-active="/" class="top-nav" mode="horizontal" :router=true>
       <el-menu-item index="/">
-        HCTF
+        HGAME
       </el-menu-item>
       <el-menu-item index="/challenge/list">
         {{ $t("root.challengeList") }}

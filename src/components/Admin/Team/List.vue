@@ -33,11 +33,12 @@
           <el-button type="text" @click="resetPassword(scope.row.team_id)">重置</el-button>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="lastLoginTime"
-        label="上次登陆时间"
-        width="180">
-      </el-table-column>
+
+      <!--<el-table-column-->
+        <!--prop="lastLoginTime"-->
+        <!--label="上次登陆时间"-->
+        <!--width="180">-->
+      <!--</el-table-column>-->
       <el-table-column
         prop="signUpTime"
         label="注册时间"
@@ -65,6 +66,20 @@
         </template>
       </el-table-column>
       <el-table-column
+        label="校内"
+        width="80">
+        <template slot-scope="scope">
+          <template v-if="scope.row.hduer">
+            <el-tooltip class="item" effect="dark" :content="`${scope.row.student_id}/${scope.row.real_name}/${scope.row.college}`" placement="top">
+              <el-button type="text">是</el-button>
+            </el-tooltip>
+          </template>
+          <template v-else>
+            <el-button type="text" disabled>否</el-button>
+          </template>
+        </template>
+      </el-table-column>
+      <el-table-column
         prop="banned"
         label="搞事情"
       >
@@ -72,6 +87,7 @@
           <el-button type="text" @click="banTeam(scope.row.team_id)" v-if="!scope.row.banned">BAN!</el-button>
           <el-button type="text" @click="unbanTeam(scope.row.team_id)" v-else>UNBAN!</el-button>
           <el-button type="text" @click="setAdmin(scope.row.team_id)">钦点管理员!</el-button>
+
         </template>
       </el-table-column>
     </el-table>
