@@ -6,6 +6,7 @@ export default {
     submitFlag: "提交 Flag",
     challengeList: "Challenge 列表",
     ranking: "排名",
+    weeklyRanking: "周排名",
     bulletin: "公告",
     welcomeMessage: "欢迎来到 HCTF 2017 / 占位"
   },
@@ -33,7 +34,9 @@ export default {
     confirmPassword: "重复密码",
     register: "注册",
     pleaseFillTheForm: "请完整填写表单",
-    pleaseConfirmPassword: "两次输入的密码不一致"
+    pleaseConfirmPassword: "两次输入的密码不一致",
+    isHDUStudent: "本校学生",
+    isNotHDUStudent: "非本校学生"
   },
   challenge: {
     submitFlagPlaceholder: "在此处输入 Flag",

@@ -6,6 +6,7 @@ export default {
     submitFlag: "Flag 入力",
     challengeList: "チャレンジリスト",
     ranking: "ランキング",
+    weeklyRanking: "毎週ランキング",
     bulletin: "お知らせ",
     welcomeMessage: "HCTF 2017 へよくそ"
   },
@@ -33,7 +34,9 @@ export default {
     confirmPassword: "パスワードを再度入力してください",
     register: "新規登録",
     pleaseFillTheForm: "ご入力いただいたフォームが正しい内容ではありません",
-    pleaseConfirmPassword: "パスワードが一致しません"
+    pleaseConfirmPassword: "パスワードが一致しません",
+    isHDUStudent: "本校の学生",
+    isNotHDUStudent: "他校の学生"
   },
   challenge: {
     submitFlagPlaceholder: "ここに Flag を入力してください",

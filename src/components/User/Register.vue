@@ -17,8 +17,8 @@
       <el-form-item>
         <el-switch
           v-model="form.isHDUStudent"
-          active-text="本校学生"
-          inactive-text="非本校学生">
+          :active-text="$t('register.isHDUStudent')"
+          :inactive-text="$t('register.isNotHDUStudent')">
         </el-switch>
       </el-form-item>
       <transition-group name="fade">

@@ -6,6 +6,7 @@ export default {
     submitFlag: "Submit Flag",
     challengeList: "Challenge List",
     ranking: "Ranking",
+    weeklyRanking: "Weekly Ranking",
     bulletin: "Bulletin",
     welcomeMessage: "Welcome to HCTF 2017"
   },
@@ -33,7 +34,9 @@ export default {
     confirmPassword: "Confirm Password",
     register: "Register",
     pleaseFillTheForm: "Please fill the form carefully",
-    pleaseConfirmPassword: "Passwords must match"
+    pleaseConfirmPassword: "Passwords must match",
+    isHDUStudent: "HDU Student",
+    isNotHDUStudent: "Other"
   },
   challenge: {
     submitFlagPlaceholder: "Input your flag here",

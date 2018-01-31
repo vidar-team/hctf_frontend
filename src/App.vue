@@ -14,7 +14,7 @@
         {{ $t("root.ranking") }}
       </el-menu-item>
       <el-menu-item index="/ranking/weekly">
-        周排名
+        {{ $t("root.weeklyRanking") }}
       </el-menu-item>
       <el-menu-item index="/bulletin/index">
         {{ $t("root.bulletin") }}
@@ -53,7 +53,7 @@
         <el-menu-item index="#zh-cn" @click="switchLanguage('zh-cn')">
           中文
         </el-menu-item>
-        <el-menu-item index="#ja" @click="switchLanguage('ja')" style="display: none">
+        <el-menu-item index="#ja" @click="switchLanguage('ja')">
           日本語(beta)
         </el-menu-item>
       </el-submenu>
