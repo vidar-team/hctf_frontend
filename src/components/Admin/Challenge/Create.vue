@@ -13,7 +13,7 @@
           <el-input type="number" v-model.number="form.score"></el-input>
         </el-form-item>
         <el-form-item label="描述">
-          <el-input v-model="form.description"></el-input>
+          <el-input type="textarea" v-model="form.description"></el-input>
         </el-form-item>
         <el-form-item label="Flag">
           <el-input v-model="form.flag" :disabled="disableFlagInput"></el-input>
