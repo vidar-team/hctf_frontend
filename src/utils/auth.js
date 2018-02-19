@@ -15,14 +15,22 @@ class Auth {
   }
 
   static async isAdmin() {
-    try {
-      let teamInfo = await Team.getTeamInfo();
-      return teamInfo.admin;
-    }
-    catch (e) {
+    let token = localStorage.getItem("jwt");
+    if (!token) {
       return false;
     }
-
+    let tokenInfo = JSON.parse(atob(token.split(".")[1]));
+    if (tokenInfo.is_admin) {
+      return true;
+    } else {
+      try {
+        let teamInfo = await Team.getTeamInfo();
+        return teamInfo.admin;
+      }
+      catch (e) {
+        return false;
+      }
+    }
   }
 }
 
