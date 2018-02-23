@@ -18,16 +18,13 @@ npm run build
 
 # build for production and view the bundle analyzer report
 npm run build --report
-
-# run unit tests
-npm run unit
-
-# run e2e tests
-npm run e2e
-
-# run all tests
-npm test
 ```
+
+## 多语言
+
+平台前台内置中英两种语言，如需扩展请查看`src/i18n`文件夹并按格式新建语言文件。
+
+此外，还需要在`src/App.vue`内添加切换到新语言的按钮。
 
 ## 其他
 
