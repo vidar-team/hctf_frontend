@@ -12,7 +12,7 @@
         </el-table-column>
       </el-table>
     </el-dialog>
-    <el-table :data="challenges">
+    <el-table :data="challenges" v-loading="loading">
       <el-table-column type="expand">
         <template slot-scope="scope">
           <el-form label-position="left" inline class="table-expand">
@@ -63,54 +63,53 @@
   </div>
 </template>
 <script>
-  import Challenge from '@/api/admin/Challenge';
+    import Challenge from '@/api/admin/Challenge';
 
-  export default {
-    data(){
-      return {
-        solvedTeamsDialogVisible: false,
-        dialogLoading: false,
-        solvedTeams: []
-      }
-    },
-    props: ["challenges"],
-    methods: {
-      editChallenge(challengeId) {
-        this.$router.push({
-          name: "Admin-Challenge-Edit",
-          query: {
-            challengeId: challengeId
-          }
-        })
-      },
-      async deleteChallenge(challengeId) {
-        this.loading = true;
-        try {
-          await this.$confirm('本操作将会删除该问题及其所有关联Flag、关联答题记录，全部队伍的分数将会重新计算，生产环境下不建议进行此操作，是否确认？', '危险操作确认', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          });
-          await Challenge.deleteChallenge(challengeId);
-          this.loadLevelInfo(this.$route.query.id);
+    export default {
+        data() {
+            return {
+                solvedTeamsDialogVisible: false,
+                dialogLoading: false,
+                solvedTeams: [],
+                loading: false,
+            }
+        },
+        props: ["challenges"],
+        methods: {
+            editChallenge(challengeId) {
+                this.$router.push({
+                    name: "Admin-Challenge-Edit",
+                    query: {
+                        challengeId: challengeId
+                    }
+                })
+            },
+            async deleteChallenge(challengeId) {
+                this.loading = true;
+                try {
+                    await this.$confirm('本操作将会删除该问题及其所有关联Flag、关联答题记录，全部队伍的分数将会重新计算，生产环境下不建议进行此操作，是否确认？', '危险操作确认', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    });
+                    await Challenge.deleteChallenge(challengeId);
+                    this.$emit('deleted', challengeId);
+                } catch (e) {
+                    this.$handleError(e);
+                }
+                this.loading = false;
+            },
+            async showSolvedTeams(challengeId) {
+                this.solvedTeamsDialogVisible = true;
+                this.dialogLoading = true;
+                this.solvedTeams = [];
+                try {
+                    this.solvedTeams = await Challenge.getSolvedTeams(challengeId);
+                } catch (e) {
+                    this.$handleError(e);
+                }
+                this.dialogLoading = false;
+            }
         }
-        catch (e) {
-          this.$handleError(e);
-        }
-        this.loading = false;
-      },
-      async showSolvedTeams(challengeId) {
-        this.solvedTeamsDialogVisible = true;
-        this.dialogLoading = true;
-        this.solvedTeams = [];
-        try{
-          this.solvedTeams = await Challenge.getSolvedTeams(challengeId);
-        }
-        catch (e){
-          this.$handleError(e);
-        }
-        this.dialogLoading = false;
-      }
     }
-  }
 </script>

@@ -20,7 +20,7 @@
         </el-form>
       </el-tab-pane>
       <el-tab-pane label="Challenge 管理">
-        <challenge-list :challenges="level.challenges"></challenge-list>
+        <challenge-list :challenges="level.challenges" @deleted="handleChallengeDeleted"></challenge-list>
       </el-tab-pane>
       <el-tab-pane label="开放条件设置" name="rules" v-loading="loading">
         <rules mode="edit" :rules="this.level.rules" :info="info" @update="updateRule"></rules>
@@ -45,82 +45,85 @@
   }
 </style>
 <script>
-  import Level from '@/api/admin/Level';
-  import Category from '@/api/admin/Category';
-  import Rules from './RuleComponents/Rules.vue';
-  import ChallengeList from './List.vue';
+    import Level from '@/api/admin/Level';
+    import Category from '@/api/admin/Category';
+    import Rules from './RuleComponents/Rules.vue';
+    import ChallengeList from './List.vue';
 
-  export default {
-    data() {
-      return {
-        activeTabName: "overview",
-        level: {},
-        rules: [],
-        info: [],
-        form: {
-          levelName: "",
-          releaseTime: undefined
+    export default {
+        data() {
+            return {
+                activeTabName: "overview",
+                level: {},
+                rules: [],
+                info: [],
+                form: {
+                    levelName: "",
+                    releaseTime: undefined
+                },
+                loading: false
+            }
         },
-        loading: false
-      }
-    },
-    async mounted() {
-      if (!this.$route.query.id) {
-        this.$handleError({
-          message: "请选择 Level"
-        });
-        this.$router.push({
-          name: "Admin-Challenge-Category"
-        });
-      }
-      this.loadLevelInfo(this.$route.query.id);
-    },
-    components: {
-      Rules,
-      ChallengeList
-    },
-    methods: {
-      async loadLevelInfo(levelId) {
-        this.loading = true;
-        try {
-          this.level = await Level.getLevelInfo(levelId);
-          this.info = await Category.getAllCategories();
-          this.form.levelName = this.level.level_name;
-          try {
-            this.form.releaseTime = new Date(this.level.release_time).toISOString();
-          }
-          catch (e) {
-            this.form.releaseTime = "";
-          }
+        async mounted() {
+            if (!this.$route.query.id) {
+                this.$handleError({
+                    message: "请选择 Level"
+                });
+                this.$router.push({
+                    name: "Admin-Challenge-Category"
+                });
+            }
+            this.loadLevelInfo(this.$route.query.id);
+        },
+        components: {
+            Rules,
+            ChallengeList
+        },
+        methods: {
+            async loadLevelInfo(levelId) {
+                this.loading = true;
+                try {
+                    this.level = await Level.getLevelInfo(levelId);
+                    this.info = await Category.getAllCategories();
+                    this.form.levelName = this.level.level_name;
+                    try {
+                        this.form.releaseTime = new Date(this.level.release_time).toISOString();
+                    } catch (e) {
+                        this.form.releaseTime = "";
+                    }
+                } catch (e) {
+                    this.$handleError(e);
+                }
+                this.loading = false;
+            },
+            async update() {
+                this.loading = true;
+                try {
+                    let level = await Level.setReleaseTime(this.level.level_id, this.form.releaseTime);
+                    if (this.form.levelName !== this.level.level_name) {
+                        level = await Level.setLevelName(this.level.level_id, this.form.levelName);
+                    }
+                } catch (e) {
+                    this.$handleError(e);
+                }
+                this.loading = false;
+            },
+            async updateRule(rules) {
+                this.loading = true;
+                try {
+                    await Level.setRules(this.level.level_id, rules.toString());
+                } catch (e) {
+                    this.$handleError(e);
+                }
+                this.loading = false;
+            },
+            handleChallengeDeleted(challengeId) {
+                const index = this.level.challenges.findIndex(i => i.challenge_id === challengeId);
+                this.level.challenges = [
+                    ...this.level.challenges.slice(0, index),
+                    ...this.level.challenges.slice(index + 1)
+                ];
+            }
         }
-        catch (e) {
-          this.$handleError(e);
-        }
-        this.loading = false;
-      },
-      async update() {
-        this.loading = true;
-        try {
-          let level = await Level.setReleaseTime(this.level.level_id, this.form.releaseTime);
-          if (this.form.levelName !== this.level.level_name) {
-            level = await Level.setLevelName(this.level.level_id, this.form.levelName);
-          }
-        }
-        catch (e) {
-          this.$handleError(e);
-        }
-        this.loading = false;
-      },
-      async updateRule(rules) {
-        this.loading = true;
-        try {
-          await Level.setRules(this.level.level_id, rules.toString());
-        }
-        catch (e) {
-          this.$handleError(e);
-        }
-        this.loading = false;
-      },
     }
-  }
 </script>
