@@ -32,8 +32,7 @@ class Challenge extends Model {
           needAuth: true
         });
         resolve(newChallenge);
-      }
-      catch (e) {
+      } catch (e) {
         reject(e);
       }
     })
@@ -53,8 +52,7 @@ class Challenge extends Model {
           needAuth: true
         });
         resolve(result);
-      }
-      catch (e) {
+      } catch (e) {
         reject(e);
       }
     })
@@ -74,8 +72,7 @@ class Challenge extends Model {
           needAuth: true
         });
         resolve(challengeInfo);
-      }
-      catch (e) {
+      } catch (e) {
         reject(e);
       }
     })
@@ -89,24 +86,17 @@ class Challenge extends Model {
    * @param releaseTime
    * @returns {Promise}
    */
-  editChallenge(challengeId, title, description, releaseTime) {
+  async editChallenge(challengeId, title, description, releaseTime, url) {
     let time = new Date(releaseTime);
-    return new Promise(async (resolve, reject) => {
-      try {
-        let challenge = await this.request("POST", "/Challenge/edit", {
-          challengeId: challengeId,
-          title: title,
-          description: description,
-          releaseTime: releaseTime
-        }, {
-          needAuth: true
-        });
-        resolve(challenge);
-      }
-      catch (e) {
-        reject(e);
-      }
-    })
+    return await this.request("POST", "/Challenge/edit", {
+      challengeId,
+      title,
+      description,
+      releaseTime: time.toISOString(),
+      url
+    }, {
+      needAuth: true
+    });
   }
 
   /**
@@ -125,8 +115,7 @@ class Challenge extends Model {
           needAuth: true
         });
         resolve(result);
-      }
-      catch (e) {
+      } catch (e) {
         reject(e);
       }
     })
@@ -146,8 +135,7 @@ class Challenge extends Model {
           needAuth: true
         });
         resolve(flags);
-      }
-      catch (e) {
+      } catch (e) {
         reject(e);
       }
     })
@@ -167,8 +155,7 @@ class Challenge extends Model {
           needAuth: true
         });
         resolve();
-      }
-      catch (e) {
+      } catch (e) {
         reject(e);
       }
     })
@@ -180,9 +167,9 @@ class Challenge extends Model {
    * @param flag
    * @returns {Promise}
    */
-  addFlags(challengeId, flag){
+  addFlags(challengeId, flag) {
     return new Promise(async (resolve, reject) => {
-      try{
+      try {
         let flags = await this.request("POST", "/Challenge/addFlags", {
           challengeId: challengeId,
           flag: flag
@@ -190,8 +177,7 @@ class Challenge extends Model {
           needAuth: true
         });
         resolve(flags);
-      }
-      catch (e){
+      } catch (e) {
         reject(e);
       }
     })
@@ -202,17 +188,16 @@ class Challenge extends Model {
    * @param challengeId
    * @returns {Promise}
    */
-  getSolvedTeams(challengeId){
+  getSolvedTeams(challengeId) {
     return new Promise(async (resolve, reject) => {
-      try{
+      try {
         let solvedTeams = await this.request("GET", "/Challenge/solvedTeams", {
           challengeId: challengeId
         }, {
           needAuth: true
         });
         resolve(solvedTeams);
-      }
-      catch (e){
+      } catch (e) {
         reject(e);
       }
     })

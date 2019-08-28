@@ -12,8 +12,12 @@
           <el-date-picker
             v-model="form.releaseTime"
             type="datetime"
+            style="width: 293px"
             placeholder="选择日期时间">
           </el-date-picker>
+        </el-form-item>
+        <el-form-item label="URL">
+          <el-input v-model="form.url" style="width: 293px"></el-input>
         </el-form-item>
         <el-form-item label="一些功能">
           <el-button type="text" @click="resetScoreDialogVisible = true">修订基准分数</el-button>
@@ -104,218 +108,210 @@
   </el-tabs>
 </template>
 <script>
-  import Challenge from '@/api/admin/Challenge';
-  import Flag from '@/api/admin/Flag';
+    import Challenge from '@/api/admin/Challenge';
+    import Flag from '@/api/admin/Flag';
 
-  export default {
-    data() {
-      return {
-        activeTabName: "overview",
-        form: {
-          title: "",
-          description: "",
-          releaseTime: ""
-        },
-        editFlagForm: {
-          flagId: "",
-          flag: "",
-          teamId: 0
-        },
-        addFlagForm: {
-          flag: ""
-        },
-        loading: false,
-        dialogLoading: false,
-        resetScoreDialogVisible: false,
-        editFlagDialogVisible: false,
-        addFlagDialogVisible: false,
-        flags: [],
-        isFlagLoaded: false
-      }
-    },
-    watch: {
-      async activeTabName() {
-        if (this.activeTabName === "flags" && !this.isFlagLoaded) {
-          this.loading = true;
-          try {
-            this.flags = await Challenge.getFlagsInfo(this.$route.query.challengeId);
-            this.isFlagLoaded = true;
-          }
-          catch (e) {
-            this.$handleError(e);
-          }
-          this.loading = false;
-        }
-      }
-    },
-    methods: {
-      /**
-       * 提交简介修改
-       * @returns {Promise.<void>}
-       */
-      async submitOverview() {
-        if (!this.form.title || !this.form.description || !this.form.releaseTime) {
-          return this.$handleError({
-            message: "信息均不能为空"
-          });
-        }
-        try {
-          if (new Date(this.form.releaseTime) <= new Date()) {
-            await this.$confirm('开放时间小于当前时间，创建后将立即可见，生产环境不建议进行此操作，确认继续?', '危险操作确认', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
-              type: 'warning'
-            });
-          }
-        }
-        catch (e) {
-          this.$handleError(e);
-        }
-        this.loading = true;
-        try {
-          await Challenge.editChallenge(this.$route.query.challengeId, this.form.title, this.form.description, this.form.releaseTime);
-        }
-        catch (e) {
-          this.$handleError(e);
-        }
-        this.loading = false;
-      },
-      /**
-       * 提交基准分数修改
-       * @returns {Promise.<void>}
-       */
-      async resetScore() {
-        this.dialogLoading = true;
-        try {
-          await Challenge.resetScore(this.$route.query.challengeId, this.form.score);
-          this.resetScoreDialogVisible = false;
-        }
-        catch (e) {
-          this.$handleError(e);
-        }
-        this.dialogLoading = false;
-      },
-      /**
-       * 提交删除Flag
-       * @param flagId
-       * @returns {Promise.<void>}
-       */
-      async deleteFlag(flagId) {
-        this.loading = true;
-        try {
-          await Flag.deleteFlag(flagId);
-          this.flags = await Challenge.getFlagsInfo(this.$route.query.challengeId);
-        }
-        catch (e) {
-          this.$handleError(e);
-        }
-        this.loading = false;
-      },
-      /**
-       * 开始编辑 Flag / 准备数据
-       * @param flagId
-       */
-      startEditFlag(flagId) {
-        this.editFlagDialogVisible = true;
-        let flag = this.flags.find(i => i.flag_id === flagId);
-        this.editFlagForm.flag = flag.flag;
-        this.editFlagForm.teamId = flag.team_id;
-        this.editFlagForm.flagId = flag.flag_id;
-      },
-      /**
-       * 提交 Flag 编辑
-       * @returns {Promise.<void>}
-       */
-      async editFlag() {
-        this.dialogLoading = true;
-        try {
-          let editedFlag = await Flag.editFlag(this.editFlagForm.flagId, this.editFlagForm.flag, this.editFlagForm.teamId);
-          let nowFlag = this.flags.find(i => i.flag_id === this.editFlagForm.flagId);
-          nowFlag.flag = editedFlag.flag;
-          nowFlag.team_id = editedFlag.team_id;
-          this.editFlagDialogVisible = false;
-        }
-        catch (e) {
-          this.$handleError(e);
-        }
-        this.dialogLoading = false;
-      },
-      /**
-       * 提交 删除全部关联 Flag
-       * @returns {Promise.<void>}
-       */
-      async deleteAllFlags() {
-        try {
-          await this.$confirm('此操作将会删除该问题下的所有Flag，但不会删除该题目已经产生的提交记录，也不会扣除对应分数。生产环境不建议进行此操作，请谨慎操作。', '危险操作确认', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          });
-        }
-        catch (e) {
-          return;
-        }
-        this.loading = true;
-        try {
-          await Challenge.deleteAllFlags(this.$route.query.challengeId);
-          this.flags = [];
-        }
-        catch (e) {
-          this.$handleError(e);
-        }
-        this.loading = false;
-      },
-      /**
-       * 添加 Flag
-       * @returns {Promise.<void>}
-       */
-      async addFlags(){
-        try{
-          let newFlags = this.addFlagForm.flag;
-          try{
-            newFlags = JSON.parse(newFlags);
-          }
-          catch(e){
-            return this.$handleError({
-              message: "JSON 不合法"
-            })
-          }
-          if (!Array.isArray(newFlags)){
-            return this.$handleError({
-              message: "JSON 不合法"
-            })
-          }
-          for (let flag of newFlags) {
-            if (!flag.hasOwnProperty("flag") || !flag.hasOwnProperty("team_id")) {
-              return this.$handleError({
-                message: "JSON 不合法"
-              })
+    export default {
+        data() {
+            return {
+                activeTabName: "overview",
+                form: {
+                    title: "",
+                    description: "",
+                    releaseTime: "",
+                    url: ""
+                },
+                editFlagForm: {
+                    flagId: "",
+                    flag: "",
+                    teamId: 0
+                },
+                addFlagForm: {
+                    flag: ""
+                },
+                loading: false,
+                dialogLoading: false,
+                resetScoreDialogVisible: false,
+                editFlagDialogVisible: false,
+                addFlagDialogVisible: false,
+                flags: [],
+                isFlagLoaded: false
             }
-          }
-          this.dialogLoading = true;
-          let flags = await Challenge.addFlags(this.$route.query.challengeId, newFlags);
-          this.flags = flags;
-          this.addFlagDialogVisible = false;
+        },
+        watch: {
+            async activeTabName() {
+                if (this.activeTabName === "flags" && !this.isFlagLoaded) {
+                    this.loading = true;
+                    try {
+                        this.flags = await Challenge.getFlagsInfo(this.$route.query.challengeId);
+                        this.isFlagLoaded = true;
+                    } catch (e) {
+                        this.$handleError(e);
+                    }
+                    this.loading = false;
+                }
+            }
+        },
+        methods: {
+            /**
+             * 提交简介修改
+             * @returns {Promise.<void>}
+             */
+            async submitOverview() {
+                if (!this.form.title || !this.form.description || !this.form.releaseTime) {
+                    return this.$handleError({
+                        message: "信息均不能为空"
+                    });
+                }
+                try {
+                    if (new Date(this.form.releaseTime) <= new Date()) {
+                        await this.$confirm('开放时间小于当前时间，创建后将立即可见，生产环境不建议进行此操作，确认继续?', '危险操作确认', {
+                            confirmButtonText: '确定',
+                            cancelButtonText: '取消',
+                            type: 'warning'
+                        });
+                    }
+                } catch (e) {
+                    this.$handleError(e);
+                }
+                this.loading = true;
+                try {
+                    await Challenge.editChallenge(this.$route.query.challengeId, this.form.title, this.form.description, this.form.releaseTime, this.form.url);
+                } catch (e) {
+                    this.$handleError(e);
+                }
+                this.loading = false;
+            },
+            /**
+             * 提交基准分数修改
+             * @returns {Promise.<void>}
+             */
+            async resetScore() {
+                this.dialogLoading = true;
+                try {
+                    await Challenge.resetScore(this.$route.query.challengeId, this.form.score);
+                    this.resetScoreDialogVisible = false;
+                } catch (e) {
+                    this.$handleError(e);
+                }
+                this.dialogLoading = false;
+            },
+            /**
+             * 提交删除Flag
+             * @param flagId
+             * @returns {Promise.<void>}
+             */
+            async deleteFlag(flagId) {
+                this.loading = true;
+                try {
+                    await Flag.deleteFlag(flagId);
+                    this.flags = await Challenge.getFlagsInfo(this.$route.query.challengeId);
+                } catch (e) {
+                    this.$handleError(e);
+                }
+                this.loading = false;
+            },
+            /**
+             * 开始编辑 Flag / 准备数据
+             * @param flagId
+             */
+            startEditFlag(flagId) {
+                this.editFlagDialogVisible = true;
+                let flag = this.flags.find(i => i.flag_id === flagId);
+                this.editFlagForm.flag = flag.flag;
+                this.editFlagForm.teamId = flag.team_id;
+                this.editFlagForm.flagId = flag.flag_id;
+            },
+            /**
+             * 提交 Flag 编辑
+             * @returns {Promise.<void>}
+             */
+            async editFlag() {
+                this.dialogLoading = true;
+                try {
+                    let editedFlag = await Flag.editFlag(this.editFlagForm.flagId, this.editFlagForm.flag, this.editFlagForm.teamId);
+                    let nowFlag = this.flags.find(i => i.flag_id === this.editFlagForm.flagId);
+                    nowFlag.flag = editedFlag.flag;
+                    nowFlag.team_id = editedFlag.team_id;
+                    this.editFlagDialogVisible = false;
+                } catch (e) {
+                    this.$handleError(e);
+                }
+                this.dialogLoading = false;
+            },
+            /**
+             * 提交 删除全部关联 Flag
+             * @returns {Promise.<void>}
+             */
+            async deleteAllFlags() {
+                try {
+                    await this.$confirm('此操作将会删除该问题下的所有Flag，但不会删除该题目已经产生的提交记录，也不会扣除对应分数。生产环境不建议进行此操作，请谨慎操作。', '危险操作确认', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    });
+                } catch (e) {
+                    return;
+                }
+                this.loading = true;
+                try {
+                    await Challenge.deleteAllFlags(this.$route.query.challengeId);
+                    this.flags = [];
+                } catch (e) {
+                    this.$handleError(e);
+                }
+                this.loading = false;
+            },
+            /**
+             * 添加 Flag
+             * @returns {Promise.<void>}
+             */
+            async addFlags() {
+                try {
+                    let newFlags = this.addFlagForm.flag;
+                    try {
+                        newFlags = JSON.parse(newFlags);
+                    } catch (e) {
+                        return this.$handleError({
+                            message: "JSON 不合法"
+                        })
+                    }
+                    if (!Array.isArray(newFlags)) {
+                        return this.$handleError({
+                            message: "JSON 不合法"
+                        })
+                    }
+                    for (let flag of newFlags) {
+                        if (!flag.hasOwnProperty("flag") || !flag.hasOwnProperty("team_id")) {
+                            return this.$handleError({
+                                message: "JSON 不合法"
+                            })
+                        }
+                    }
+                    this.dialogLoading = true;
+                    let flags = await Challenge.addFlags(this.$route.query.challengeId, newFlags);
+                    this.flags = flags;
+                    this.addFlagDialogVisible = false;
+                } catch (e) {
+                    this.$handleError(e);
+                }
+                this.dialogLoading = false;
+            }
+        },
+        async mounted() {
+            if (!this.$route.query.challengeId) {
+                this.$router.push({
+                    name: "Admin-Challenge-Category"
+                })
+            }
+            this.loading = true;
+            let challengeInfo = await Challenge.getChallengeInfo(this.$route.query.challengeId);
+            this.loading = false;
+            this.form.title = challengeInfo.title;
+            this.form.description = challengeInfo.description;
+            this.form.releaseTime = challengeInfo.release_time;
+            this.form.score = challengeInfo.score;
+            this.form.url = challengeInfo.url;
         }
-        catch (e){
-          this.$handleError(e);
-        }
-        this.dialogLoading = false;
-      }
-    },
-    async mounted() {
-      if (!this.$route.query.challengeId) {
-        this.$router.push({
-          name: "Admin-Challenge-Category"
-        })
-      }
-      this.loading = true;
-      let challengeInfo = await Challenge.getChallengeInfo(this.$route.query.challengeId);
-      this.loading = false;
-      this.form.title = challengeInfo.title;
-      this.form.description = challengeInfo.description;
-      this.form.releaseTime = challengeInfo.release_time;
-      this.form.score = challengeInfo.score;
     }
-  }
 </script>
